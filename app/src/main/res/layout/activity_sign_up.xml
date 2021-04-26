@@ -18,15 +18,15 @@
         app:srcCompat="@drawable/ic_overnight_stay" />
 
     <EditText
-        android:id="@+id/usernameE"
+        android:id="@+id/nameE"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginTop="50dp"
         android:background="#FFFFFF"
         android:ems="10"
-        android:hint="Username"
-        android:inputType="textPassword"
+        android:hint="Name"
+        android:inputType="text"
         android:padding="8dp"
         android:paddingEnd="30dp" />
 
@@ -40,7 +40,7 @@
         android:backgroundTint="#FFFFFF"
         android:ems="10"
         android:hint="Password"
-        android:inputType="textEmailAddress"
+        android:inputType="textPassword"
         android:padding="8dp" />
 
     <EditText
@@ -52,7 +52,7 @@
         android:background="#FFFFFF"
         android:ems="10"
         android:hint="Email ID"
-        android:inputType="phone"
+        android:inputType="textWebEmailAddress|textPassword"
         android:padding="8dp" />
 
     <TextView
