@@ -4,95 +4,80 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/signLytBG"
+    android:background="#7EC681"
     android:orientation="vertical"
+    android:padding="10dp"
     android:paddingStart="30dp"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp"
-    tools:context=".view.SignUpActivity">
+    android:paddingEnd="30dp"
+    tools:context=".View.SignInActivity">
 
     <ImageView
-        android:id="@+id/logoImg"
-        android:layout_width="324dp"
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/ic_overnight_stay" />
 
     <EditText
-        android:id="@+id/usernameE"
+        android:id="@+id/emailLoginE"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="50dp"
-        android:background="#FFFFFF"
-        android:ems="10"
-        android:hint="Username"
-        android:inputType="textPassword"
-        android:padding="8dp"
-        android:paddingEnd="30dp" />
-
-    <EditText
-        android:id="@+id/passwordE"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="20dp"
-        android:background="#FFFFFF"
-        android:backgroundTint="#FFFFFF"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textEmailAddress"
-        android:padding="8dp" />
-
-    <EditText
-        android:id="@+id/emailE"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="60dp"
         android:background="#FFFFFF"
         android:ems="10"
         android:hint="Email ID"
         android:inputType="phone"
         android:padding="8dp" />
 
-    <TextView
-        android:id="@+id/existingUserT"
+    <EditText
+        android:id="@+id/passwordLoginE"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="170dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="20dp"
+        android:background="#FFFFFF"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:padding="8dp" />
+
+    <TextView
+        android:id="@+id/NewUserT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="180dp"
         android:layout_marginTop="8dp"
         android:background="@color/textBG"
         android:padding="4dp"
-        android:text="Existing User?"
+        android:text="New User?"
         android:textSize="12sp" />
 
     <Button
-        android:id="@+id/signUpBtn"
+        android:id="@+id/signInBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/signBtnBG"
-        android:text="Sign Up" />
+        android:text="Sign In" />
 
     <LinearLayout
-        android:layout_width="340dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="10dp">
 
         <Button
-            android:id="@+id/googleSignBtn"
+            android:id="@+id/googleLoginBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
             android:backgroundTint="@color/white"
             android:drawableLeft="@drawable/ic_google"
             android:text="Google"
             android:textColor="#090808" />
 
         <Button
-            android:id="@+id/facebookSignBtn"
+            android:id="@+id/facebookLoginBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -102,14 +87,13 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/phoneSignT"
+        android:id="@+id/signInPhoneT"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="85dp"
+        android:layout_marginTop="10dp"
         android:background="@color/textBG"
         android:padding="2dp"
-        android:text="Sign Up with Phone"
-        android:textColor="@color/purple_500"
-        android:textSize="16sp" />
+        android:text="SignIn with Phone" />
+
 </LinearLayout>

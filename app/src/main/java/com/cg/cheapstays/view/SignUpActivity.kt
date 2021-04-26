@@ -1,5 +1,6 @@
 package com.cg.cheapstays.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -31,6 +32,12 @@ class SignUpActivity : AppCompatActivity() {
             else
                 doSignUp()
         }
+        existingUserT.setOnClickListener{
+            startActivity(Intent(this,SignInActivity::class.java))
+            finish()
+        }
+
+
 
     }
 
