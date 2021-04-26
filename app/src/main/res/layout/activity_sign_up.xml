@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/signLytBG"
+    android:orientation="vertical"
+    android:paddingStart="30dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    tools:context=".view.SignUpActivity">
+
+    <ImageView
+        android:id="@+id/logoImg"
+        android:layout_width="324dp"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_overnight_stay" />
+
+    <EditText
+        android:id="@+id/usernameE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="50dp"
+        android:background="#FFFFFF"
+        android:ems="10"
+        android:hint="Username"
+        android:inputType="textPassword"
+        android:padding="8dp"
+        android:paddingEnd="30dp" />
+
+    <EditText
+        android:id="@+id/passwordE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="20dp"
+        android:background="#FFFFFF"
+        android:backgroundTint="#FFFFFF"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textEmailAddress"
+        android:padding="8dp" />
+
+    <EditText
+        android:id="@+id/emailE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="16dp"
+        android:background="#FFFFFF"
+        android:ems="10"
+        android:hint="Email ID"
+        android:inputType="phone"
+        android:padding="8dp" />
+
+    <TextView
+        android:id="@+id/existingUserT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="170dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/textBG"
+        android:padding="4dp"
+        android:text="Existing User?"
+        android:textSize="12sp" />
+
+    <Button
+        android:id="@+id/signUpBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/signBtnBG"
+        android:text="Sign Up" />
+
+    <LinearLayout
+        android:layout_width="340dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/googleSignBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:backgroundTint="@color/white"
+            android:drawableLeft="@drawable/ic_google"
+            android:text="Google"
+            android:textColor="#090808" />
+
+        <Button
+            android:id="@+id/facebookSignBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:backgroundTint="@color/fbBG"
+            android:drawableLeft="@drawable/ic_facebook"
+            android:text="Facebook" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/phoneSignT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/textBG"
+        android:padding="2dp"
+        android:text="Sign Up with Phone"
+        android:textColor="@color/purple_500"
+        android:textSize="16sp" />
+</LinearLayout>

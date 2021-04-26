@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1026618382506",
+    "project_id": "cheapstays-6caab",
+    "storage_bucket": "cheapstays-6caab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1026618382506:android:92e39dfe275ad2a39e98d3",
+        "android_client_info": {
+          "package_name": "com.cg.cheapstays"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1026618382506-asg8qtkbpa0blgqi4ao6jn79jjcg0v50.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDX1vPRZf4OqJ-NfU1djfMwutbHw01Gymc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1026618382506-asg8qtkbpa0blgqi4ao6jn79jjcg0v50.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
