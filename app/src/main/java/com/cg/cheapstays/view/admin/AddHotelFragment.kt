@@ -5,7 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.cg.cheapstays.R
+import com.cg.cheapstays.model.Hotels
+import com.google.firebase.database.FirebaseDatabase
+import kotlinx.android.synthetic.main.fragment_add_hotel.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +25,7 @@ class AddHotelFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    lateinit var fDatabase : FirebaseDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +40,31 @@ class AddHotelFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        fDatabase = FirebaseDatabase.getInstance()
         return inflater.inflate(R.layout.fragment_add_hotel, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        addHotelBtn.setOnClickListener {
+            if(addHotelName.text.isNotEmpty() && addHotelAddress.text.isNotEmpty() && addHotelRooms.text.isNotEmpty() && addHotelDesc.text.isNotEmpty()){
+                val db = fDatabase.reference.child("hotels")
+                val hotelid = db.push().key!!
+                val hotel = Hotels(addHotelName.text.toString(),addHotelAddress.text.toString(),addHotelDesc.text.toString(),addHotelRooms.text.toString().toInt(),
+                    listOf<Hotels.Rooms>())
+                db.child(hotelid).setValue(hotel).addOnCompleteListener{
+                    if(it.isSuccessful){
+                        Toast.makeText(activity,"Added hotel successfully",Toast.LENGTH_LONG).show()
+                    }
+                    else{
+                        Toast.makeText(activity,"${it.exception?.message}",Toast.LENGTH_LONG).show()
+                    }
+                }
+
+            }else{
+                Toast.makeText(activity,"Please enter all the details",Toast.LENGTH_LONG).show()
+            }
+        }
     }
 
     companion object {

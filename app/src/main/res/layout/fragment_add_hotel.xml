@@ -27,7 +27,7 @@
         android:padding="1dp"
         android:text="Add Hotel"
         android:textColor="#E33629"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
     <EditText
@@ -38,7 +38,6 @@
         android:background="#FFFFFF"
         android:ems="10"
         android:hint="Hotel Name"
-        android:inputType="textEmailAddress"
         android:padding="8dp" />
 
     <EditText
@@ -49,7 +48,7 @@
         android:background="#FFFFFF"
         android:ems="10"
         android:hint="Address"
-        android:inputType="textPassword"
+        android:inputType="textPostalAddress"
         android:padding="8dp" />
 
     <EditText
@@ -60,7 +59,7 @@
         android:background="#FFFFFF"
         android:ems="10"
         android:hint="No. of Rooms"
-        android:inputType="textPassword"
+        android:inputType="number"
         android:padding="8dp" />
 
     <EditText
@@ -71,7 +70,7 @@
         android:background="#FFFFFF"
         android:ems="10"
         android:hint="Description"
-        android:inputType="textPassword"
+        android:inputType="textMultiLine|text"
         android:padding="8dp" />
 
     <Button
