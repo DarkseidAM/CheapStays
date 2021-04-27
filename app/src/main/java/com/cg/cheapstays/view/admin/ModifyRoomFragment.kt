@@ -1,4 +1,4 @@
-package com.cg.cheapstays.view
+package com.cg.cheapstays.view.admin
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

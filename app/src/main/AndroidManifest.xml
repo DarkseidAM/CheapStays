@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CheapStays">
-        <activity android:name=".view.AdminActivity"></activity>
+        <activity android:name=".view.admin.AdminActivity"></activity>
         <activity android:name=".view.StartUpActivity" />
         <activity
             android:name=".view.UserActivity"

@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Toast
 import com.cg.cheapstays.R
 import com.cg.cheapstays.model.Users
+import com.cg.cheapstays.view.admin.AdminActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -89,7 +90,10 @@ class SignInActivity : AppCompatActivity() {
 
     private fun updateUI(user: FirebaseUser?) { //use this to move to activity
         Toast.makeText(this,"Login successful", Toast.LENGTH_LONG).show()
-        startActivity(Intent(this@SignInActivity,UserActivity::class.java))
+        if(type=="admin"){
+            startActivity(Intent(this@SignInActivity,AdminActivity::class.java))
+        }else
+            startActivity(Intent(this@SignInActivity,UserActivity::class.java))
         finish()
 
     }
