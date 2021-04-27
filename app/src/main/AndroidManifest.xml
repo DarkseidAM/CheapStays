@@ -9,9 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CheapStays">
+        <activity android:name=".view.StartUpActivity"></activity>
         <activity
             android:name=".view.UserActivity"
-            android:label="@string/title_activity_user"/>
+            android:label="@string/title_activity_user" />
         <activity android:name=".view.SignInActivity" />
         <activity android:name=".view.SignUpActivity" />
         <activity android:name=".view.MainActivity">

@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import com.cg.cheapstays.R
 import com.cg.cheapstays.model.Users
@@ -22,18 +23,30 @@ class SignInActivity : AppCompatActivity() {
     lateinit var googleSignInClient : GoogleSignInClient
     lateinit var fAuth : FirebaseAuth
     lateinit var fDatabase : FirebaseDatabase
+    lateinit var type : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
 
+        progressBar.visibility = View.GONE
+
         fAuth = FirebaseAuth.getInstance()
         fDatabase = FirebaseDatabase.getInstance()
+        val intent = intent
+        type = intent.getStringExtra("type")!!
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
+
+        NewUserT.setOnClickListener{
+            val intent = Intent(this,SignUpActivity::class.java)
+            intent.putExtra("type",type)
+            startActivity(intent)
+        }
+
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
@@ -41,6 +54,7 @@ class SignInActivity : AppCompatActivity() {
             googleSignIn()
         }
         signInBtn.setOnClickListener {
+            progressBar.visibility = View.VISIBLE
             emailSignIn()
         }
 
@@ -75,6 +89,9 @@ class SignInActivity : AppCompatActivity() {
 
     private fun updateUI(user: FirebaseUser?) { //use this to move to activity
         Toast.makeText(this,"Login successful", Toast.LENGTH_LONG).show()
+        startActivity(Intent(this@SignInActivity,UserActivity::class.java))
+        finish()
+
     }
 
 
@@ -110,9 +127,10 @@ class SignInActivity : AppCompatActivity() {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("Login", "signInWithCredential:success")
                     val user = fAuth.currentUser
-                    val users = Users(user?.displayName!!,user.email!!)
+                    val users = Users(user?.displayName!!,user.email!!,type)
                     fDatabase.reference.child("users").child(user.uid).setValue(users)
-                    startActivity(Intent(this@SignInActivity,UserActivity::class.java))
+                    updateUI(user)
+
 
                 } else {
                     // If sign in fails, display a message to the user.
