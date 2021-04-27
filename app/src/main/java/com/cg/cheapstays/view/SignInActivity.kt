@@ -113,8 +113,7 @@ class SignInActivity : AppCompatActivity() {
                     val user_type = snapshot.child(user?.uid!!).getValue(Users::class.java)?.userType
                     if (user_type == type) updateUI(user)
                     else {
-                        Toast.makeText(this@SignInActivity,"You are not a $type",
-                            Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@SignInActivity,"You are not a $type",Toast.LENGTH_LONG).show()
                         fAuth.signOut()
                         startActivity(Intent(this@SignInActivity,StartUpActivity::class.java))
                         finish()
