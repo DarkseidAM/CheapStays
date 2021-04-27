@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.cg.cheapstays.R
 import com.cg.cheapstays.model.Users
 import com.cg.cheapstays.view.admin.AdminActivity
@@ -13,10 +14,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
 class SignInActivity : AppCompatActivity() {
@@ -30,12 +35,19 @@ class SignInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
 
+
         progressBar.visibility = View.GONE
 
         fAuth = FirebaseAuth.getInstance()
         fDatabase = FirebaseDatabase.getInstance()
-        val intent = intent
-        type = intent.getStringExtra("type")!!
+
+        type = USER_TYPE
+        if(type == "admin"){
+            NewUserT.visibility = View.GONE
+            googleLoginBtn.visibility = View.GONE
+        }
+
+
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -44,8 +56,8 @@ class SignInActivity : AppCompatActivity() {
 
         NewUserT.setOnClickListener{
             val intent = Intent(this,SignUpActivity::class.java)
-            intent.putExtra("type",type)
             startActivity(intent)
+            finish()
         }
 
 
@@ -59,6 +71,12 @@ class SignInActivity : AppCompatActivity() {
             emailSignIn()
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        NewUserT.visibility = View.VISIBLE
+        googleLoginBtn.visibility = View.VISIBLE
     }
 
     private fun emailSignIn() {
@@ -78,7 +96,7 @@ class SignInActivity : AppCompatActivity() {
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         val user = fAuth.currentUser
-                        updateUI(user)
+                        checkUser(user)
                     } else { //wrong details
                         Toast.makeText(this, "Authentication failed.",
                                 Toast.LENGTH_SHORT).show()
@@ -86,6 +104,27 @@ class SignInActivity : AppCompatActivity() {
                     }
                 }
 
+    }
+
+    private fun checkUser(user : FirebaseUser?){
+        val ref =  fDatabase.reference.child("users")
+        ref.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                    val user_type = snapshot.child(user?.uid!!).getValue(Users::class.java)?.userType
+                    if (user_type == type) updateUI(user)
+                    else {
+                        Toast.makeText(this@SignInActivity,"You are not a $type",
+                            Toast.LENGTH_LONG).show()
+                        fAuth.signOut()
+                        startActivity(Intent(this@SignInActivity,StartUpActivity::class.java))
+                        finish()
+                    }
+                }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Do nothing
+            }
+        })
     }
 
     private fun updateUI(user: FirebaseUser?) { //use this to move to activity

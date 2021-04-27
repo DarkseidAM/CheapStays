@@ -1,5 +1,6 @@
 package com.cg.cheapstays.view.admin
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.cg.cheapstays.R
+import com.cg.cheapstays.view.StartUpActivity
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_admin_start_up.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -23,6 +26,7 @@ class AdminStartUpFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    lateinit var fAuth : FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +34,7 @@ class AdminStartUpFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+        fAuth = FirebaseAuth.getInstance()
     }
 
     override fun onCreateView(
@@ -42,17 +47,23 @@ class AdminStartUpFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adminCardView.visibility = View.VISIBLE
+        val activity = view.context as AppCompatActivity
 
         adminAddHotelB.setOnClickListener {
             val frag = AddHotelFragment()
             //adminCardView.visibility = View.GONE
-            val activity = view.context as AppCompatActivity
+
             activity.supportFragmentManager.beginTransaction()
                 .add(R.id.parentAdmin, frag)
                 .addToBackStack(null)
                 .commit()
         }
+        logoutB.setOnClickListener {
+            fAuth.signOut()
+            startActivity(Intent(getActivity(),StartUpActivity::class.java))
+            getActivity()?.finish()
+        }
+
     }
 
     companion object {

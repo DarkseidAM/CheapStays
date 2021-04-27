@@ -22,12 +22,10 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(R.layout.activity_sign_up)
 
 
-
         fDatabase = FirebaseDatabase.getInstance()
         fAuth = FirebaseAuth.getInstance()
 
-        val intent = intent
-        type = intent.getStringExtra("type")!!
+        type = USER_TYPE
 
         signUpBtn.setOnClickListener{
             if(emailE.text.isNullOrEmpty() || passwordE.text.isNullOrEmpty()){
@@ -51,7 +49,10 @@ class SignUpActivity : AppCompatActivity() {
                 val users = Users(nameE.text.toString(),emailE.text.toString(),type)
                 val id = it.result?.user?.uid
                 fDatabase.reference.child("users").child(id!!).setValue(users)
-                Toast.makeText(this,"Registration Successful",Toast.LENGTH_LONG).show() }
+                Toast.makeText(this,"Registration Successful",Toast.LENGTH_LONG).show()
+                startActivity(Intent(this,SignInActivity::class.java))
+                finish()
+            }
             else{
                 Toast.makeText(this,"${it.exception?.message}",Toast.LENGTH_LONG).show()
             }

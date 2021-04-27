@@ -7,7 +7,7 @@ data class Hotels(
     val address : String,
     val description : String,
     val noOfRooms : Int,
-    val rooms : Rooms
+    val rooms : List<Rooms>
 ) {
     data class Rooms (
         val roomNo : Int,
