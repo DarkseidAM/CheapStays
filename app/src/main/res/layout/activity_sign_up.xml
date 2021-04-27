@@ -31,6 +31,18 @@
         android:paddingEnd="30dp" />
 
     <EditText
+        android:id="@+id/emailE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="16dp"
+        android:background="#FFFFFF"
+        android:ems="10"
+        android:hint="Email ID"
+        android:inputType="textWebEmailAddress|textPassword"
+        android:padding="8dp" />
+
+    <EditText
         android:id="@+id/passwordE"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -43,18 +55,6 @@
         android:inputType="textPassword"
         android:padding="8dp" />
 
-    <EditText
-        android:id="@+id/emailE"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="16dp"
-        android:background="#FFFFFF"
-        android:ems="10"
-        android:hint="Email ID"
-        android:inputType="textWebEmailAddress|textPassword"
-        android:padding="8dp" />
-
     <TextView
         android:id="@+id/existingUserT"
         android:layout_width="wrap_content"
@@ -62,7 +62,7 @@
         android:layout_marginStart="170dp"
         android:layout_marginTop="8dp"
         android:background="@color/textBG"
-        android:padding="4dp"
+        android:padding="2dp"
         android:text="Existing User?"
         android:textSize="12sp" />
 
@@ -110,6 +110,5 @@
         android:background="@color/textBG"
         android:padding="2dp"
         android:text="Sign Up with Phone"
-        android:textColor="@color/purple_500"
         android:textSize="16sp" />
 </LinearLayout>

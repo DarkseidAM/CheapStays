@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()
         CoroutineScope(Dispatchers.Main).launch{
             delay(1000)
-            startActivity(Intent(this@MainActivity,SignUpActivity::class.java))
+            startActivity(Intent(this@MainActivity,SignInActivity::class.java))
             finish()
         }
 

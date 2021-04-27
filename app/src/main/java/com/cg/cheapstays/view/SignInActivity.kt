@@ -4,12 +4,14 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import com.cg.cheapstays.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
@@ -22,6 +24,8 @@ class SignInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
 
+        fAuth = FirebaseAuth.getInstance()
+
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
@@ -32,9 +36,44 @@ class SignInActivity : AppCompatActivity() {
         googleLoginBtn.setOnClickListener {
             googleSignIn()
         }
-
+        signInBtn.setOnClickListener {
+            emailSignIn()
+        }
 
     }
+
+    private fun emailSignIn() {
+        if(emailLoginE.text.isEmpty()){
+            emailLoginE.error ="Please enter email"
+            emailLoginE.requestFocus()
+            return
+        }
+        if(passwordLoginE.text.isEmpty()){
+            passwordLoginE.error ="Please enter password"
+            passwordLoginE.requestFocus()
+            return
+        }
+
+        //----LOGIN USER---
+        fAuth.signInWithEmailAndPassword(emailLoginE.text.toString(), passwordLoginE.text.toString())
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        val user = fAuth.currentUser
+                        updateUI(user)
+                    } else { //wrong details
+                        Toast.makeText(this, "Authentication failed.",
+                                Toast.LENGTH_SHORT).show()
+                        //updateUI(null)
+                    }
+                }
+
+    }
+
+    private fun updateUI(user: FirebaseUser?) { //use this to move to activity
+        Toast.makeText(this,"Login successful", Toast.LENGTH_LONG).show()
+    }
+
+
 
     private val RC_SIGN_IN : Int = 12
 

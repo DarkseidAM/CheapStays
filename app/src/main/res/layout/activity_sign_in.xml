@@ -9,7 +9,7 @@
     android:padding="10dp"
     android:paddingStart="30dp"
     android:paddingEnd="30dp"
-    tools:context=".View.SignInActivity">
+    tools:context=".view.SignInActivity">
 
     <ImageView
         android:id="@+id/imageView2"
@@ -26,7 +26,7 @@
         android:background="#FFFFFF"
         android:ems="10"
         android:hint="Email ID"
-        android:inputType="phone"
+        android:inputType="textEmailAddress"
         android:padding="8dp" />
 
     <EditText
@@ -48,7 +48,7 @@
         android:layout_marginStart="180dp"
         android:layout_marginTop="8dp"
         android:background="@color/textBG"
-        android:padding="4dp"
+        android:padding="2dp"
         android:text="New User?"
         android:textSize="12sp" />
 
@@ -94,6 +94,6 @@
         android:layout_marginTop="10dp"
         android:background="@color/textBG"
         android:padding="2dp"
-        android:text="SignIn with Phone" />
+        android:text="Sign In with Phone" />
 
 </LinearLayout>
