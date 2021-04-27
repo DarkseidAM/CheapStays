@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.cg.cheapstays.R
+import com.cg.cheapstays.model.Users
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -13,18 +14,21 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
 class SignInActivity : AppCompatActivity() {
 
     lateinit var googleSignInClient : GoogleSignInClient
     lateinit var fAuth : FirebaseAuth
+    lateinit var fDatabase : FirebaseDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
 
         fAuth = FirebaseAuth.getInstance()
+        fDatabase = FirebaseDatabase.getInstance()
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -106,9 +110,13 @@ class SignInActivity : AppCompatActivity() {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("Login", "signInWithCredential:success")
                     val user = fAuth.currentUser
+                    val users = Users(user?.displayName!!,user.email!!)
+                    fDatabase.reference.child("users").child(user.uid).setValue(users)
+                    startActivity(Intent(this@SignInActivity,UserActivity::class.java))
+
                 } else {
                     // If sign in fails, display a message to the user.
-                    Log.w("Login", "signInWithCredential:failure", task.exception)
+                    Log.d("Login", "signInWithCredential:failure", task.exception)
                 }
             }
     }

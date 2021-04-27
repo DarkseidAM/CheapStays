@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "1026618382506",
+    "firebase_url": "https://cheapstays-6caab-default-rtdb.firebaseio.com",
     "project_id": "cheapstays-6caab",
     "storage_bucket": "cheapstays-6caab.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "1026618382506-asnfor3q0m7mo16dlo4g7is28jc5pugb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cg.cheapstays",
+            "certificate_hash": "79313cafe6214b1af7c921cfbb84d38928043d10"
+          }
+        },
         {
           "client_id": "1026618382506-asg8qtkbpa0blgqi4ao6jn79jjcg0v50.apps.googleusercontent.com",
           "client_type": 3

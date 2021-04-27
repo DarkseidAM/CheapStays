@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.cg.cheapstays.view.R
+import com.cg.cheapstays.R
 
 class HomeFragment : Fragment() {
 
