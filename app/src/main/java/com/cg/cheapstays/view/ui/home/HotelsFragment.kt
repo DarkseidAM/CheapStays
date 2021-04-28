@@ -39,7 +39,7 @@ class HotelsFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = MyHotelsRecyclerViewAdapter(listOf<Hotels>(Hotels("","","",0, listOf<Hotels.Rooms>())))
+                adapter = MyHotelsRecyclerViewAdapter(listOf<Hotels>(Hotels("","","",0,"", listOf<Hotels.Rooms>())))
             }
         }
         return view

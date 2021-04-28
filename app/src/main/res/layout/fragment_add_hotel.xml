@@ -89,10 +89,45 @@
         android:layout_marginTop="5dp"
         android:backgroundTint="@color/signBtnBG"
         android:drawableLeft="@drawable/ic_fi_rr_add"
-        android:text="Upload Picture"
+        android:text="Select Picture"
         android:textColor="@color/white"
         android:textSize="14sp"
         app:cornerRadius="10dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/selectedImageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:visibility="gone"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <ImageButton
+            android:id="@+id/uploadButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="25dp"
+            android:layout_weight="1"
+            android:src="@android:drawable/stat_sys_upload"
+            android:visibility="gone" />
+
+        <ProgressBar
+            android:id="@+id/progressBar2"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="25dp"
+            android:indeterminate="false"
+            android:visibility="gone" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/addHotelBtn"

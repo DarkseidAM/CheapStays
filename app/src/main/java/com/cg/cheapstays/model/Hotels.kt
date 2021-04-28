@@ -7,6 +7,7 @@ data class Hotels(
     val address : String,
     val description : String,
     val noOfRooms : Int,
+    val imgPath : String,
     val rooms : List<Rooms>
 ) {
     data class Rooms (
