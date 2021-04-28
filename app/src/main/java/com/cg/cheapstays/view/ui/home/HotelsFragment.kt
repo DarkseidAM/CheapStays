@@ -1,4 +1,4 @@
-package com.cg.cheapstays.view.ui.dashboard
+package com.cg.cheapstays.view.ui.home
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.cg.cheapstays.R
+import com.cg.cheapstays.model.Hotels
 
 /**
  * A fragment representing a list of Items.
@@ -29,6 +30,8 @@ class HotelsFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_hotel_lists, container, false)
 
+
+
         // Set the adapter
         if (view is RecyclerView) {
             with(view) {
@@ -36,11 +39,13 @@ class HotelsFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-//                adapter = MyHotelsRecyclerViewAdapter(DummyContent.ITEMS)
+                adapter = MyHotelsRecyclerViewAdapter(listOf<Hotels>(Hotels("","","",0, listOf<Hotels.Rooms>())))
             }
         }
         return view
     }
+
+
 
     companion object {
 

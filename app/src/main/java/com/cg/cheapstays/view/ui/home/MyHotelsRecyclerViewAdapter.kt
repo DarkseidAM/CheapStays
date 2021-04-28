@@ -1,4 +1,4 @@
-package com.cg.cheapstays.view.ui.dashboard
+package com.cg.cheapstays.view.ui.home
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
@@ -8,10 +8,7 @@ import android.widget.TextView
 import com.cg.cheapstays.R
 import com.cg.cheapstays.model.Hotels
 
-/**
- * [RecyclerView.Adapter] that can display a [DummyItem].
- * TODO: Replace the implementation with code for your data type.
- */
+
 class MyHotelsRecyclerViewAdapter(
         private val values: List<Hotels>)
     : RecyclerView.Adapter<MyHotelsRecyclerViewAdapter.ViewHolder>() {
@@ -32,10 +29,6 @@ class MyHotelsRecyclerViewAdapter(
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         //val idView: TextView = view.findViewById(R.id.item_number)
-        val contentView: TextView = view.findViewById(R.id.content)
 
-        override fun toString(): String {
-            return super.toString() + " '" + contentView.text + "'"
-        }
     }
 }

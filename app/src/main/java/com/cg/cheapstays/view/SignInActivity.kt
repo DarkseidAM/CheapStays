@@ -6,15 +6,16 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.cg.cheapstays.R
 import com.cg.cheapstays.model.Users
+import com.cg.cheapstays.presenter.SignIn
+import com.cg.cheapstays.presenter.SignIn.Companion.RC_SIGN_IN
+import com.cg.cheapstays.presenter.SignIn.Companion.gso
 import com.cg.cheapstays.view.admin.AdminActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
@@ -24,11 +25,11 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
-class SignInActivity : AppCompatActivity() {
+class SignInActivity : AppCompatActivity(), SignIn.View {
 
-    lateinit var googleSignInClient : GoogleSignInClient
-    lateinit var fAuth : FirebaseAuth
-    lateinit var fDatabase : FirebaseDatabase
+    override lateinit var googleSignInClient : GoogleSignInClient
+    override lateinit var fAuth : FirebaseAuth
+    override lateinit var fDatabase : FirebaseDatabase
     lateinit var type : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,10 +50,8 @@ class SignInActivity : AppCompatActivity() {
 
 
 
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
+        SignIn().initialize(getString(R.string.default_web_client_id))
+
 
         NewUserT.setOnClickListener{
             val intent = Intent(this,SignUpActivity::class.java)
@@ -79,7 +78,7 @@ class SignInActivity : AppCompatActivity() {
         googleLoginBtn.visibility = View.VISIBLE
     }
 
-    private fun emailSignIn() {
+    override fun  emailSignIn(){
         if(emailLoginE.text.isEmpty()){
             emailLoginE.error ="Please enter email"
             emailLoginE.requestFocus()
@@ -106,7 +105,7 @@ class SignInActivity : AppCompatActivity() {
 
     }
 
-    private fun checkUser(user : FirebaseUser?){
+    override fun checkUser(user : FirebaseUser?){
         val ref =  fDatabase.reference.child("users")
         ref.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -126,7 +125,7 @@ class SignInActivity : AppCompatActivity() {
         })
     }
 
-    private fun updateUI(user: FirebaseUser?) { //use this to move to activity
+    override fun updateUI(user: FirebaseUser?) { //use this to move to activity
         Toast.makeText(this,"Login successful", Toast.LENGTH_LONG).show()
         if(type=="admin"){
             startActivity(Intent(this@SignInActivity,AdminActivity::class.java))
@@ -137,10 +136,7 @@ class SignInActivity : AppCompatActivity() {
     }
 
 
-
-    private val RC_SIGN_IN : Int = 12
-
-    private fun googleSignIn() {
+    override fun googleSignIn() {
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
@@ -161,7 +157,7 @@ class SignInActivity : AppCompatActivity() {
             }
         }
     }
-    private fun firebaseAuthWithGoogle(idToken: String) {
+    override fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         fAuth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->

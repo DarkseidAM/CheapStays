@@ -106,13 +106,26 @@
         android:textColorHint="@color/textHint" />
 
     <Button
+        android:id="@+id/addRoomImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:backgroundTint="@color/signBtnBG"
+        android:drawableLeft="@drawable/ic_fi_rr_add"
+        android:text="Upload Picture"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:cornerRadius="10dp" />
+
+    <Button
         android:id="@+id/addRoomBtn"
         android:layout_width="209dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:backgroundTint="@color/signBtnBG"
+        android:backgroundTint="@color/teal_700"
         android:text="Add"
         android:textColor="@color/white"
+        android:textSize="18sp"
         app:cornerRadius="15dp" />
 
 </LinearLayout>
