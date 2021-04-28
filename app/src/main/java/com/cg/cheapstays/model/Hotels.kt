@@ -10,6 +10,7 @@ data class Hotels(
     val imgPath : String,
     val rooms : List<Rooms>
 ) {
+    constructor() : this ("","","",0,"", listOf())
     data class Rooms (
         val roomNo : Int,
         val tariff : Double,

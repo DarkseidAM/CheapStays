@@ -1,6 +1,7 @@
 package com.cg.cheapstays.view.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,6 +11,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.cg.cheapstays.R
 import com.cg.cheapstays.model.Hotels
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 /**
  * A fragment representing a list of Items.
@@ -17,10 +22,14 @@ import com.cg.cheapstays.model.Hotels
 class HotelsFragment : Fragment() {
 
     private var columnCount = 1
+    lateinit var fDatabase: FirebaseDatabase
+    lateinit var hotelList : MutableList<Hotels>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        fDatabase = FirebaseDatabase.getInstance()
+        hotelList = mutableListOf()
         arguments?.let {
             columnCount = it.getInt(ARG_COLUMN_COUNT)
         }
@@ -30,18 +39,33 @@ class HotelsFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_hotel_lists, container, false)
 
-
-
-        // Set the adapter
-        if (view is RecyclerView) {
-            with(view) {
-                layoutManager = when {
-                    columnCount <= 1 -> LinearLayoutManager(context)
-                    else -> GridLayoutManager(context, columnCount)
+        val ref = fDatabase.reference.child("hotels")
+        ref.addValueEventListener(object:ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    hotelList.clear()
+                    for(child in snapshot.children){
+                        val hotel = child.getValue(Hotels::class.java)
+                        hotelList.add(hotel!!)
+//                        Log.d("List","List - $hotelList,$hotel")
+                    }
+                    //Sets adapter
+                    if(view is RecyclerView){
+                        Log.d("List","List - $hotelList")
+                        view.adapter = MyHotelsRecyclerViewAdapter(hotelList)
+                    }
                 }
-                adapter = MyHotelsRecyclerViewAdapter(listOf<Hotels>(Hotels("","","",0,"", listOf<Hotels.Rooms>())))
+
             }
-        }
+
+            override fun onCancelled(error: DatabaseError) {
+                //
+            }
+
+        })
+
+
+
         return view
     }
 
