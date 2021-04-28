@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#7EC681"
-    android:gravity="center"
+    android:background="@drawable/appbg"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
     android:padding="10dp"
     android:paddingStart="30dp"
@@ -14,71 +14,82 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="245dp"
+        android:layout_height="107dp"
         app:srcCompat="@drawable/ic_overnight_stay" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:background="#9CDE9F"
-        android:padding="1dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/round_edittext"
+        android:padding="4dp"
         android:text="Add Hotel"
-        android:textColor="#E33629"
-        android:textSize="18sp"
+        android:textColor="@color/teal_700"
+        android:textSize="24sp"
         android:textStyle="bold" />
 
     <EditText
         android:id="@+id/addHotelName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:background="#FFFFFF"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/round_edittext"
         android:ems="10"
         android:hint="Hotel Name"
-        android:padding="8dp" />
+        android:inputType="text"
+        android:padding="8dp"
+        android:textColor="@color/inputText"
+        android:textColorHint="@color/textHint" />
 
     <EditText
         android:id="@+id/addHotelAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="#FFFFFF"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/round_edittext"
         android:ems="10"
         android:hint="Address"
         android:inputType="textPostalAddress"
-        android:padding="8dp" />
+        android:padding="8dp"
+        android:textColor="@color/inputText"
+        android:textColorHint="@color/textHint" />
 
     <EditText
         android:id="@+id/addHotelRooms"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="#FFFFFF"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/round_edittext"
         android:ems="10"
         android:hint="No. of Rooms"
         android:inputType="number"
-        android:padding="8dp" />
+        android:padding="8dp"
+        android:textColor="@color/inputText"
+        android:textColorHint="@color/textHint" />
 
     <EditText
         android:id="@+id/addHotelDesc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="#FFFFFF"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/round_edittext"
         android:ems="10"
         android:hint="Description"
         android:inputType="textMultiLine|text"
-        android:padding="8dp" />
+        android:padding="8dp"
+        android:textColor="@color/inputText"
+        android:textColorHint="@color/textHint" />
 
     <Button
         android:id="@+id/addHotelBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="209dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/signBtnBG"
-        android:text="Add" />
+        android:text="Add"
+        android:textColor="@color/white"
+        app:cornerRadius="15dp" />
 
 </LinearLayout>

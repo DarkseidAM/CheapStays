@@ -7,8 +7,10 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="signBtnBG">#009688</color>
+    <color name="signBtnBG">#03A9F4</color>
     <color name="fbBG">#3F51B5</color>
     <color name="textBG">#DDF4C2</color>
     <color name="signLytBG">#7EC681</color>
+    <color name="inputText">#2D2C2C</color>
+    <color name="textHint">#828080</color>
 </resources>

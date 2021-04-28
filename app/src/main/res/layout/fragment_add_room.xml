@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#7EC681"
-    android:gravity="center"
+    android:background="@drawable/appbg"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
     android:padding="10dp"
     android:paddingStart="30dp"
@@ -14,7 +14,7 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="match_parent"
+        android:layout_width="215dp"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/ic_overnight_stay" />
 
@@ -22,12 +22,12 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:background="#9CDE9F"
-        android:padding="1dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/round_edittext"
+        android:padding="4dp"
         android:text="Add Room"
-        android:textColor="#E33629"
-        android:textSize="16sp"
+        android:textColor="@color/teal_700"
+        android:textSize="24sp"
         android:textStyle="bold" />
 
     <EditText
@@ -35,11 +35,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
-        android:background="#FFFFFF"
+        android:background="@drawable/round_edittext"
         android:ems="10"
         android:hint="Room No."
-        android:inputType="textEmailAddress"
-        android:padding="8dp" />
+        android:inputType="number"
+        android:padding="8dp"
+        android:textColor="@color/inputText"
+        android:textColorHint="@color/textHint" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -52,7 +54,10 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/round_edittext"
+            android:padding="2dp"
             android:text="No. of Beds:"
+            android:textColor="@color/inputText"
             android:textSize="18sp" />
 
         <Spinner
@@ -74,7 +79,10 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/round_edittext"
+            android:padding="2dp"
             android:text="Room Type:"
+            android:textColor="@color/inputText"
             android:textSize="18sp" />
 
         <Spinner
@@ -89,18 +97,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:background="#FFFFFF"
+        android:background="@drawable/round_edittext"
         android:ems="10"
         android:hint="Description"
-        android:inputType="textPassword"
-        android:padding="8dp" />
+        android:inputType="textMultiLine"
+        android:padding="8dp"
+        android:textColor="@color/inputText"
+        android:textColorHint="@color/textHint" />
 
     <Button
         android:id="@+id/addRoomBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="209dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/signBtnBG"
-        android:text="Add" />
+        android:text="Add"
+        android:textColor="@color/white"
+        app:cornerRadius="15dp" />
 
 </LinearLayout>

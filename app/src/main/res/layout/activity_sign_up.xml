@@ -4,16 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/signLytBG"
-    android:gravity="center_vertical"
+    android:background="@drawable/appbg"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context=".view.SignUpActivity">
 
     <ImageView
         android:id="@+id/logoImg"
-        android:layout_width="324dp"
+        android:layout_width="315dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="2dp"
         app:srcCompat="@drawable/ic_overnight_stay" />
 
     <EditText
@@ -21,78 +22,82 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"
-        android:background="#FFFFFF"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/round_edittext"
+        android:drawableLeft="@drawable/ic_fi_rr_text"
+        android:drawablePadding="6dp"
         android:ems="10"
         android:hint="Name"
         android:inputType="text"
         android:padding="8dp"
-        android:paddingEnd="30dp" />
+        android:paddingEnd="30dp"
+        android:textColor="@color/inputText"
+        android:textColorHint="@color/textHint"
+        android:textSize="18sp" />
 
     <EditText
         android:id="@+id/emailE"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        android:background="#FFFFFF"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/round_edittext"
+        android:drawableLeft="@drawable/ic_fi_rr_envelope"
+        android:drawablePadding="6dp"
         android:ems="10"
         android:hint="Email ID"
         android:inputType="textWebEmailAddress|textPassword"
-        android:padding="8dp" />
+        android:padding="8dp"
+        android:textColor="@color/inputText"
+        android:textColorHint="@color/textHint"
+        android:textSize="18sp" />
 
     <EditText
         android:id="@+id/passwordE"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:background="#FFFFFF"
-        android:backgroundTint="#FFFFFF"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/round_edittext"
+        android:drawableLeft="@drawable/ic_fi_rr_lock"
+        android:drawablePadding="6dp"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
-        android:padding="8dp" />
-
-    <TextView
-        android:id="@+id/existingUserT"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="8dp"
-        android:background="#7EC681"
-        android:padding="2dp"
-        android:text="Existing User?"
-        android:textColor="#BFFF0000"
-        android:textSize="14sp"
-        android:textStyle="bold" />
+        android:padding="8dp"
+        android:textColor="@color/inputText"
+        android:textColorHint="@color/textHint"
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/signUpBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="210dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:backgroundTint="@color/signBtnBG"
-        android:text="Sign Up" />
+        android:text="Sign Up"
+        android:textColor="@color/white"
+        app:cornerRadius="15dp" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="216dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        android:padding="10dp">
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/googleSignBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="#E44D4D"
             android:drawableLeft="@drawable/ic_google"
-            android:padding="12dp"
-            android:text="Sign In with Google"
-            android:textColor="#090808" />
+            android:text="Sign In With Google"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:cornerRadius="15dp"
+            app:iconPadding="4dp" />
 
     </LinearLayout>
 
@@ -101,10 +106,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        android:background="#7EC681"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/round_edittext"
         android:padding="2dp"
         android:text="Sign Up with Phone"
-        android:textSize="16sp"
+        android:textColor="#2C2B2B"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/existingUserT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/round_edittext"
+        android:padding="2dp"
+        android:text="Existing User? Sign In"
+        android:textColor="@color/teal_700"
+        android:textSize="14sp"
         android:textStyle="bold" />
 </LinearLayout>

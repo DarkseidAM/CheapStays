@@ -5,16 +5,17 @@
     android:id="@+id/parent_signin"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#7EC681"
-    android:gravity="center_vertical"
+    android:background="@drawable/appbg"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
     android:padding="10dp"
     tools:context=".view.SignInActivity">
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="match_parent"
+        android:layout_width="315dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
         app:srcCompat="@drawable/ic_overnight_stay" />
 
     <EditText
@@ -22,12 +23,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="60dp"
-        android:background="#FFFFFF"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/round_edittext"
+        android:drawableLeft="@drawable/ic_fi_rr_envelope"
+        android:drawablePadding="6dp"
         android:ems="10"
         android:hint="Email ID"
         android:inputType="textEmailAddress"
-        android:padding="8dp" />
+        android:padding="8dp"
+        android:textColor="@color/inputText"
+        android:textColorHint="@color/textHint" />
 
     <EditText
         android:id="@+id/passwordLoginE"
@@ -35,24 +40,15 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:background="#FFFFFF"
+        android:background="@drawable/round_edittext"
+        android:drawableLeft="@drawable/ic_fi_rr_lock"
+        android:drawablePadding="6dp"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
-        android:padding="8dp" />
-
-    <TextView
-        android:id="@+id/NewUserT"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="8dp"
-        android:background="#7EC681"
-        android:padding="2dp"
-        android:text="New User?"
-        android:textColor="#BFFF0000"
-        android:textSize="14sp"
-        android:textStyle="bold" />
+        android:padding="8dp"
+        android:textColor="@color/inputText"
+        android:textColorHint="@color/textHint" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -62,12 +58,14 @@
 
         <Button
             android:id="@+id/signInBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:backgroundTint="@color/signBtnBG"
-            android:text="Sign In" />
+            android:text="Sign In"
+            android:textColor="@color/white"
+            app:cornerRadius="15dp" />
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -92,11 +90,11 @@
             android:id="@+id/googleLoginBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="#E44D4D"
             android:drawableLeft="@drawable/ic_google"
-            android:padding="12dp"
             android:text="Sign In with Google"
-            android:textColor="#090808" />
+            android:textColor="#FBF7F7"
+            app:cornerRadius="15dp" />
 
     </LinearLayout>
 
@@ -106,9 +104,23 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:background="#7EC681"
+        android:background="@drawable/round_edittext"
         android:padding="2dp"
         android:text="Sign In with Phone"
+        android:textColor="#0E0B0B"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/NewUserT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/round_edittext"
+        android:padding="2dp"
+        android:text="New User? Sign Up"
+        android:textColor="@color/signBtnBG"
+        android:textSize="14sp"
         android:textStyle="bold" />
 
 </LinearLayout>

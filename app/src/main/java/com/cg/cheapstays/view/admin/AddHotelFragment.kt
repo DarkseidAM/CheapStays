@@ -46,7 +46,7 @@ class AddHotelFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        addHotelBtn.setOnClickListener {
+        addHotelBtn.setOnClickListener {Toast.makeText(activity,"Added hotel successfully",Toast.LENGTH_LONG).show()
             if(addHotelName.text.isNotEmpty() && addHotelAddress.text.isNotEmpty() && addHotelRooms.text.isNotEmpty() && addHotelDesc.text.isNotEmpty()){
                 val db = fDatabase.reference.child("hotels")
                 val hotelid = db.push().key!!
