@@ -77,11 +77,18 @@ class AddHotelFragment : Fragment() {
                 val hotelid = db.push().key!!
 
                 Log.d("Upload","$imageUrl")
-                val hotel = Hotels(addHotelName.text.toString(),addHotelAddress.text.toString(),addHotelDesc.text.toString(),addHotelRooms.text.toString().toInt(),imageUrl.toString(),
-                    listOf<Hotels.Rooms>())
+                val hotel = Hotels(addHotelName.text.toString(),addHotelAddress.text.toString(),addHotelDesc.text.toString(),0,0.00,imageUrl.toString())
+                    listOf<Hotels.Rooms>()
                 db.child(hotelid).setValue(hotel).addOnCompleteListener{
                     if(it.isSuccessful){
                         Toast.makeText(activity,"Added hotel successfully",Toast.LENGTH_LONG).show()
+                        val frag = AddRoomFragment()
+                        val bundle = Bundle()
+                        bundle.putString("hotelid",hotelid)
+                        frag.arguments = bundle
+                        activity?.supportFragmentManager?.beginTransaction()
+                                ?.replace(R.id.parentAdmin,frag)
+                                ?.commit()
                     }
                     else{
                         Toast.makeText(activity,"${it.exception?.message}",Toast.LENGTH_LONG).show()

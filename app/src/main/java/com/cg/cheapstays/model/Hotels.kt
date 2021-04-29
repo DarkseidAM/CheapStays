@@ -1,19 +1,20 @@
 package com.cg.cheapstays.model
 
-import android.location.Address
-
+// TODO check noOfRooms is being used or not
 data class Hotels(
     val name : String,
     val address : String,
     val description : String,
-    val noOfRooms : Int,
-    val imgPath : String,
-    val rooms : List<Rooms>
+    val price : Int,
+    val rating : Double,
+    val imgPath : String
 ) {
-    constructor() : this ("","","",0,"", listOf())
+    constructor() : this ("","","",0,0.00,"")
     data class Rooms (
-        val roomNo : Int,
         val tariff : Double,
         val type : String
-    )
+    ){
+        constructor() : this(0.00,"")
+    }
+
 }

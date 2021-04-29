@@ -87,7 +87,7 @@
                 app:srcCompat="@drawable/basic_user_image" />
         </androidx.cardview.widget.CardView>
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/textViewPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-black"

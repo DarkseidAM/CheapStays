@@ -27,6 +27,8 @@ class SignUpActivity : AppCompatActivity() {
 
         type = USER_TYPE
 
+
+
         signUpBtn.setOnClickListener{
             if(emailE.text.isNullOrEmpty() || passwordE.text.isNullOrEmpty()){
                 Toast.makeText(this,"Empty Email Id or password ",Toast.LENGTH_LONG).show()

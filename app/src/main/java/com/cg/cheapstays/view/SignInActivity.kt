@@ -43,7 +43,9 @@ class SignInActivity : AppCompatActivity(), SignIn.View {
         fDatabase = FirebaseDatabase.getInstance()
 
         type = USER_TYPE
+        Log.d("Login"," $type")
         if(type == "admin"){
+            Log.d("Login"," $type")
             NewUserT.visibility = View.GONE
             googleLoginBtn.visibility = View.GONE
         }
@@ -74,8 +76,10 @@ class SignInActivity : AppCompatActivity(), SignIn.View {
 
     override fun onResume() {
         super.onResume()
-        NewUserT.visibility = View.VISIBLE
-        googleLoginBtn.visibility = View.VISIBLE
+        if(type!="admin") {
+            NewUserT.visibility = View.VISIBLE
+            googleLoginBtn.visibility = View.VISIBLE
+        }
     }
 
     override fun  emailSignIn(){

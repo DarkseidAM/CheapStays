@@ -11,7 +11,7 @@ class AdminActivity : AppCompatActivity() {
         setContentView(R.layout.activity_admin)
 
         val frag = AdminStartUpFragment()
-        supportFragmentManager.beginTransaction().add(R.id.parentAdmin,frag)
+        supportFragmentManager.beginTransaction().replace(R.id.parentAdmin,frag)
             .commit()
 
     }
