@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/appbg"
-    android:gravity="center_horizontal"
+    android:gravity="center|center_vertical"
     android:orientation="vertical"
     android:padding="10dp"
     android:paddingStart="30dp"
@@ -18,11 +18,17 @@
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/ic_overnight_stay" />
 
+    <Spinner
+        android:id="@+id/spinnerModidyHotel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="25dp" />
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/round_edittext"
         android:padding="4dp"
         android:text="Modify Hotel"
@@ -57,51 +63,73 @@
         android:textColorHint="@color/textHint" />
 
     <EditText
-        android:id="@+id/editHotelRooms"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/round_edittext"
-        android:ems="10"
-        android:hint="No. of Rooms"
-        android:inputType="number"
-        android:padding="8dp"
-        android:textColor="@color/inputText"
-        android:textColorHint="@color/textHint" />
-
-    <EditText
         android:id="@+id/editHotelDesc"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/round_edittext"
         android:ems="10"
         android:hint="Description"
         android:inputType="textMultiLine"
         android:padding="8dp"
+        android:scrollbars="vertical"
         android:textColor="@color/inputText"
         android:textColorHint="@color/textHint" />
-    <Button
-        android:id="@+id/editHotelImage"
+
+    <EditText
+        android:id="@+id/modifyHotelOffer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:backgroundTint="@color/signBtnBG"
-        android:drawableLeft="@drawable/ic_fi_rr_add"
-        android:text="Upload Picture"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        app:cornerRadius="10dp" />
+        android:layout_marginTop="10dp"
+        android:background="@drawable/round_edittext"
+        android:ems="10"
+        android:hint="Change Discount"
+        android:inputType="numberDecimal"
+        android:padding="8dp"
+        android:textColor="@color/inputText"
+        android:textColorHint="@color/textHint" />
 
     <Button
         android:id="@+id/editHotelBtn"
-        android:layout_width="213dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/teal_700"
-        android:text="submit"
+        android:text="Confirm changes"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:cornerRadius="15dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/modifyHotelRoomBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/teal_700"
+            android:text="Modify Rooms"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:cornerRadius="15dp" />
+
+        <Button
+            android:id="@+id/deleteHotel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/holo_red_dark"
+            android:text="Delete Hotel"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:cornerRadius="15dp" />
+
+    </LinearLayout>
 
 </LinearLayout>

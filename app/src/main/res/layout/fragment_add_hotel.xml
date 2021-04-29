@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/appbg"
-    android:gravity="center_horizontal"
+    android:gravity="center_horizontal|center_vertical"
     android:orientation="vertical"
     android:padding="10dp"
     android:paddingStart="30dp"
@@ -58,14 +58,14 @@
         android:textColorHint="@color/textHint" />
 
     <EditText
-        android:id="@+id/addHotelRooms"
+        android:id="@+id/addHotelRatings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@drawable/round_edittext"
         android:ems="10"
-        android:hint="No. of Rooms"
-        android:inputType="number"
+        android:hint="Rating of Hotel"
+        android:inputType="numberDecimal"
         android:padding="8dp"
         android:textColor="@color/inputText"
         android:textColorHint="@color/textHint" />
@@ -79,6 +79,18 @@
         android:ems="10"
         android:hint="Description"
         android:inputType="textMultiLine|text"
+        android:padding="8dp"
+        android:textColor="@color/inputText"
+        android:textColorHint="@color/textHint" />
+
+    <EditText
+        android:id="@+id/addHotelOffer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/round_edittext"
+        android:ems="10"
+        android:hint="Discount (If Any)"
         android:padding="8dp"
         android:textColor="@color/inputText"
         android:textColorHint="@color/textHint" />

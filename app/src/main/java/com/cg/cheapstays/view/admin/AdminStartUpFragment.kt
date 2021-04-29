@@ -58,6 +58,14 @@ class AdminStartUpFragment : Fragment() {
                 .addToBackStack(null)
                 .commit()
         }
+        adminModifyHotel.setOnClickListener {
+            val frag = ModifyHotelFragment()
+
+            activity.supportFragmentManager.beginTransaction()
+                    .add(R.id.parentAdmin, frag)
+                    .addToBackStack(null)
+                    .commit()
+        }
         logoutB.setOnClickListener {
             fAuth.signOut()
             startActivity(Intent(getActivity(),StartUpActivity::class.java))

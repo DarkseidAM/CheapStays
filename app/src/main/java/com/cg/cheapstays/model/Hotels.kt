@@ -7,9 +7,10 @@ data class Hotels(
     val description : String,
     val price : Int,
     val rating : Double,
-    val imgPath : String
+    val imgPath : String,
+    val specialOffer : String
 ) {
-    constructor() : this ("","","",0,0.00,"")
+    constructor() : this ("","","",0,0.00,"","None")
     data class Rooms (
         val tariff : Double,
         val type : String

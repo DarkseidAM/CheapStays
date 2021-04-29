@@ -1,9 +1,10 @@
 package com.cg.cheapstays.view.admin
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
-import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -38,6 +39,7 @@ class AddHotelFragment : Fragment() {
     lateinit var storageRef : StorageReference
     private var filePath : Uri? = null
     private var imageUrl : Uri? = null
+    var imageUploaded = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,23 +74,29 @@ class AddHotelFragment : Fragment() {
         }
         addHotelBtn.setOnClickListener {
 
-            if(addHotelName.text.isNotEmpty() && addHotelAddress.text.isNotEmpty() && addHotelRooms.text.isNotEmpty() && addHotelDesc.text.isNotEmpty()){
+            if(addHotelName.text.isNotEmpty() && addHotelAddress.text.isNotEmpty() && addHotelRatings.text.isNotEmpty() && addHotelDesc.text.isNotEmpty()){
                 val db = fDatabase.reference.child("hotels")
                 val hotelid = db.push().key!!
 
                 Log.d("Upload","$imageUrl")
-                val hotel = Hotels(addHotelName.text.toString(),addHotelAddress.text.toString(),addHotelDesc.text.toString(),0,0.00,imageUrl.toString())
+                val hotel = Hotels(addHotelName.text.toString(),addHotelAddress.text.toString(),addHotelDesc.text.toString(),0,addHotelRatings.text.toString().toDouble(),imageUrl.toString(),addHotelOffer.text.toString())
                     listOf<Hotels.Rooms>()
                 db.child(hotelid).setValue(hotel).addOnCompleteListener{
                     if(it.isSuccessful){
-                        Toast.makeText(activity,"Added hotel successfully",Toast.LENGTH_LONG).show()
-                        val frag = AddRoomFragment()
-                        val bundle = Bundle()
-                        bundle.putString("hotelid",hotelid)
-                        frag.arguments = bundle
-                        activity?.supportFragmentManager?.beginTransaction()
-                                ?.replace(R.id.parentAdmin,frag)
-                                ?.commit()
+                        if(imageUploaded){
+                            addRoom(hotelid)
+                        }else{
+                            val builder = AlertDialog.Builder(activity)
+                            builder.setTitle("Confirmation")
+                            builder.setMessage("Do you want to continue without adding an image?")
+                            builder.setPositiveButton("Yes", DialogInterface.OnClickListener { _, _ ->
+                                addRoom(hotelid)
+                            })
+                            builder.setNegativeButton("No") { dialog, _ -> dialog.cancel()}//trailing lambda
+                            val dlg=builder.create()
+                            dlg.show()
+                        }
+
                     }
                     else{
                         Toast.makeText(activity,"${it.exception?.message}",Toast.LENGTH_LONG).show()
@@ -100,6 +108,18 @@ class AddHotelFragment : Fragment() {
             }
         }
     }
+
+    private fun addRoom(hotelid: String) {
+        Toast.makeText(activity, "Added hotel successfully", Toast.LENGTH_LONG).show()
+        val frag = AddRoomFragment()
+        val bundle = Bundle()
+        bundle.putString("hotelid", hotelid)
+        frag.arguments = bundle
+        activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.parentAdmin, frag)
+                ?.commit()
+    }
+
     private fun openGalleryForImage() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
@@ -125,6 +145,7 @@ class AddHotelFragment : Fragment() {
                 if(it.isSuccessful)
                     imageUrl = it.result
                 Log.d("Upload","$imageUrl")
+                imageUploaded = true
             }
 
         }
