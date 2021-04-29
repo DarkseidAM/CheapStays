@@ -26,7 +26,9 @@ class MyHotelsRecyclerViewAdapter(
         val item = values[position]
         holder.hotelName.text = item.name
         holder.address.text = item.address
-        Glide.with(holder.itemView.context).load(Uri.parse(item.imgPath)).into(holder.image)
+        holder.price.text = "₹${item.price.toString()}"
+        holder.rating.text = "${item.rating}"
+        Glide.with(holder.itemView.context).load(Uri.parse(item.imgPath)).placeholder(R.drawable.default_hotel).into(holder.image)
 
     }
 
@@ -36,6 +38,8 @@ class MyHotelsRecyclerViewAdapter(
         val hotelName : TextView = view.findViewById(R.id.hotelNameT)
         val image : ImageView = view.findViewById(R.id.imageView6)
         val address : TextView = view.findViewById(R.id.hotelAddressT)
+        val price : TextView = view.findViewById(R.id.hotelPriceT)
+        val rating : TextView = view.findViewById(R.id.hotelRatingT)
 
     }
 }

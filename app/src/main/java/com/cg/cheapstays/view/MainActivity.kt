@@ -3,6 +3,7 @@ package com.cg.cheapstays.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import com.cg.cheapstays.R
 import com.cg.cheapstays.model.Users
 import com.cg.cheapstays.view.admin.AdminActivity
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         val fAuth = FirebaseAuth.getInstance()
         val fDatabase = FirebaseDatabase.getInstance()
         if(fAuth.currentUser != null){
+            Toast.makeText(this,"Automatic Signing you in...",Toast.LENGTH_LONG).show()
             val id = fAuth.currentUser?.uid!!
             val ref =  fDatabase.reference.child("users")
             CoroutineScope(Dispatchers.IO).launch {
