@@ -16,6 +16,9 @@ import com.cg.cheapstays.R
 import com.cg.cheapstays.model.Hotels
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_modify_hotel.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -53,36 +56,40 @@ class ModifyHotelFragment : Fragment(), AdapterView.OnItemSelectedListener {
             savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-
+//        spinnerAdapter = ArrayAdapter(activity?.applicationContext!!, android.R.layout.simple_spinner_dropdown_item, mutableListOf())
         return inflater.inflate(R.layout.fragment_modify_hotel, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        dRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    hotelList.clear()
-                    hotelNames.clear()
-                    hotelId.clear()
-                    for (child in snapshot.children) {
-                        val hotel = child.getValue(Hotels::class.java)
-                        hotelId.add(child.key.toString())
-                        hotelList.add(hotel!!)
-                        hotelNames.add(hotel.name)
+                dRef.addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (snapshot.exists()) {
+                            hotelList.clear()
+                            hotelNames.clear()
+                            hotelId.clear()
+                            for (child in snapshot.children) {
+                                val hotel = child.getValue(Hotels::class.java)
+                                hotelId.add(child.key.toString())
+                                hotelList.add(hotel!!)
+                                hotelNames.add(hotel.name)
+                            }
+                        }
+                        Log.d("HotelId","$hotelId")
+                        dRef.removeEventListener(this)
+                        spinnerAdapter = ArrayAdapter(activity?.applicationContext!!, android.R.layout.simple_spinner_dropdown_item, hotelNames)
+                        spinnerModidyHotel.adapter = spinnerAdapter
                     }
-                }
-                Log.d("HotelId","$hotelId")
-                spinnerAdapter = ArrayAdapter(activity?.applicationContext!!, android.R.layout.simple_spinner_dropdown_item, hotelNames)
-                spinnerModidyHotel.adapter = spinnerAdapter
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(activity, "No Hotels Added", Toast.LENGTH_LONG).show()
-            }
+                    override fun onCancelled(error: DatabaseError) {
+                        Toast.makeText(activity, "No Hotels Added", Toast.LENGTH_LONG).show()
+                    }
 
-        })
+                })
+
+
+
         spinnerModidyHotel.onItemSelectedListener = this
 
         editHotelBtn.setOnClickListener {
@@ -110,8 +117,11 @@ class ModifyHotelFragment : Fragment(), AdapterView.OnItemSelectedListener {
         modifyHotelRoomBtn.setOnClickListener {
             val frag = ModifyRoomFragment()
             val bundle = Bundle()
+            frag.arguments = bundle
             bundle.putString("hotelid",hotelId[currentPosition])
+
             activity?.supportFragmentManager?.beginTransaction()
+                    ?.remove(this)
                     ?.replace(R.id.parentAdmin,frag)
                     ?.commit()
         }

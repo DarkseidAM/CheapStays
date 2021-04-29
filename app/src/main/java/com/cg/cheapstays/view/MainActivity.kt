@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         val fAuth = FirebaseAuth.getInstance()
         val fDatabase = FirebaseDatabase.getInstance()
         if(fAuth.currentUser != null){
-            Toast.makeText(this,"Automatic Signing you in...",Toast.LENGTH_LONG).show()
+            Toast.makeText(this,"Automatically Signing you in...",Toast.LENGTH_LONG).show()
             val id = fAuth.currentUser?.uid!!
             val ref =  fDatabase.reference.child("users")
             CoroutineScope(Dispatchers.IO).launch {
