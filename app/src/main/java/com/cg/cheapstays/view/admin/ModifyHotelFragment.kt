@@ -108,7 +108,12 @@ class ModifyHotelFragment : Fragment(), AdapterView.OnItemSelectedListener {
             dlg.show()
         }
         modifyHotelRoomBtn.setOnClickListener {
-
+            val frag = ModifyRoomFragment()
+            val bundle = Bundle()
+            bundle.putString("hotelid",hotelId[currentPosition])
+            activity?.supportFragmentManager?.beginTransaction()
+                    ?.replace(R.id.parentAdmin,frag)
+                    ?.commit()
         }
 
     }
