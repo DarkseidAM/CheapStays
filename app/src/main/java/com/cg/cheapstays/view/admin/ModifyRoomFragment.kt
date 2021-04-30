@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import com.cg.cheapstays.R
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_modify_room.*
@@ -31,6 +32,7 @@ class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
     lateinit var dRef: DatabaseReference
     lateinit var roomId : MutableList<String>
     lateinit var oldPrice : String
+    lateinit var listener: ValueEventListener
     var singlePrice = 0
     var doublePrice = 0
     var singleRoomNo = 0
@@ -61,24 +63,22 @@ class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val listener = dRef.addValueEventListener(object : ValueEventListener{
+        listener = dRef.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()){
                     oldPrice = snapshot.child("price").value.toString()
                     currentRoomHotel.setText(snapshot.child("name").value.toString())
-                    for(childs in snapshot.child("rooms").children){
-                        roomId.add(childs.key.toString())
-                        if(childs.child("type").value.toString() == "Single"){
-                            ++singleRoomNo
-                            singlePrice = childs.child("tariff").value.toString().toInt()
-                        }else{
-                            ++doubleRoomNo
-                            doublePrice = childs.child("tariff").value.toString().toInt()
-                        }
+                    if(snapshot.child("rooms").child("single").exists()){
+                        singleRoomNo = snapshot.child("rooms").child("single").child("noOfRooms").value.toString().toInt()
+                        singlePrice = snapshot.child("rooms").child("single").child("tariff").value.toString().toInt()
+                    }
+                    if(snapshot.child("rooms").child("double").exists()){
+                        doubleRoomNo = snapshot.child("rooms").child("double").child("noOfRooms").value.toString().toInt()
+                        doublePrice = snapshot.child("rooms").child("single").child("tariff").value.toString().toInt()
                     }
                     editRoomType.adapter = ArrayAdapter<String>(activity?.applicationContext!!,android.R.layout.simple_spinner_dropdown_item, arrayOf<String>("Single","Double"))
-                    Log.d("Rooms","$roomId")
-                    dRef.removeEventListener(this)
+                    Log.d("Rooms","$singlePrice,$singleRoomNo,$doublePrice,$doubleRoomNo")
+//                    dRef.removeEventListener(this)
 
                 }
             }
@@ -89,25 +89,27 @@ class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
         editRoomType.onItemSelectedListener = this
         editRoomBtn.setOnClickListener {
-            val roomType = editRoomType.selectedItem.toString()
+            val roomType = editRoomType.selectedItem.toString().toLowerCase()
             val price = editRoomTariff.text.toString()
-            for(id in roomId){
-                dRef.child("rooms").child(id).addListenerForSingleValueEvent(object:ValueEventListener{
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        if(snapshot.exists()){
-                            if(snapshot.child("type").value.toString() == roomType) dRef.child("rooms").child(id).child("tariff").setValue(price.toString())
-                            if(price.toInt() < oldPrice.toInt())    dRef.child("price").setValue(price.toInt())
-                        }
-                        dRef.removeEventListener(this)
+
+            dRef.child("rooms").child(roomType).addValueEventListener(object:ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if(snapshot.exists()){
+                        dRef.child("rooms").child(roomType).child("tariff").setValue(price.toString())
+                        if(price.toInt() < oldPrice.toInt())    dRef.child("price").setValue(price.toInt())
+                    }else{
+                        Toast.makeText(activity,"$snapshot",Toast.LENGTH_LONG).show()
                     }
-
-                    override fun onCancelled(error: DatabaseError) {
-                        //
-                    }
-
-                })
-            }
-
+                }
+                override fun onCancelled(error: DatabaseError) {
+                    //
+                }
+            })
+        }
+        deleteRoomsBtn.setOnClickListener {
+            val newRoomNo = editRoomsNo.text.toString().toInt()
+            val roomType = editRoomType.selectedItem.toString().toLowerCase()
+            dRef.child("rooms").child(roomType).child("noOfRooms").setValue(newRoomNo)
         }
 
     }
@@ -134,10 +136,12 @@ class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         if(position==0) {
+            editRoomTariff.setText("")
             editRoomTariff.setText(singlePrice.toString())
             editRoomsNo.setText(singleRoomNo.toString())
         }
         else    {
+            editRoomTariff.setText("")
             editRoomTariff.setText(doublePrice.toString())
             editRoomsNo.setText(doubleRoomNo.toString())
         }
@@ -145,5 +149,10 @@ class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
         //
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        dRef.removeEventListener(listener)
     }
 }

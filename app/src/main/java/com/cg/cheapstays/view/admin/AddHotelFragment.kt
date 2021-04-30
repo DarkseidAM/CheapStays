@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.cg.cheapstays.R
 import com.cg.cheapstays.model.Hotels
+import com.cg.cheapstays.model.Rooms
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -80,7 +81,7 @@ class AddHotelFragment : Fragment() {
 
                 Log.d("Upload","$imageUrl")
                 val hotel = Hotels(addHotelName.text.toString(),addHotelAddress.text.toString(),addHotelDesc.text.toString(),0,addHotelRatings.text.toString().toDouble(),imageUrl.toString(),addHotelOffer.text.toString())
-                    listOf<Hotels.Rooms>()
+                    listOf<Rooms>()
                 db.child(hotelid).setValue(hotel).addOnCompleteListener{
                     if(it.isSuccessful){
                         if(imageUploaded){

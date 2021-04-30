@@ -8,7 +8,7 @@
     android:layout_height="wrap_content"
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
-    android:layout_marginBottom="175dp"
+    android:layout_marginBottom="100dp"
     app:layoutManager="LinearLayoutManager"
     tools:context=".view.ui.home.HotelsFragment"
     tools:listitem="@layout/fragment_hotel_list" />

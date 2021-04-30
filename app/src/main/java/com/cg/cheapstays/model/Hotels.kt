@@ -11,11 +11,23 @@ data class Hotels(
     val specialOffer : String
 ) {
     constructor() : this ("","","",0,0.00,"","None")
-    data class Rooms (
-        val tariff : Double,
-        val type : String
-    ){
-        constructor() : this(0.00,"")
-    }
 
+}
+data class Rooms (
+        val single : Single,
+        val double : Doubles
+){
+    constructor() : this(Single(0,0), Doubles(0,0))
+}
+data class Single(
+        val tariff : Int,
+        val noOfRooms : Int
+){
+    constructor() : this(0,0)
+}
+data class Doubles(
+        val tariff : Int,
+        val noOfRooms : Int
+){
+    constructor() : this(0,0)
 }

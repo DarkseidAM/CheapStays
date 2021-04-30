@@ -11,12 +11,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import com.cg.cheapstays.R
+import com.cg.cheapstays.model.Doubles
 import com.cg.cheapstays.model.Hotels
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.cg.cheapstays.model.Single
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_add_room.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.*
+import kotlin.math.min
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,6 +42,8 @@ class AddRoomFragment : Fragment() {
     lateinit var hotelid : String
     lateinit var fDatabase: FirebaseDatabase
     lateinit var ref : DatabaseReference
+    var sp = Int.MAX_VALUE
+    var dp = Int.MAX_VALUE
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,14 +77,61 @@ class AddRoomFragment : Fragment() {
 
         addRoomBtn.setOnClickListener {
             if(roomPrice.text.isNotEmpty()){
-                for(i in 1..addNoOfBeds.selectedItem.toString().toInt()){
-                    val room = Hotels.Rooms(roomPrice.text.toString().toDouble(), addRoomType.selectedItem.toString())
-                    ref.child(UUID.randomUUID().toString()).setValue(room)
-                    Log.d("Rooms","$ref")
-                    price = Math.min(price,roomPrice.text.toString().toDouble())
+                var noOfRooms = addNoOfBeds.selectedItem.toString().toInt()
+                var price = roomPrice.text.toString().toInt()
+                val roomType = addRoomType.selectedItem.toString().toLowerCase(Locale.ROOT)
+                var oldPrice = Int.MAX_VALUE
+                CoroutineScope(Dispatchers.IO).launch {
+                    ref.addListenerForSingleValueEvent(object:ValueEventListener{
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            if(snapshot.child(roomType).exists()){
+                                val rooms = snapshot.child(roomType).child("noOfRooms").value.toString().toInt()
+                                Log.d("OldPrice","$rooms")
+                                noOfRooms+=rooms
+                            }
+
+                            if(roomType=="single")  {
+                                ref.child(roomType).setValue(Single(price,noOfRooms))
+                            }
+                            else    {
+                                ref.child(roomType).setValue(Doubles(price,noOfRooms))
+                            }
+
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            //
+                        }
+
+                    })
+
+                    delay(1000)
+
+                    ref.addListenerForSingleValueEvent(object:ValueEventListener{
+                        override fun onDataChange(snapshot: DataSnapshot) {
+
+                            if(snapshot.child("single").exists())   {
+                                sp = snapshot.child("single").child("tariff").value.toString().toInt()
+                                Log.d("Pricess","$sp $dp")
+                                ref.parent?.child("price")?.setValue(min(sp,dp))
+                            }
+                            if(snapshot.child("double").exists())   {
+                                dp = snapshot.child("double").child("tariff").value.toString().toInt()
+                                Log.d("Pricess","$sp $dp")
+                                ref.parent?.child("price")?.setValue(min(sp,dp))
+                            }
+                        }
+                        override fun onCancelled(error: DatabaseError) {
+                            //
+                        }
+
+                    })
                 }
-                ref.parent?.child("price")?.setValue(price)
+
+
                 roomReturnBtn.visibility = View.VISIBLE
+            }else{
+                Toast.makeText(activity,"Please enter the tariff details",Toast.LENGTH_LONG).show()
             }
         }
         roomReturnBtn.setOnClickListener {
