@@ -78,7 +78,7 @@ class AddRoomFragment : Fragment() {
         addRoomBtn.setOnClickListener {
             if(roomPrice.text.isNotEmpty()){
                 var noOfRooms = addNoOfBeds.selectedItem.toString().toInt()
-                var price = roomPrice.text.toString().toInt()
+                var price = roomPrice.text.toString()
                 val roomType = addRoomType.selectedItem.toString().toLowerCase(Locale.ROOT)
                 var oldPrice = Int.MAX_VALUE
                 CoroutineScope(Dispatchers.IO).launch {

@@ -24,12 +24,14 @@ class HotelsFragment : Fragment() {
     private var columnCount = 1
     lateinit var fDatabase: FirebaseDatabase
     lateinit var hotelList : MutableList<Hotels>
+    lateinit var hotelId : MutableList<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         fDatabase = FirebaseDatabase.getInstance()
         hotelList = mutableListOf()
+        hotelId = mutableListOf()
         arguments?.let {
             columnCount = it.getInt(ARG_COLUMN_COUNT)
         }
@@ -44,15 +46,27 @@ class HotelsFragment : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()){
                     hotelList.clear()
+                    hotelId.clear()
                     for(child in snapshot.children){
                         val hotel = child.getValue(Hotels::class.java)
                         hotelList.add(hotel!!)
+                        hotelId.add(child.key.toString())
 //                        Log.d("List","List - $hotelList,$hotel")
                     }
                     //Sets adapter
                     if(view is RecyclerView){
                         Log.d("List","List - $hotelList")
-                        view.adapter = MyHotelsRecyclerViewAdapter(hotelList)
+                        view.adapter = MyHotelsRecyclerViewAdapter(hotelList){
+                            val bundle = Bundle()
+                            bundle.putString("hotelid",hotelId[it])
+                            val frag = SelectedHotelFragment()
+                            frag.arguments = bundle
+                            activity?.supportFragmentManager?.beginTransaction()
+                                ?.remove(HotelsFragment())
+                                ?.replace(R.id.parent_home_linear,frag)
+                                ?.addToBackStack(null)
+                                ?.commit()
+                        }
                     }
                 }
 

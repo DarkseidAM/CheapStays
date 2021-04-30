@@ -5,7 +5,7 @@
     android:id="@+id/parent_constraint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#BEFF0000"
+    android:background="#DDD"
     tools:context=".view.ui.home.HomeFragment">
 
     <LinearLayout
@@ -51,11 +51,10 @@
     <LinearLayout
         android:id="@+id/parent_home_linear"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_height="0dp"
         android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"></LinearLayout>

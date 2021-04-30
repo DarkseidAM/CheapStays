@@ -12,8 +12,7 @@ import com.cg.cheapstays.R
 import com.cg.cheapstays.model.Hotels
 
 
-class MyHotelsRecyclerViewAdapter(
-        private val values: List<Hotels>)
+class MyHotelsRecyclerViewAdapter(private val values: List<Hotels>, var listener : (position:Int)->(Unit))
     : RecyclerView.Adapter<MyHotelsRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -29,6 +28,10 @@ class MyHotelsRecyclerViewAdapter(
         holder.price.text = "₹${item.price.toString()}"
         holder.rating.text = "${item.rating}"
         Glide.with(holder.itemView.context).load(Uri.parse(item.imgPath)).placeholder(R.drawable.default_hotel).into(holder.image)
+
+        holder.itemView.setOnClickListener {
+            listener(position)
+        }
 
     }
 

@@ -17,17 +17,17 @@ data class Rooms (
         val single : Single,
         val double : Doubles
 ){
-    constructor() : this(Single(0,0), Doubles(0,0))
+    constructor() : this(Single("",0), Doubles("",0))
 }
 data class Single(
-        val tariff : Int,
+        val tariff : String,
         val noOfRooms : Int
 ){
-    constructor() : this(0,0)
+    constructor() : this("",0)
 }
 data class Doubles(
-        val tariff : Int,
+        val tariff : String,
         val noOfRooms : Int
 ){
-    constructor() : this(0,0)
+    constructor() : this("",0)
 }
