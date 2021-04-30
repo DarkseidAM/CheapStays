@@ -9,13 +9,33 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.cg.cheapstays.R
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class UserActivity : AppCompatActivity() {
+
+    lateinit var fDatabase : FirebaseDatabase
+    lateinit var fAuth : FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
+        fDatabase = FirebaseDatabase.getInstance()
+        fAuth = FirebaseAuth.getInstance()
+
+        fDatabase.reference.child("users").child(fAuth.currentUser?.uid.toString()).addListenerForSingleValueEvent(object:ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                USER_TYPE = snapshot.child("userType").value.toString()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                //
+            }
+        })
 
         navView.setOnNavigationItemReselectedListener {
             Log.d("Reselect","Reselected")

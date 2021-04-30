@@ -9,12 +9,15 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
+import android.widget.Toast
 import com.cg.cheapstays.R
 import com.cg.cheapstays.model.Hotels
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import kotlinx.android.synthetic.main.fragment_home.*
 
 /**
  * A fragment representing a list of Items.
@@ -24,7 +27,9 @@ class HotelsFragment : Fragment() {
     private var columnCount = 1
     lateinit var fDatabase: FirebaseDatabase
     lateinit var hotelList : MutableList<Hotels>
+    lateinit var filteredList : MutableList<Hotels>
     lateinit var hotelId : MutableList<String>
+    lateinit var adapter: MyHotelsRecyclerViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,14 +37,27 @@ class HotelsFragment : Fragment() {
         fDatabase = FirebaseDatabase.getInstance()
         hotelList = mutableListOf()
         hotelId = mutableListOf()
+        filteredList = mutableListOf<Hotels>()
         arguments?.let {
             columnCount = it.getInt(ARG_COLUMN_COUNT)
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        filteredList.clear()
+        activity?.findViewById<SearchView>(R.id.userSearchView)?.visibility = View.VISIBLE
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_hotel_lists, container, false)
+
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val ref = fDatabase.reference.child("hotels")
         ref.addValueEventListener(object:ValueEventListener{
@@ -47,6 +65,7 @@ class HotelsFragment : Fragment() {
                 if(snapshot.exists()){
                     hotelList.clear()
                     hotelId.clear()
+
                     for(child in snapshot.children){
                         val hotel = child.getValue(Hotels::class.java)
                         hotelList.add(hotel!!)
@@ -56,17 +75,24 @@ class HotelsFragment : Fragment() {
                     //Sets adapter
                     if(view is RecyclerView){
                         Log.d("List","List - $hotelList")
-                        view.adapter = MyHotelsRecyclerViewAdapter(hotelList){
+                        adapter = MyHotelsRecyclerViewAdapter(hotelList){
+                            Log.d("Listener","Happened")
                             val bundle = Bundle()
-                            bundle.putString("hotelid",hotelId[it])
+                            if(filteredList.isNotEmpty())
+                                bundle.putString("hotelid",hotelId[hotelList.indexOf(filteredList[it])])
+                            else
+                                bundle.putString("hotelid",hotelId[it])
                             val frag = SelectedHotelFragment()
                             frag.arguments = bundle
+                            activity?.findViewById<SearchView>(R.id.userSearchView)?.visibility = View.GONE
                             activity?.supportFragmentManager?.beginTransaction()
                                 ?.remove(HotelsFragment())
                                 ?.replace(R.id.parent_home_linear,frag)
                                 ?.addToBackStack(null)
                                 ?.commit()
                         }
+                        view.adapter = adapter
+
                     }
                 }
 
@@ -78,11 +104,29 @@ class HotelsFragment : Fragment() {
 
         })
 
+        val sv = activity?.findViewById<SearchView>(R.id.userSearchView)
 
+        sv?.setOnQueryTextListener(object:SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                //
+                return false
+            }
 
-        return view
+            override fun onQueryTextChange(newText: String?): Boolean {
+
+                filteredList = hotelList.filter {
+                    it.name.toLowerCase().contains(newText!!)
+                }.toMutableList()
+
+                if(filteredList.isNotEmpty())   adapter.filter(filteredList)
+                Log.d("Listener","$filteredList")
+
+                return false
+            }
+
+        })
+
     }
-
 
 
     companion object {

@@ -1,6 +1,7 @@
 package com.cg.cheapstays.view.ui.home
 
 import android.net.Uri
+import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -10,10 +11,13 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.cg.cheapstays.R
 import com.cg.cheapstays.model.Hotels
+import com.cg.cheapstays.view.USER_TYPE
+import com.google.firebase.auth.FirebaseAuth
 
 
-class MyHotelsRecyclerViewAdapter(private val values: List<Hotels>, var listener : (position:Int)->(Unit))
+class MyHotelsRecyclerViewAdapter(private var values: List<Hotels>, var listener : (position:Int)->(Unit))
     : RecyclerView.Adapter<MyHotelsRecyclerViewAdapter.ViewHolder>() {
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -30,7 +34,9 @@ class MyHotelsRecyclerViewAdapter(private val values: List<Hotels>, var listener
         Glide.with(holder.itemView.context).load(Uri.parse(item.imgPath)).placeholder(R.drawable.default_hotel).into(holder.image)
 
         holder.itemView.setOnClickListener {
-            listener(position)
+
+            if(USER_TYPE!="admin")
+                listener(position)
         }
 
     }
@@ -45,4 +51,10 @@ class MyHotelsRecyclerViewAdapter(private val values: List<Hotels>, var listener
         val rating : TextView = view.findViewById(R.id.hotelRatingT)
 
     }
+
+    fun filter(filteredValue : List<Hotels>){
+        values = filteredValue
+        notifyDataSetChanged()
+    }
+
 }
