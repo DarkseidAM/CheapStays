@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.fragment_home.*
+import java.util.*
 
 /**
  * A fragment representing a list of Items.
@@ -47,6 +48,7 @@ class HotelsFragment : Fragment() {
         super.onResume()
         filteredList.clear()
         activity?.findViewById<SearchView>(R.id.userSearchView)?.visibility = View.VISIBLE
+        activity?.findViewById<SearchView>(R.id.userSearchView)?.setQuery("",false)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -58,7 +60,6 @@ class HotelsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val ref = fDatabase.reference.child("hotels")
         ref.addValueEventListener(object:ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -85,15 +86,16 @@ class HotelsFragment : Fragment() {
                             val frag = SelectedHotelFragment()
                             frag.arguments = bundle
                             activity?.findViewById<SearchView>(R.id.userSearchView)?.visibility = View.GONE
+                            activity?.findViewById<SearchView>(R.id.userSearchView)?.clearFocus()
                             activity?.supportFragmentManager?.beginTransaction()
                                 ?.remove(HotelsFragment())
                                 ?.replace(R.id.parent_home_linear,frag)
-                                ?.addToBackStack(null)
                                 ?.commit()
                         }
                         view.adapter = adapter
 
                     }
+                    ref.removeEventListener(this)
                 }
 
             }
@@ -112,10 +114,11 @@ class HotelsFragment : Fragment() {
                 return false
             }
 
+
             override fun onQueryTextChange(newText: String?): Boolean {
 
                 filteredList = hotelList.filter {
-                    it.name.toLowerCase().contains(newText!!)
+                    it.name.toLowerCase(Locale.getDefault()).contains(newText!!)
                 }.toMutableList()
 
                 if(filteredList.isNotEmpty())   adapter.filter(filteredList)

@@ -141,6 +141,18 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/addRoomsBtn2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@android:color/holo_blue_bright"
+        android:text="Add Rooms"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:visibility="gone"
+        app:cornerRadius="15dp" />
+
+    <Button
         android:id="@+id/deleteRoomsBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

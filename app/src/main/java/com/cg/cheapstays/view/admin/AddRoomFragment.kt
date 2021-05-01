@@ -105,7 +105,7 @@ class AddRoomFragment : Fragment() {
 
                     })
 
-                    delay(1000)
+                    delay(500)
 
                     ref.addListenerForSingleValueEvent(object:ValueEventListener{
                         override fun onDataChange(snapshot: DataSnapshot) {

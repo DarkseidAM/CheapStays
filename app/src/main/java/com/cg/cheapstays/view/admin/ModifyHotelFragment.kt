@@ -63,7 +63,7 @@ class ModifyHotelFragment : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-                dRef.addValueEventListener(object : ValueEventListener {
+                dRef.addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         if (snapshot.exists()) {
                             hotelList.clear()
@@ -77,7 +77,6 @@ class ModifyHotelFragment : Fragment(), AdapterView.OnItemSelectedListener {
                             }
                         }
                         Log.d("HotelId","$hotelId")
-                        dRef.removeEventListener(this)
                         spinnerAdapter = ArrayAdapter(activity?.applicationContext!!, android.R.layout.simple_spinner_dropdown_item, hotelNames)
                         spinnerModidyHotel.adapter = spinnerAdapter
                     }

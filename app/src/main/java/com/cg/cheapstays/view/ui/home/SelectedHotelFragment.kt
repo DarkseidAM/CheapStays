@@ -7,6 +7,7 @@ import android.app.DatePickerDialog.OnDateSetListener
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -89,6 +90,7 @@ class SelectedHotelFragment : Fragment() {
                     hotelDescT.setText(hotel?.description)
                     hotelOfferT.setText(hotel?.specialOffer)
                 }
+                dRef.removeEventListener(this)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -126,5 +128,23 @@ class SelectedHotelFragment : Fragment() {
 
         }
 
-
+    override fun onResume() {
+        super.onResume()
+        view?.isFocusableInTouchMode =true
+        view?.requestFocus()
+        view?.setOnKeyListener { v, keyCode, event ->
+            if(keyCode == KeyEvent.KEYCODE_BACK)
+            {
+                val frag = HotelsFragment()
+                activity?.supportFragmentManager?.beginTransaction()
+                        ?.replace(R.id.parent_home_linear,frag)
+                        ?.commit()
+                return@setOnKeyListener true
+            }
+            else{
+                return@setOnKeyListener false
+            }
+        }
     }
+
+}

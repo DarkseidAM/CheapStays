@@ -12,6 +12,11 @@ import android.widget.Toast
 import com.cg.cheapstays.R
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_modify_room.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlin.math.min
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -48,6 +53,14 @@ class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        deleteRoomsBtn.visibility = View.VISIBLE
+        editRoomBtn.visibility = View.VISIBLE
+        editRoomTariff.isFocusable = true
+        editRoomsNo.isFocusable = true
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -72,9 +85,15 @@ class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
                         singleRoomNo = snapshot.child("rooms").child("single").child("noOfRooms").value.toString().toInt()
                         singlePrice = snapshot.child("rooms").child("single").child("tariff").value.toString().toInt()
                     }
+                    else{
+                        onNullRooms()
+                    }
                     if(snapshot.child("rooms").child("double").exists()){
                         doubleRoomNo = snapshot.child("rooms").child("double").child("noOfRooms").value.toString().toInt()
-                        doublePrice = snapshot.child("rooms").child("single").child("tariff").value.toString().toInt()
+                        doublePrice = snapshot.child("rooms").child("double").child("tariff").value.toString().toInt()
+                    }
+                    else{
+                        onNullRooms()
                     }
                     editRoomType.adapter = ArrayAdapter<String>(activity?.applicationContext!!,android.R.layout.simple_spinner_dropdown_item, arrayOf<String>("Single","Double"))
                     Log.d("Rooms","$singlePrice,$singleRoomNo,$doublePrice,$doubleRoomNo")
@@ -92,19 +111,23 @@ class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
             val roomType = editRoomType.selectedItem.toString().toLowerCase()
             val price = editRoomTariff.text.toString()
 
-            dRef.child("rooms").child(roomType).addValueEventListener(object:ValueEventListener{
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if(snapshot.exists()){
-                        dRef.child("rooms").child(roomType).child("tariff").setValue(price.toString())
-                        if(price.toInt() < oldPrice.toInt())    dRef.child("price").setValue(price.toInt())
-                    }else{
-                        Toast.makeText(activity,"$snapshot",Toast.LENGTH_LONG).show()
+            CoroutineScope(Dispatchers.IO).launch {
+                dRef.child("rooms").child(roomType).addListenerForSingleValueEvent(object:ValueEventListener{
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if(snapshot.exists()){
+                            dRef.child("rooms").child(roomType).child("tariff").setValue(price)
+                        }else{
+                            Toast.makeText(activity,"$snapshot",Toast.LENGTH_LONG).show()
+                        }
                     }
-                }
-                override fun onCancelled(error: DatabaseError) {
-                    //
-                }
-            })
+                    override fun onCancelled(error: DatabaseError) {
+                        //
+                    }
+                })
+                delay(500)
+                dRef.child("price").setValue(min(singlePrice,doublePrice))
+            }
+
         }
         deleteRoomsBtn.setOnClickListener {
             val newRoomNo = editRoomsNo.text.toString().toInt()
@@ -112,6 +135,25 @@ class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
             dRef.child("rooms").child(roomType).child("noOfRooms").setValue(newRoomNo)
         }
 
+        addRoomsBtn2.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putString("hotelid",hotelid)
+            val frag = AddRoomFragment()
+            frag.arguments = bundle
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.remove(this)
+                ?.replace(R.id.parentAdmin,frag)
+                ?.commit()
+        }
+
+    }
+
+    private fun onNullRooms() {
+        deleteRoomsBtn.visibility = View.GONE
+        editRoomBtn.visibility = View.GONE
+        addRoomsBtn2.visibility = View.VISIBLE
+        editRoomTariff.isFocusable = false
+        editRoomsNo.isFocusable = false
     }
 
     companion object {
