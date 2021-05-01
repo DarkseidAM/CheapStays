@@ -50,7 +50,7 @@ class NotificationsFragment : Fragment() {
                 val user = snapshot.child(id).getValue(Users::class.java)!!
                 settingsNameE.setText(user.name)
                 settingsEmailE.setText(user.email)
-                settingsPhoneE.setText("")//TODO add phone to user model
+                settingsPhoneE.setText(user.phone)//TODO add phone to user model
             }
             override fun onCancelled(error: DatabaseError) {
             }

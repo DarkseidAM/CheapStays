@@ -48,7 +48,7 @@ class SignUpActivity : AppCompatActivity() {
     private fun doSignUp() {
         fAuth.createUserWithEmailAndPassword(emailE.text.toString(),passwordE.text.toString()).addOnCompleteListener{
             if(it.isSuccessful){
-                val users = Users(nameE.text.toString(),emailE.text.toString(),type)
+                val users = Users(nameE.text.toString(),emailE.text.toString(),type,"")
                 val id = it.result?.user?.uid
                 fDatabase.reference.child("users").child(id!!).setValue(users)
                 Toast.makeText(this,"Registration Successful",Toast.LENGTH_LONG).show()

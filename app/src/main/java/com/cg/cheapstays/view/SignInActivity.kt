@@ -169,7 +169,7 @@ class SignInActivity : AppCompatActivity(), SignIn.View {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("Login", "signInWithCredential:success")
                     val user = fAuth.currentUser
-                    val users = Users(user?.displayName!!,user.email!!,type)
+                    val users = Users(user?.displayName!!,user.email!!,type,"")
                     fDatabase.reference.child("users").child(user.uid).setValue(users)
                     updateUI(user)
 
