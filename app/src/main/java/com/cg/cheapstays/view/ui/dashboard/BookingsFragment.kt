@@ -17,9 +17,11 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-/**
- * A fragment representing a list of Items.
- */
+import kotlinx.android.synthetic.main.fragment_bookings_list.*
+import java.text.SimpleDateFormat
+import java.util.*
+
+
 class BookingsFragment : Fragment() {
     private var columnCount = 1
     lateinit var fDatabase: FirebaseDatabase
@@ -35,7 +37,7 @@ class BookingsFragment : Fragment() {
         fAuth = FirebaseAuth.getInstance()
 
         arguments?.let {
-            columnCount = it.getInt(ARG_COLUMN_COUNT)
+
         }
     }
 
@@ -70,14 +72,42 @@ class BookingsFragment : Fragment() {
                         bookingList.add(bookings)
                         bookingId.add(child.key.toString())
                         Log.d("Bookings","$bookingList")
-                        //Sets adapter
-                        if(view is RecyclerView){
-                            view.adapter = MyBookingsRecyclerViewAdapter(bookingList)
+
+                    }
+                    if(view is RecyclerView){
+                        view.adapter = MyBookingsRecyclerViewAdapter(bookingList){
+                            val bookings = bookingList[it]
+                            fDatabase.reference.child("bookings").child(bookingId[it]).removeValue()
+                            view.adapter?.notifyDataSetChanged()
+                            var time = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).parse(bookings.date)?.time
+                            time = time!! + (5.5*60*60*1000).toInt()
+                            val bookedRoomType = if(bookings.roomType == "single")  "singleBooked"  else    "doubleBooked"
+                            val dRef = fDatabase.reference.child("hotels").child(bookings.hotelId).child("rooms")
+                                    .child(bookedRoomType).child((time).toString())
+                            dRef.addListenerForSingleValueEvent(object : ValueEventListener{
+                                override fun onDataChange(snapshot: DataSnapshot) {
+                                    Log.d("NewRooms","$dRef")
+                                    if(snapshot.exists()){
+                                        val current = snapshot.child("bookedRooms").value.toString().toInt()
+                                        val new = current - bookings.noOfRooms
+                                        Log.d("NewRooms","$new")
+                                        fDatabase.reference.child("hotels").child(bookings.hotelId).child("rooms")
+                                                .child(bookedRoomType).child(time.toString())
+                                                .updateChildren(mutableMapOf("bookedRooms" to new as Any))
+                                    }
+                                }
+
+                                override fun onCancelled(error: DatabaseError) {
+                                    //
+                                }
+                            })
+
                         }
                     }
                 }
                 else{
-                    Toast.makeText(activity,"No Bookings",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(view.context,"No Bookings",Toast.LENGTH_SHORT).show()
+                    view.findViewById<RecyclerView>(R.id.bookings_list2).adapter?.notifyDataSetChanged()
                 }
             }
             override fun onCancelled(error: DatabaseError) {
@@ -86,16 +116,5 @@ class BookingsFragment : Fragment() {
         })
     }
 
-    companion object {
-        // TODO: Customize parameter argument names
-        const val ARG_COLUMN_COUNT = "column-count"
-        // TODO: Customize parameter initialization
-        @JvmStatic
-        fun newInstance(columnCount: Int) =
-            BookingsFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(ARG_COLUMN_COUNT, columnCount)
-                }
-            }
-    }
+
 }
