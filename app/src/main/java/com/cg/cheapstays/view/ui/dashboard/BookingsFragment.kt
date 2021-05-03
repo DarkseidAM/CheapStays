@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.cg.cheapstays.R
 import com.cg.cheapstays.model.Bookings
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -108,6 +109,8 @@ class BookingsFragment : Fragment() {
                 else{
                     Toast.makeText(view.context,"No Bookings",Toast.LENGTH_SHORT).show()
                     view.findViewById<RecyclerView>(R.id.bookings_list2).adapter?.notifyDataSetChanged()
+                    activity?.findViewById<BottomNavigationView>(R.id.nav_view)?.selectedItemId = R.id.navigation_home
+                    activity?.findViewById<BottomNavigationView>(R.id.nav_view)?.selectedItemId = R.id.navigation_dashboard
                 }
             }
             override fun onCancelled(error: DatabaseError) {

@@ -142,7 +142,7 @@ class SelectedHotelFragment : Fragment(), AdapterView.OnItemSelectedListener {
         }
         book_room_type.onItemSelectedListener = this
 
-        book_from_date_btn.setOnClickListener {
+        book_date_btn.setOnClickListener {
 
             activity?.supportFragmentManager?.let {frag ->
                 val picker = MaterialDatePicker.Builder.datePicker().build()

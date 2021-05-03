@@ -51,6 +51,9 @@ class SignUpActivity : AppCompatActivity() {
                 val users = Users(nameE.text.toString(),emailE.text.toString(),type,"")
                 val id = it.result?.user?.uid
                 fDatabase.reference.child("users").child(id!!).setValue(users)
+                if(type=="employee"){
+                    // TODO employee hotel selection
+                }
                 Toast.makeText(this,"Registration Successful",Toast.LENGTH_LONG).show()
                 startActivity(Intent(this,SignInActivity::class.java))
                 finish()

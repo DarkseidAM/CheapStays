@@ -1,5 +1,6 @@
 package com.cg.cheapstays.view.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -13,6 +14,8 @@ import android.widget.SearchView
 import android.widget.Toast
 import com.cg.cheapstays.R
 import com.cg.cheapstays.model.Hotels
+import com.cg.cheapstays.view.USER_TYPE
+import com.cg.cheapstays.view.admin.AdminReportActivity
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -77,20 +80,26 @@ class HotelsFragment : Fragment() {
                     if(view is RecyclerView){
                         Log.d("List","List - $hotelList")
                         adapter = MyHotelsRecyclerViewAdapter(hotelList){
-                            Log.d("Listener","Happened")
-                            val bundle = Bundle()
-                            if(filteredList.isNotEmpty())
-                                bundle.putString("hotelid",hotelId[hotelList.indexOf(filteredList[it])])
-                            else
-                                bundle.putString("hotelid",hotelId[it])
-                            val frag = SelectedHotelFragment()
-                            frag.arguments = bundle
-                            activity?.findViewById<SearchView>(R.id.userSearchView)?.visibility = View.GONE
-                            activity?.findViewById<SearchView>(R.id.userSearchView)?.clearFocus()
-                            activity?.supportFragmentManager?.beginTransaction()
-                                ?.remove(HotelsFragment())
-                                ?.replace(R.id.parent_home_linear,frag)
-                                ?.commit()
+                            if(USER_TYPE!="admin"){
+                                val bundle = Bundle()
+                                if(filteredList.isNotEmpty())
+                                    bundle.putString("hotelid",hotelId[hotelList.indexOf(filteredList[it])])
+                                else
+                                    bundle.putString("hotelid",hotelId[it])
+                                val frag = SelectedHotelFragment()
+                                frag.arguments = bundle
+                                activity?.findViewById<SearchView>(R.id.userSearchView)?.visibility = View.GONE
+                                activity?.findViewById<SearchView>(R.id.userSearchView)?.clearFocus()
+                                activity?.supportFragmentManager?.beginTransaction()
+                                    ?.remove(HotelsFragment())
+                                    ?.replace(R.id.parent_home_linear,frag)
+                                    ?.commit()
+                            }else{
+                                val intent = Intent(activity, AdminReportActivity::class.java)
+                                intent.putExtra("hotelid",hotelId[it])
+                                startActivity(intent)
+                            }
+
                         }
                         view.adapter = adapter
 

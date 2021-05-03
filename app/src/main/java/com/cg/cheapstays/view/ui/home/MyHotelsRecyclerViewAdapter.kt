@@ -35,8 +35,8 @@ class MyHotelsRecyclerViewAdapter(private var values: List<Hotels>, var listener
 
         holder.itemView.setOnClickListener {
 
-            if(USER_TYPE!="admin")
-                listener(position)
+            listener(position)
+
         }
 
     }

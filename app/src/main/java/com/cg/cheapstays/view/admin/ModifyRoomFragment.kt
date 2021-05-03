@@ -1,5 +1,7 @@
 package com.cg.cheapstays.view.admin
 
+import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,24 +12,24 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.cg.cheapstays.R
+import com.cg.cheapstays.model.Bookings
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.dialog.MaterialDialogs
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_modify_room.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.time.Instant
+import java.util.*
+import kotlin.math.max
 import kotlin.math.min
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ModifyRoomFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -41,13 +43,15 @@ class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
     var singlePrice = 0
     var doublePrice = 0
     var singleRoomNo = 0
+    var singleBooked = 0
+    lateinit var singleBookedDate : String
     var doubleRoomNo = 0
+    var doubleBooked = 0
+    lateinit var doubleBookedDate : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
             hotelid = it.getString("hotelid")!!
         }
 
@@ -70,6 +74,39 @@ class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
         dRef = fDatabase.reference.child("hotels").child(hotelid)
         roomId = mutableListOf<String>()
         // Inflate the layout for this fragment
+
+        dRef.child("rooms").addListenerForSingleValueEvent(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val currentTime = Calendar.getInstance().timeInMillis
+                if(snapshot.child("singleBooked").exists()){
+                    for(childs in snapshot.child("singleBooked").children){
+                        if(childs.key?.toLong()!! > currentTime){
+                            val bookedRooms = childs.child("bookedRooms").value.toString().toInt()
+                            if(bookedRooms>singleBooked){
+                                singleBooked = bookedRooms
+                                singleBookedDate = SimpleDateFormat("MMM dd, yyy", Locale.getDefault()).format(childs.key?.toLong())
+                            }
+                        }
+                    }
+                    for(childs in snapshot.child("doubleBooked").children){
+                        if(childs.key?.toLong()!! > currentTime){
+                            val bookedRooms = childs.child("bookedRooms").value.toString().toInt()
+                            if(bookedRooms>doubleBooked){
+                                doubleBooked = bookedRooms
+                                doubleBookedDate = SimpleDateFormat("MMM dd, yyy", Locale.getDefault()).format(childs.key?.toLong())
+                            }
+                        }
+                    }
+                    Log.d("BookedRooms","$singleBookedDate,$doubleBookedDate")
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                //
+            }
+
+        })
+
         return inflater.inflate(R.layout.fragment_modify_room, container, false)
     }
 
@@ -97,7 +134,7 @@ class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
                     }
                     editRoomType.adapter = ArrayAdapter<String>(activity?.applicationContext!!,android.R.layout.simple_spinner_dropdown_item, arrayOf<String>("Single","Double"))
                     Log.d("Rooms","$singlePrice,$singleRoomNo,$doublePrice,$doubleRoomNo")
-//                    dRef.removeEventListener(this)
+                    dRef.removeEventListener(this)
 
                 }
             }
@@ -115,9 +152,17 @@ class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 dRef.child("rooms").child(roomType).addListenerForSingleValueEvent(object:ValueEventListener{
                     override fun onDataChange(snapshot: DataSnapshot) {
                         if(snapshot.exists()){
-                            dRef.child("rooms").child(roomType).child("tariff").setValue(price)
+                            MaterialAlertDialogBuilder(activity as Context)
+                                .setTitle("Confirmation")
+                                .setMessage("Do you want to change the tariff of ${roomType.capitalize()} type from $singlePrice to $price?")
+                                .setPositiveButton("Confirm"){ dialogInterface: DialogInterface, i: Int ->
+                                        dRef.child("rooms").child(roomType).child("tariff").setValue(price)
+                                }
+                                .setNegativeButton("Cancel"){ dialogInterface: DialogInterface, i: Int ->
+                                    dialogInterface.dismiss()
+                                }.show()
                         }else{
-                            Toast.makeText(activity,"$snapshot",Toast.LENGTH_LONG).show()
+                            //Toast.makeText(activity,"$snapshot",Toast.LENGTH_LONG).show()
                         }
                     }
                     override fun onCancelled(error: DatabaseError) {
@@ -132,7 +177,25 @@ class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
         deleteRoomsBtn.setOnClickListener {
             val newRoomNo = editRoomsNo.text.toString().toInt()
             val roomType = editRoomType.selectedItem.toString().toLowerCase()
-            dRef.child("rooms").child(roomType).child("noOfRooms").setValue(newRoomNo)
+            val bookedRooms = if(roomType=="single") singleBooked else doubleBooked
+            val bookedRoomsDate = if(roomType=="single") singleBookedDate else doubleBookedDate
+
+            if(newRoomNo<bookedRooms){
+                val sb = Snackbar.make(view,"This type of room can't be lesser than $bookedRooms as it is booked on $bookedRoomsDate",Snackbar.LENGTH_SHORT)
+                sb.animationMode = Snackbar.ANIMATION_MODE_SLIDE
+                sb.duration = 4000
+                sb.show()
+            }
+            else{
+                MaterialAlertDialogBuilder(activity as Context)
+                    .setTitle("Confirmation")
+                    .setMessage("Do you want to change the number of rooms to $newRoomNo?")
+                    .setPositiveButton("Confirm"){ dialogInterface: DialogInterface, i: Int ->
+                        dRef.child("rooms").child(roomType).child("noOfRooms").setValue(newRoomNo)                    }
+                    .setNegativeButton("Cancel"){ dialogInterface: DialogInterface, i: Int ->
+                        dialogInterface.dismiss()
+                    }.show()
+            }
         }
 
         addRoomsBtn2.setOnClickListener {
@@ -156,25 +219,7 @@ class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
         editRoomsNo.isFocusable = false
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ModifyRoomFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ModifyRoomFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
+
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         if(position==0) {

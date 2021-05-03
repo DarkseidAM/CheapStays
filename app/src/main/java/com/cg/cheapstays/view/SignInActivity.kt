@@ -133,6 +133,8 @@ class SignInActivity : AppCompatActivity(), SignIn.View {
         Toast.makeText(this,"Login successful", Toast.LENGTH_LONG).show()
         if(type=="admin"){
             startActivity(Intent(this@SignInActivity,AdminActivity::class.java))
+        }else if(type=="employee"){
+            // TODO employee hotel selection
         }else
             startActivity(Intent(this@SignInActivity,UserActivity::class.java))
         finish()
