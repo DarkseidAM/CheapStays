@@ -1,20 +1,18 @@
 package com.cg.cheapstays.view.admin
 import android.app.Activity
-import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.cg.cheapstays.R
+import com.cg.cheapstays.model.MakeSnackBar
 import com.cg.cheapstays.view.admin.presenter.AddHotelPresenter
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.fragment_add_hotel.*
 
 class AddHotelFragment : Fragment(),AddHotelPresenter.View {
@@ -49,18 +47,17 @@ class AddHotelFragment : Fragment(),AddHotelPresenter.View {
                 if (imageUploaded) {
                     presenter.addHotelFireBase(addHotelName.text.toString(),addHotelAddress.text.toString(),addHotelDesc.text.toString(),0,addHotelRatings.text.toString().toDouble(),imageUrl.toString(),addHotelOffer.text.toString())
                 } else {
-                    val builder = AlertDialog.Builder(activity)
-                    builder.setTitle("Confirmation")
-                    builder.setMessage("Do you want to continue without adding an image?")
-                    builder.setPositiveButton("Yes") { _, _ ->
-                        presenter.addHotelFireBase(addHotelName.text.toString(),addHotelAddress.text.toString(),addHotelDesc.text.toString(),0,addHotelRatings.text.toString().toDouble(),imageUrl.toString(),addHotelOffer.text.toString())
-                    }
-                    builder.setNegativeButton("No") { dialog, _ -> dialog.cancel() }
-                    val dlg = builder.create()
-                    dlg.show()
+                    MaterialAlertDialogBuilder(it.context).setTitle("Confirmation")
+                        .setMessage("Do you want to continue without adding an image?")
+                        .setPositiveButton("Yes"){ _: DialogInterface, _: Int ->
+                            presenter.addHotelFireBase(addHotelName.text.toString(),addHotelAddress.text.toString(),addHotelDesc.text.toString(),0,addHotelRatings.text.toString().toDouble(),imageUrl.toString(),addHotelOffer.text.toString())
+                        }.setNegativeButton("No"){ dialogInterface: DialogInterface, _: Int ->
+                            dialogInterface.dismiss()
+                        }.show()
+
                 }
             }else{
-                Toast.makeText(activity,"Please enter all the details",Toast.LENGTH_LONG).show()
+                MakeSnackBar(activity?.findViewById(android.R.id.content)!!).make("Please enter all the details").show()
             }
         }
     }
@@ -98,6 +95,10 @@ class AddHotelFragment : Fragment(),AddHotelPresenter.View {
             selectedImageView.visibility = View.VISIBLE
             uploadButton.visibility = View.VISIBLE
         }
+        else{
+            MakeSnackBar(activity?.findViewById(android.R.id.content)!!).make("Error in selecting image").show()
+
+        }
     }
 
     override fun uploadImageStatus(status: String, progress: Int, result: Uri?) {
@@ -107,18 +108,17 @@ class AddHotelFragment : Fragment(),AddHotelPresenter.View {
             }
             "Success"->{
                 progressBar2.visibility = View.GONE
-                Toast.makeText(activity,"Uploaded",Toast.LENGTH_LONG).show()
+                MakeSnackBar(activity?.findViewById(android.R.id.content)!!).make("Image Uploaded").show()
             }
             "Failure"->{
                 progressBar2.visibility = View.GONE
-                Toast.makeText(activity,"Failed",Toast.LENGTH_LONG).show()
+                MakeSnackBar(activity?.findViewById(android.R.id.content)!!).make("Error in uploading image").show()
             }
             "Uploading"->{
                 progressBar2.progress = progress
             }
             "Completed"->{
                 imageUrl = result
-                Log.d("Upload","$imageUrl")
                 imageUploaded = true
             }
         }
@@ -130,7 +130,7 @@ class AddHotelFragment : Fragment(),AddHotelPresenter.View {
                 addRoom(hotelid)
             }
             "Failure" -> {
-                Toast.makeText(activity, "$msg", Toast.LENGTH_LONG).show()
+                MakeSnackBar(activity?.findViewById(android.R.id.content)!!).make("$msg").show()
             }
         }
     }

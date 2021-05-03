@@ -3,7 +3,6 @@ package com.cg.cheapstays.view.admin
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.cg.cheapstays.R
-import kotlinx.android.synthetic.main.activity_admin.*
 
 class AdminActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

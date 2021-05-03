@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.cg.cheapstays.R
 import com.cg.cheapstays.model.Bookings
+import com.cg.cheapstays.model.MakeSnackBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.dialog.MaterialDialogs
@@ -29,11 +30,8 @@ import java.util.*
 import kotlin.math.max
 import kotlin.math.min
 
-
 class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
     private lateinit var hotelid : String
     lateinit var fDatabase: FirebaseDatabase
     lateinit var dRef: DatabaseReference
@@ -181,10 +179,7 @@ class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
             val bookedRoomsDate = if(roomType=="single") singleBookedDate else doubleBookedDate
 
             if(newRoomNo<bookedRooms){
-                val sb = Snackbar.make(view,"This type of room can't be lesser than $bookedRooms as it is booked on $bookedRoomsDate",Snackbar.LENGTH_SHORT)
-                sb.animationMode = Snackbar.ANIMATION_MODE_SLIDE
-                sb.duration = 4000
-                sb.show()
+                MakeSnackBar(activity?.findViewById(android.R.id.content)!!).make("This type of room can't be lesser than $bookedRooms as it is booked on $bookedRoomsDate").show()
             }
             else{
                 MaterialAlertDialogBuilder(activity as Context)
@@ -238,8 +233,9 @@ class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
         //
     }
 
-    override fun onDetach() {
-        super.onDetach()
+
+    override fun onDestroyView() {
+        super.onDestroyView()
         dRef.removeEventListener(listener)
     }
 }

@@ -2,11 +2,10 @@ package com.cg.cheapstays.view.admin
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import com.cg.cheapstays.R
+import com.cg.cheapstays.model.MakeSnackBar
 import com.cg.cheapstays.model.Rooms
 import com.cg.cheapstays.model.Users
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -37,7 +36,6 @@ class AdminReportActivity : AppCompatActivity() {
         userIDList = mutableSetOf()
         userNameList = mutableListOf()
         adapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,userNameList)
-        Log.d("AdminReport","$hotelId")
 
         val ref = fDatabase.reference.child("hotels").child(hotelId)
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -76,7 +74,7 @@ class AdminReportActivity : AppCompatActivity() {
             userNameList.clear()
             adminReportList.adapter =adapter
             if(userIDList.isEmpty())
-                Toast.makeText(this,"No Bookings/Guests",Toast.LENGTH_SHORT).show()
+                MakeSnackBar(findViewById(android.R.id.content)).make("No Bookings/Guests").show()
             for(user in userIDList){
                 var ref = fDatabase.reference.child("users").child(user)
                 ref.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -102,7 +100,6 @@ class AdminReportActivity : AppCompatActivity() {
         var ref = fDatabase.reference.child("hotels").child(hotelId).child("rooms").child("doubleBooked").child(bookingDateInMillis)
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                Log.d("AdminReport","$snapshot")
                 if(snapshot.exists()) adminDoubleRoomBookedT.text= snapshot.child("bookedRooms").value.toString()
                 else adminDoubleRoomBookedT.text= "0"
             }
@@ -112,7 +109,6 @@ class AdminReportActivity : AppCompatActivity() {
         ref = fDatabase.reference.child("hotels").child(hotelId).child("rooms").child("singleBooked").child(bookingDateInMillis)
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                Log.d("AdminReport","$snapshot")
                 if(snapshot.exists()) adminSingleRoomBookedT.text= snapshot.child("bookedRooms").value.toString()
                 else adminSingleRoomBookedT.text= "0"
             }
@@ -129,7 +125,6 @@ class AdminReportActivity : AppCompatActivity() {
                         val userId = child.child("uid").value.toString()
                         userIDList.add(userId)
                     }
-                    Log.d("AdminReport","$userIDList")
                 }
             }
             override fun onCancelled(error: DatabaseError) {

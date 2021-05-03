@@ -1,4 +1,5 @@
 package com.cg.cheapstays.view.admin
+
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,6 +11,7 @@ import com.cg.cheapstays.view.StartUpActivity
 import com.cg.cheapstays.view.admin.presenter.AdminStartUpPresenter
 import com.cg.cheapstays.view.ui.home.HotelsFragment
 import kotlinx.android.synthetic.main.fragment_admin_start_up.*
+
 class AdminStartUpFragment : Fragment(), AdminStartUpPresenter.View {
     lateinit var presenter: AdminStartUpPresenter
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +46,10 @@ class AdminStartUpFragment : Fragment(), AdminStartUpPresenter.View {
             presenter.signOutFireBase()
             startActivity(Intent(activity,StartUpActivity::class.java))
             activity?.finish()
+        }
+        adminBookingListB.setOnClickListener{
+            val frag = AdminBookingsFragment()
+            startAdminFragment(frag)
         }
     }
     override fun startAdminFragment(frag: Fragment) {

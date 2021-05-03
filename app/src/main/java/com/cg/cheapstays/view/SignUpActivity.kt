@@ -4,12 +4,15 @@ import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.cg.cheapstays.R
 import com.cg.cheapstays.model.Hotels
+import com.cg.cheapstays.model.MakeSnackBar
 import com.cg.cheapstays.model.Users
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -59,7 +62,7 @@ class SignUpActivity : AppCompatActivity() {
 
         signUpBtn.setOnClickListener{
             if(emailE.text.isNullOrEmpty() || passwordE.text.isNullOrEmpty()){
-                Toast.makeText(this,"Empty Email Id or password ",Toast.LENGTH_LONG).show()
+                MakeSnackBar(it).make("Empty Email Id or password").show()
             }
             else{
                 if(type=="employee"){
@@ -79,7 +82,6 @@ class SignUpActivity : AppCompatActivity() {
             startActivity(Intent(this,SignInActivity::class.java))
             finish()
         }
-
 
 
     }

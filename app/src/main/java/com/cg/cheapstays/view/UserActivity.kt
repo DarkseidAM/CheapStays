@@ -37,9 +37,7 @@ class UserActivity : AppCompatActivity() {
             }
         })
 
-        navView.setOnNavigationItemReselectedListener {
-            Log.d("Reselect","Reselected")
-        }
+        navView.setOnNavigationItemReselectedListener {   }
 
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each

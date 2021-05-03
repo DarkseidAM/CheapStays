@@ -1,6 +1,7 @@
 package com.cg.cheapstays.view.admin
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,54 +10,40 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.cg.cheapstays.R
-import com.cg.cheapstays.view.admin.dummy.DummyContent
+import com.cg.cheapstays.model.Bookings
+import com.cg.cheapstays.view.admin.presenter.AdminBookingsPresenter
 
-/**
- * A fragment representing a list of Items.
- */
-class AdminBookingsFragment : Fragment() {
-
+class AdminBookingsFragment : Fragment(), AdminBookingsPresenter.View {
     private var columnCount = 1
-
+    lateinit var presenter : AdminBookingsPresenter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        arguments?.let {
-            columnCount = it.getInt(ARG_COLUMN_COUNT)
-        }
+        presenter = AdminBookingsPresenter(this)
+        presenter.initialize()
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.all_booking_list_item, container, false)
-
-        // Set the adapter
+        val view = inflater.inflate(R.layout.all_booking_list, container, false)
         if (view is RecyclerView) {
             with(view) {
                 layoutManager = when {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = MyAdminBookingsRecyclerViewAdapter(DummyContent.ITEMS)
             }
         }
         return view
     }
 
-    companion object {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        presenter.getBookingList()
+    }
 
-        // TODO: Customize parameter argument names
-        const val ARG_COLUMN_COUNT = "column-count"
-
-        // TODO: Customize parameter initialization
-        @JvmStatic
-        fun newInstance(columnCount: Int) =
-            AdminBookingsFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(ARG_COLUMN_COUNT, columnCount)
-                }
-            }
+    override fun changeBookingAdapter(bookingMap: MutableMap<Bookings, String>, bookingList: MutableList<Bookings>) {
+        Log.d("AdminBookings",bookingList.toString())
+        (view as RecyclerView).adapter = MyAdminBookingsRecyclerViewAdapter(bookingList)
     }
 }

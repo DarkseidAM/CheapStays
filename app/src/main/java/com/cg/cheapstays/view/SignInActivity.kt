@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.cg.cheapstays.R
+import com.cg.cheapstays.model.MakeSnackBar
 import com.cg.cheapstays.model.Users
 import com.cg.cheapstays.presenter.SignIn
 import com.cg.cheapstays.presenter.SignIn.Companion.RC_SIGN_IN
@@ -43,10 +44,8 @@ class SignInActivity : AppCompatActivity(), SignIn.View {
         fDatabase = FirebaseDatabase.getInstance()
 
         type = USER_TYPE
-        Log.d("Login"," $type")
-        if(type != "user"){
-            Log.d("Login"," $type")
-            NewUserT.visibility = View.GONE
+        if(type == "admin" || type == "employee"){
+            if(type == "admin")    NewUserT.visibility = View.GONE
             googleLoginBtn.visibility = View.GONE
         }
 
@@ -68,7 +67,6 @@ class SignInActivity : AppCompatActivity(), SignIn.View {
             googleSignIn()
         }
         signInBtn.setOnClickListener {
-            progressBar.visibility = View.VISIBLE
             emailSignIn()
         }
 
@@ -76,10 +74,6 @@ class SignInActivity : AppCompatActivity(), SignIn.View {
 
     override fun onResume() {
         super.onResume()
-        if(type!="admin") {
-            NewUserT.visibility = View.VISIBLE
-            googleLoginBtn.visibility = View.VISIBLE
-        }
     }
 
     override fun  emailSignIn(){
@@ -93,6 +87,7 @@ class SignInActivity : AppCompatActivity(), SignIn.View {
             passwordLoginE.requestFocus()
             return
         }
+        progressBar.visibility = View.VISIBLE
 
         //----LOGIN USER---
         fAuth.signInWithEmailAndPassword(emailLoginE.text.toString(), passwordLoginE.text.toString())
@@ -101,8 +96,8 @@ class SignInActivity : AppCompatActivity(), SignIn.View {
                         val user = fAuth.currentUser
                         checkUser(user)
                     } else { //wrong details
-                        Toast.makeText(this, "Authentication failed.",
-                                Toast.LENGTH_SHORT).show()
+                        MakeSnackBar(findViewById(android.R.id.content)).make("Authentication Failed. Incorrect Username/Password").show()
+                        progressBar.visibility = View.GONE
                         //updateUI(null)
                     }
                 }
@@ -155,11 +150,10 @@ class SignInActivity : AppCompatActivity(), SignIn.View {
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 val account = task.getResult(ApiException::class.java)!!
-                Log.d("Login", "firebaseAuthWithGoogle:" + account.id)
                 firebaseAuthWithGoogle(account.idToken!!)
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
-                Log.w("Login", "Google sign in failed", e)
+                MakeSnackBar(findViewById(android.R.id.content)).make("Error in signing : ${e.message}").show()
             }
         }
     }
@@ -169,7 +163,6 @@ class SignInActivity : AppCompatActivity(), SignIn.View {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
-                    Log.d("Login", "signInWithCredential:success")
                     val user = fAuth.currentUser
                     val users = Users(user?.displayName!!,user.email!!,type,"")
                     fDatabase.reference.child("users").child(user.uid).setValue(users)
@@ -178,7 +171,7 @@ class SignInActivity : AppCompatActivity(), SignIn.View {
 
                 } else {
                     // If sign in fails, display a message to the user.
-                    Log.d("Login", "signInWithCredential:failure", task.exception)
+                    MakeSnackBar(findViewById(android.R.id.content)).make("Error : ${task.exception?.message}").show()
                 }
             }
     }
