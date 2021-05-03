@@ -36,7 +36,6 @@ class BookingsFragment : Fragment() {
         bookingList = mutableListOf()
         bookingId = mutableListOf()
         fAuth = FirebaseAuth.getInstance()
-
         arguments?.let {
 
         }

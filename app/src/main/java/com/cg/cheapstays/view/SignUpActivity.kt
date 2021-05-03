@@ -48,7 +48,7 @@ class SignUpActivity : AppCompatActivity() {
                         hotelId.add(childs.key!!)
                     }
                 }
-                hotelAdapter = ArrayAdapter(this@SignUpActivity,android.R.layout.simple_list_item_1,hotels)
+                hotelAdapter = ArrayAdapter(this@SignUpActivity,android.R.layout.simple_selectable_list_item,hotels)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -64,7 +64,7 @@ class SignUpActivity : AppCompatActivity() {
             else{
                 if(type=="employee"){
                     MaterialAlertDialogBuilder(this)
-                        .setTitle("Select your hotel")
+                        .setTitle("Select your hotel".toUpperCase())
                         .setCancelable(false)
                         .setSingleChoiceItems(hotelAdapter,0) { dialog, which ->
                             selectedHotelId = hotelId[which]

@@ -44,7 +44,7 @@ class SignInActivity : AppCompatActivity(), SignIn.View {
 
         type = USER_TYPE
         Log.d("Login"," $type")
-        if(type == "admin"){
+        if(type != "user"){
             Log.d("Login"," $type")
             NewUserT.visibility = View.GONE
             googleLoginBtn.visibility = View.GONE
