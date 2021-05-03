@@ -2,24 +2,22 @@ package com.cg.cheapstays.view.admin
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import com.cg.cheapstays.R
 import com.cg.cheapstays.model.MakeSnackBar
 import com.cg.cheapstays.model.Rooms
-import com.cg.cheapstays.model.Users
+import com.cg.cheapstays.view.admin.presenter.AdminReportPresenter
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_admin_report.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AdminReportActivity : AppCompatActivity() {
+class AdminReportActivity : AppCompatActivity(),AdminReportPresenter.View {
 
-    lateinit var fDatabase: FirebaseDatabase
+    lateinit var presenter: AdminReportPresenter
     lateinit var hotelId:String
     lateinit var rooms: Rooms
     lateinit var userIDList : MutableSet<String>
@@ -31,34 +29,21 @@ class AdminReportActivity : AppCompatActivity() {
         setContentView(R.layout.activity_admin_report)
 
         adminReportCV.visibility =View.INVISIBLE
-        fDatabase = FirebaseDatabase.getInstance()
+        presenter = AdminReportPresenter(this)
+        presenter.initialize()
         hotelId = intent.getStringExtra("hotelid")!!
         userIDList = mutableSetOf()
         userNameList = mutableListOf()
         adapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,userNameList)
 
-        val ref = fDatabase.reference.child("hotels").child(hotelId)
-        ref.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if(snapshot.exists())
-                {
-                    val name = snapshot.child("name").value.toString()
-                    adminReportHotelNameT.text = name
-                    rooms = snapshot.child("rooms").getValue(Rooms::class.java)?: Rooms()
-                    adminSingleRoomNoT.text = "${rooms.single.noOfRooms} (₹${rooms.single.tariff})"
-                    adminDoubleRoomNoT.text = "${rooms.double.noOfRooms} (₹${rooms.double.tariff})"
-                }
-            }
-            override fun onCancelled(error: DatabaseError) {
-            }
-        })
+        presenter.getHotelRoomFireBase(hotelId)
 
 
         //BUTTON
         adminReportDateB.setOnClickListener {
             userNameList.clear()
-            userIDList.clear()
-            adapter.notifyDataSetChanged()
+            adminReportList.adapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,userNameList)
+
             val picker = MaterialDatePicker.Builder.datePicker().build()
             picker.addOnPositiveButtonClickListener {
                 val bookingDateInMillis = it.toString()
@@ -72,63 +57,42 @@ class AdminReportActivity : AppCompatActivity() {
 
         adminReportGuestB.setOnClickListener{
             userNameList.clear()
-            adminReportList.adapter =adapter
             if(userIDList.isEmpty())
                 MakeSnackBar(findViewById(android.R.id.content)).make("No Bookings/Guests").show()
-            for(user in userIDList){
-                var ref = fDatabase.reference.child("users").child(user)
-                ref.addListenerForSingleValueEvent(object : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        if(snapshot.exists())
-                        {
-                            val user = snapshot.getValue(Users::class.java)!!
-                            userNameList.add(user.name)
-                            adapter.notifyDataSetChanged()
-                        }
-                    }
-                    override fun onCancelled(error: DatabaseError) {
-                    }
-                })
-            }
-
+            presenter.getGuestList(userIDList)
         }
 
 
     }
 
     private fun showBookings(bookingDateInMillis: String, date: String) {
-        var ref = fDatabase.reference.child("hotels").child(hotelId).child("rooms").child("doubleBooked").child(bookingDateInMillis)
-        ref.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if(snapshot.exists()) adminDoubleRoomBookedT.text= snapshot.child("bookedRooms").value.toString()
-                else adminDoubleRoomBookedT.text= "0"
-            }
-            override fun onCancelled(error: DatabaseError) {
-            }
-        })
-        ref = fDatabase.reference.child("hotels").child(hotelId).child("rooms").child("singleBooked").child(bookingDateInMillis)
-        ref.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if(snapshot.exists()) adminSingleRoomBookedT.text= snapshot.child("bookedRooms").value.toString()
-                else adminSingleRoomBookedT.text= "0"
-            }
-            override fun onCancelled(error: DatabaseError) {
-            }
-        })
-        val refU = fDatabase.reference.child("bookings").orderByChild("date").equalTo(date)
-        refU.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                adminReportCV.visibility =View.VISIBLE
-                if(snapshot.exists()){
-                    userIDList.clear()
-                    for(child in snapshot.children){
-                        val userId = child.child("uid").value.toString()
-                        userIDList.add(userId)
-                    }
-                }
-            }
-            override fun onCancelled(error: DatabaseError) {
-            }
-        })
+        presenter.getBookings(hotelId,bookingDateInMillis,date)
     }
+
+    override fun getHotelRoomStatus(msg: String, name: String, single: String, double: String) {
+        if(msg == "Success"){
+            adminReportHotelNameT.text =name
+            adminSingleRoomNoT.text = single
+            adminDoubleRoomNoT.text = double
+        }
+        else{
+            Toast.makeText(this,msg,Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun makeChanges(numS: String, numD: String, ids: MutableSet<String>) {
+        adminReportCV.visibility = View.VISIBLE
+        adminSingleRoomBookedT.text= numS
+        adminDoubleRoomBookedT.text= numD
+        userIDList =ids
+        if(userIDList.isEmpty())
+            MakeSnackBar(findViewById(android.R.id.content)).make("No Bookings/Guests").show()
+    }
+
+    override fun guestListStatus(userNames: MutableList<String>) {
+        userNameList = userNames
+        Log.d("AdminReport User",userNameList.toString())
+        adminReportList.adapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,userNameList)
+    }
+
 }
