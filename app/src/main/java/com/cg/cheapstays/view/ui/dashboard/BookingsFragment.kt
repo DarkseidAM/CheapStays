@@ -66,6 +66,7 @@ class BookingsFragment : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists())
                 {
+                    view.findViewById<RecyclerView>(R.id.bookings_list2).adapter?.notifyDataSetChanged()
                     bookingList.clear()
                     bookingId.clear()
                     for(child in snapshot.children){
@@ -87,6 +88,7 @@ class BookingsFragment : Fragment() {
                                     .child(bookedRoomType).child((time).toString())
                             dRef.addListenerForSingleValueEvent(object : ValueEventListener{
                                 override fun onDataChange(snapshot: DataSnapshot) {
+                                    view.adapter?.notifyDataSetChanged()
                                     Log.d("NewRooms","$dRef")
                                     if(snapshot.exists()){
                                         val current = snapshot.child("bookedRooms").value.toString().toInt()
@@ -95,6 +97,7 @@ class BookingsFragment : Fragment() {
                                         fDatabase.reference.child("hotels").child(bookings.hotelId).child("rooms")
                                                 .child(bookedRoomType).child(time.toString())
                                                 .updateChildren(mutableMapOf("bookedRooms" to new as Any))
+                                        dRef.removeEventListener(this)
                                     }
                                 }
 
@@ -108,9 +111,10 @@ class BookingsFragment : Fragment() {
                 }
                 else{
                     Toast.makeText(view.context,"No Bookings",Toast.LENGTH_SHORT).show()
-                    view.findViewById<RecyclerView>(R.id.bookings_list2).adapter?.notifyDataSetChanged()
+                    Log.d("NoBookings","eeeee")
                     activity?.findViewById<BottomNavigationView>(R.id.nav_view)?.selectedItemId = R.id.navigation_home
-                    activity?.findViewById<BottomNavigationView>(R.id.nav_view)?.selectedItemId = R.id.navigation_dashboard
+//                    activity?.findViewById<BottomNavigationView>(R.id.nav_view)?.selectedItemId = R.id.navigation_dashboard
+                    ref.removeEventListener(this)
                 }
             }
             override fun onCancelled(error: DatabaseError) {

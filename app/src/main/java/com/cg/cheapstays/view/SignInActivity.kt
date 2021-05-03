@@ -134,7 +134,7 @@ class SignInActivity : AppCompatActivity(), SignIn.View {
         if(type=="admin"){
             startActivity(Intent(this@SignInActivity,AdminActivity::class.java))
         }else if(type=="employee"){
-            // TODO employee hotel selection
+            startActivity(Intent(this@SignInActivity,UserActivity::class.java))
         }else
             startActivity(Intent(this@SignInActivity,UserActivity::class.java))
         finish()

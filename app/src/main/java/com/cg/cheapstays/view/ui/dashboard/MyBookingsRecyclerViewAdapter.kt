@@ -37,6 +37,7 @@ class MyBookingsRecyclerViewAdapter(private val values: List<Bookings>, var list
                     val hotel = snapshot.getValue(Hotels::class.java)
                     holder.hotelName.text = hotel?.name
                 }
+                ref.removeEventListener(this)
             }
             override fun onCancelled(error: DatabaseError) {
                 //
