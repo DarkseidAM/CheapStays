@@ -9,22 +9,29 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.cg.cheapstays.R
+import com.cg.cheapstays.presenter.UserPresenter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class UserActivity : AppCompatActivity() {
+class UserActivity : AppCompatActivity(),UserPresenter.View {
 
     lateinit var fDatabase : FirebaseDatabase
     lateinit var fAuth : FirebaseAuth
+    lateinit var  presenter: UserPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
-        fDatabase = FirebaseDatabase.getInstance()
+
+        presenter= UserPresenter(this)
+        presenter.initialize()
+
+        presenter.setUserTypeFireBase()
+        /*fDatabase = FirebaseDatabase.getInstance()
         fAuth = FirebaseAuth.getInstance()
 
         fDatabase.reference.child("users").child(fAuth.currentUser?.uid.toString()).addListenerForSingleValueEvent(object:ValueEventListener{
@@ -35,7 +42,7 @@ class UserActivity : AppCompatActivity() {
             override fun onCancelled(error: DatabaseError) {
                 //
             }
-        })
+        })*/
 
         navView.setOnNavigationItemReselectedListener {   }
 

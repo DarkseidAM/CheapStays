@@ -1,16 +1,12 @@
 package com.cg.cheapstays.presenter
 
-import android.content.Intent
-import android.widget.Toast
 import com.cg.cheapstays.model.Users
-import com.cg.cheapstays.view.SignInActivity
 import com.cg.cheapstays.view.USER_TYPE
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import kotlinx.android.synthetic.main.activity_sign_up.*
 
 class SignUpPresenter (val view : View) {
     companion object{
@@ -58,7 +54,7 @@ class SignUpPresenter (val view : View) {
     }
 
     interface View {
-         fun setHotelAdapter(hotels: MutableList<String>, hotelId: MutableList<String>)
-        abstract fun signUpStatus(msg: String)
+        fun setHotelAdapter(hotels: MutableList<String>, hotelId: MutableList<String>)
+        fun signUpStatus(msg: String)
     }
 }
