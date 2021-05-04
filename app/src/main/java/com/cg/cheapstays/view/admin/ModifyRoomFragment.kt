@@ -37,7 +37,8 @@ class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
     lateinit var dRef: DatabaseReference
     lateinit var roomId : MutableList<String>
     lateinit var oldPrice : String
-    lateinit var listener: ValueEventListener
+    lateinit var listener1 : ValueEventListener
+    lateinit var listener2 : ValueEventListener
     var singlePrice = 0
     var doublePrice = 0
     var singleRoomNo = 0
@@ -52,15 +53,16 @@ class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
         arguments?.let {
             hotelid = it.getString("hotelid")!!
         }
-
+        singleBookedDate = ""
+        doubleBookedDate = ""
     }
 
     override fun onResume() {
         super.onResume()
         deleteRoomsBtn.visibility = View.VISIBLE
         editRoomBtn.visibility = View.VISIBLE
-        editRoomTariff.isFocusable = true
-        editRoomsNo.isFocusable = true
+        editRoomTariff.isEnabled = true
+        editRoomsNo.isEnabled = true
     }
 
     override fun onCreateView(
@@ -73,7 +75,7 @@ class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
         roomId = mutableListOf<String>()
         // Inflate the layout for this fragment
 
-        dRef.child("rooms").addListenerForSingleValueEvent(object : ValueEventListener{
+        listener2 = dRef.child("rooms").addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 val currentTime = Calendar.getInstance().timeInMillis
                 if(snapshot.child("singleBooked").exists()){
@@ -110,7 +112,7 @@ class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        listener = dRef.addValueEventListener(object : ValueEventListener{
+        listener1 = dRef.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()){
                     oldPrice = snapshot.child("price").value.toString()
@@ -119,19 +121,14 @@ class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
                         singleRoomNo = snapshot.child("rooms").child("single").child("noOfRooms").value.toString().toInt()
                         singlePrice = snapshot.child("rooms").child("single").child("tariff").value.toString().toInt()
                     }
-                    else{
-                        onNullRooms()
-                    }
                     if(snapshot.child("rooms").child("double").exists()){
                         doubleRoomNo = snapshot.child("rooms").child("double").child("noOfRooms").value.toString().toInt()
                         doublePrice = snapshot.child("rooms").child("double").child("tariff").value.toString().toInt()
                     }
-                    else{
+                    if(singleRoomNo==0){
                         onNullRooms()
                     }
                     editRoomType.adapter = ArrayAdapter<String>(activity?.applicationContext!!,android.R.layout.simple_spinner_dropdown_item, arrayOf<String>("Single","Double"))
-                    Log.d("Rooms","$singlePrice,$singleRoomNo,$doublePrice,$doubleRoomNo")
-                    dRef.removeEventListener(this)
 
                 }
             }
@@ -145,28 +142,32 @@ class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
             val roomType = editRoomType.selectedItem.toString().toLowerCase()
             val price = editRoomTariff.text.toString()
 
-            CoroutineScope(Dispatchers.IO).launch {
-                dRef.child("rooms").child(roomType).addListenerForSingleValueEvent(object:ValueEventListener{
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        if(snapshot.exists()){
-                            MaterialAlertDialogBuilder(activity as Context)
-                                .setTitle("Confirmation")
-                                .setMessage("Do you want to change the tariff of ${roomType.capitalize()} type from $singlePrice to $price?")
-                                .setPositiveButton("Confirm"){ dialogInterface: DialogInterface, i: Int ->
+            CoroutineScope(Dispatchers.Default).launch {
+                val j = CoroutineScope(Dispatchers.IO).launch {
+                    dRef.child("rooms").child(roomType).addListenerForSingleValueEvent(object:ValueEventListener{
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            if(snapshot.exists()){
+                                MaterialAlertDialogBuilder(activity as Context)
+                                    .setTitle("Confirmation")
+                                    .setMessage("Do you want to change the tariff of ${roomType.capitalize()} type from $singlePrice to $price?")
+                                    .setPositiveButton("Confirm"){ dialogInterface: DialogInterface, i: Int ->
                                         dRef.child("rooms").child(roomType).child("tariff").setValue(price)
-                                }
-                                .setNegativeButton("Cancel"){ dialogInterface: DialogInterface, i: Int ->
-                                    dialogInterface.dismiss()
-                                }.show()
-                        }else{
-                            //Toast.makeText(activity,"$snapshot",Toast.LENGTH_LONG).show()
+                                    }
+                                    .setNegativeButton("Cancel"){ dialogInterface: DialogInterface, i: Int ->
+                                        dialogInterface.dismiss()
+                                    }.show()
+                            }else{
+                                //Toast.makeText(activity,"$snapshot",Toast.LENGTH_LONG).show()
+                            }
                         }
-                    }
-                    override fun onCancelled(error: DatabaseError) {
-                        //
-                    }
-                })
-                delay(500)
+                        override fun onCancelled(error: DatabaseError) {
+                            //
+                        }
+                    })
+                }
+
+                j.join()
+                delay(1500)
                 dRef.child("price").setValue(min(singlePrice,doublePrice))
             }
 
@@ -209,19 +210,38 @@ class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
         deleteRoomsBtn.visibility = View.GONE
         editRoomBtn.visibility = View.GONE
         addRoomsBtn2.visibility = View.VISIBLE
-        editRoomTariff.isFocusable = false
-        editRoomsNo.isFocusable = false
+        editRoomTariff.isEnabled = false
+        editRoomsNo.isEnabled = false
+    }
+    private fun onNonNullRooms() {
+        deleteRoomsBtn.visibility = View.VISIBLE
+        editRoomBtn.visibility = View.VISIBLE
+        addRoomsBtn2.visibility = View.GONE
+        editRoomTariff.isFocusable = true
+        editRoomsNo.isFocusable = true
+        editRoomTariff.isEnabled = true
+        editRoomsNo.isEnabled = true
     }
 
 
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         if(position==0) {
+            if(singleRoomNo==0){
+                MakeSnackBar(activity?.findViewById(android.R.id.content)!!).make("No single room available, Please add them first").show()
+                onNullRooms()
+            }
+            else    onNonNullRooms()
             editRoomTariff.setText("")
             editRoomTariff.setText(singlePrice.toString())
             editRoomsNo.setText(singleRoomNo.toString())
         }
-        else    {
+        else{
+            if(doubleRoomNo==0) {
+                MakeSnackBar(activity?.findViewById(android.R.id.content)!!).make("No double room available, Please add them first").show()
+                onNullRooms()
+            }
+            else onNonNullRooms()
             editRoomTariff.setText("")
             editRoomTariff.setText(doublePrice.toString())
             editRoomsNo.setText(doubleRoomNo.toString())
@@ -235,6 +255,7 @@ class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        dRef.removeEventListener(listener)
+        dRef.removeEventListener(listener1)
+        dRef.removeEventListener(listener2)
     }
 }

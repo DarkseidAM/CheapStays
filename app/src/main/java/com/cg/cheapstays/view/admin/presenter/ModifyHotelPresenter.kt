@@ -1,8 +1,13 @@
 package com.cg.cheapstays.view.admin.presenter
 
+import android.util.Log
+import com.cg.cheapstays.model.Bookings
 import com.cg.cheapstays.model.Hotels
+import com.cg.cheapstays.model.Users
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_modify_hotel.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ModifyHotelPresenter(val view: View) {
 
@@ -10,6 +15,7 @@ class ModifyHotelPresenter(val view: View) {
         lateinit var fDatabase : FirebaseDatabase
         lateinit var listener: ValueEventListener
         lateinit var dRef : DatabaseReference
+        var flag = 0
     }
 
     fun initialize() {
@@ -73,9 +79,54 @@ class ModifyHotelPresenter(val view: View) {
         }
     }
 
+    fun checkRemoving(hotelId : String){
+        var currentTime = Calendar.getInstance().timeInMillis
+        val ref1 = fDatabase.reference.child("bookings")
+            .orderByChild("hotelId").equalTo(hotelId)
+        ref1.addListenerForSingleValueEvent(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    for(childs in snapshot.children){
+                        val booking = childs.getValue(Bookings::class.java)!!
+                        val btime = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).parse(booking.date)?.time!!
+                        if(hotelId == booking.hotelId && btime>currentTime){
+                            flag = 1
+                            ref1.removeEventListener(this)
+                        }
+                        Log.d("HotelBooking","$flag")
+                    }
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                //
+            }
+
+        })
+        val ref2 = fDatabase.reference.child("users").orderByChild("userType").equalTo("employee")
+        ref2.addListenerForSingleValueEvent(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    for(childs in snapshot.children){
+                        val users = childs.getValue(Users::class.java)!!
+                        if(childs.child("hotelId").value.toString()==hotelId){
+                            flag = 2
+                            ref2.removeEventListener(this)
+                            Log.d("EmployeePresent","$flag")
+                        }
+                    }
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                //
+            }
+
+        })
+    }
+
     interface View {
         fun getHotelsStatus(msg: String, hotelNames: MutableList<String>, hotelId: MutableList<String>, hotelList: MutableList<Hotels>)
         fun modifyHotelStatus(msg: String)
         fun removeHotelStatus(msg: String)
+        fun hotelRemoveConditions(flag : Int)
     }
 }

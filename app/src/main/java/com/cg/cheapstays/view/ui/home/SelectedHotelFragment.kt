@@ -77,7 +77,7 @@ class SelectedHotelFragment : Fragment(), AdapterView.OnItemSelectedListener {
                     hotelNameT.setText(hotel.name)
                     Glide.with(activity!!).load(Uri.parse(hotel.imgPath)).placeholder(R.drawable.default_hotel).into(imageView6)
                     hotelRatingT.setText(hotel.rating.toString())
-                    hotelPriceT.setText(hotel.price.toString())
+                    hotelPriceT.setText("₹${hotel.price.toString()}")
                     hotelAddressT.setText(hotel.address)
                     hotelDescT.setText(hotel.description)
                     val offer = hotel.specialOffer

@@ -3,19 +3,25 @@ package com.cg.cheapstays.view.admin
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import com.cg.cheapstays.R
 import com.cg.cheapstays.model.Hotels
 import com.cg.cheapstays.model.MakeSnackBar
 import com.cg.cheapstays.view.admin.presenter.ModifyHotelPresenter
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_modify_hotel.*
-
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 class ModifyHotelFragment : Fragment(),
@@ -82,17 +88,30 @@ class ModifyHotelFragment : Fragment(),
         }
 
         deleteHotel.setOnClickListener {
-            val builder = AlertDialog.Builder(activity)
-            builder.setTitle("Are you sure?")
-            builder.setMessage("You won't be able to revert the changes")
-            builder.setPositiveButton("Yes") { _, _ ->
-                presenter.removeHotelFireBase(hotelId[currentPosition])
-                //TODO
+            Toast.makeText(it.context,"Checking for any problems...",Toast.LENGTH_LONG).show()
+            var flag = 0
+            CoroutineScope(Dispatchers.Main).launch {
+                val j = CoroutineScope(Dispatchers.IO).launch {
+                    presenter.checkRemoving(hotelId[currentPosition])
+                }
+                j.join()
+                delay(1000)
+                flag = ModifyHotelPresenter.flag
+                Log.d("HotelBookingFrag","${ModifyHotelPresenter.flag}")
+                val builder = AlertDialog.Builder(activity)
+                builder.setTitle("Are you sure?")
+                builder.setMessage("You won't be able to revert the changes")
+                builder.setPositiveButton("Yes") { _, _ ->
+
+                    hotelRemoveConditions(flag)
+                    //else    presenter.removeHotelFireBase(hotelId[currentPosition])
+                    //TODO
 //                dRef.child(hotelId[currentPosition]).removeValue()
+                }
+                builder.setNegativeButton("No") { dialog, _ -> dialog.cancel()}//trailing lambda
+                val dlg=builder.create()
+                dlg.show()
             }
-            builder.setNegativeButton("No") { dialog, _ -> dialog.cancel()}//trailing lambda
-            val dlg=builder.create()
-            dlg.show()
         }
 
         modifyHotelRoomBtn.setOnClickListener {
@@ -156,6 +175,18 @@ class ModifyHotelFragment : Fragment(),
             MakeSnackBar(activity?.findViewById(android.R.id.content)!!).make("Hotel Removed").show()
             //TODO FIX HOTEL SPINNER
 //            presenter.getHotelsFireBase()
+        }
+    }
+
+    override fun hotelRemoveConditions(flag : Int) {
+        if(flag==1){
+            MakeSnackBar(activity?.findViewById(android.R.id.content)!!).make("Cannot remove as there are some bookings made for the selected hotel").show()
+        }
+        else if(flag==2){
+            MakeSnackBar(activity?.findViewById(android.R.id.content)!!).make("Cannot remove as there are some employees working in the hotel").show()
+        }
+        else{
+            presenter.removeHotelFireBase(hotelId[currentPosition])
         }
     }
 
