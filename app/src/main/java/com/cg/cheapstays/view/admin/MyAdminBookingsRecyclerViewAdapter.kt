@@ -26,6 +26,7 @@ class MyAdminBookingsRecyclerViewAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
         holder.date.text = item.date
+        holder.price.text = "₹${item.totalPrice}"
         val ref = AdminBookingsPresenter.fDatabase.reference.child("hotels").child(item.hotelId)
         ref.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -50,5 +51,6 @@ class MyAdminBookingsRecyclerViewAdapter(
         val user = view.findViewById<TextView>(R.id.show_booking_userT)
         val date = view.findViewById<TextView>(R.id.show_booking_dateT)
         val hotel = view.findViewById<TextView>(R.id.show_booking_hotelT)
+        val price = view.findViewById<TextView>(R.id.show_booking_priceT)
     }
 }

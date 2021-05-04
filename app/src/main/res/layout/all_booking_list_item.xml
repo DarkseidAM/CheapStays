@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
+    android:layout_margin="8dp"
     app:cardCornerRadius="15dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,6 +12,20 @@
         android:layout_height="match_parent"
         android:background="@drawable/gradient_color"
         android:padding="15dp">
+
+        <TextView
+            android:id="@+id/show_booking_priceT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_weight="1"
+            android:padding="2dp"
+            android:text="Price: "
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/show_booking_dateT"
+            app:layout_constraintStart_toEndOf="@+id/show_booking_userT"
+            app:layout_constraintTop_toBottomOf="@+id/show_booking_hotelT" />
 
         <TextView
             android:id="@+id/show_booking_hotelT"
@@ -23,6 +37,7 @@
             android:text="Hotel:"
             android:textColor="@color/white"
             android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.453"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,7 +47,7 @@
             android:id="@+id/show_booking_userT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="12dp"
             android:layout_weight="1"
             android:padding="2dp"
@@ -46,13 +61,14 @@
             android:id="@+id/show_booking_dateT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="168dp"
+            android:layout_marginEnd="8dp"
             android:layout_weight="1"
             android:padding="2dp"
             android:text="Date:"
+            android:textAlignment="textEnd"
             android:textColor="@color/white"
             android:textSize="18sp"
-            app:layout_constraintStart_toEndOf="@+id/show_booking_userT"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/show_booking_userT" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

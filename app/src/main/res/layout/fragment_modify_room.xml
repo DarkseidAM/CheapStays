@@ -1,166 +1,176 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/appbg"
-    android:gravity="center|center_horizontal"
-    android:orientation="vertical"
-    android:padding="10dp"
-    android:paddingStart="30dp"
-    android:paddingEnd="30dp"
-    tools:context=".view.SignInActivity">
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="220dp"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_overnight_stay" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/round_edittext"
-        android:padding="4dp"
-        android:text="Modify Room"
-        android:textColor="@color/teal_700"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/currentRoomHotel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/round_edittext"
-        android:padding="4dp"
-        android:textColor="@color/teal_700"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
+        android:background="@drawable/appbg"
+        android:gravity="center|center_horizontal"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
+        tools:context=".view.SignInActivity">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_overnight_stay" />
 
         <TextView
-            android:id="@+id/textViewPrice"
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
             android:background="@drawable/round_edittext"
-            android:padding="8dp"
-            android:text="Select Room Type:"
-            android:textColor="@color/inputText"
-            android:textSize="18sp" />
+            android:padding="4dp"
+            android:text="Modify Room"
+            android:textColor="@color/teal_700"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
-        <Spinner
-            android:id="@+id/editRoomType"
+        <TextView
+            android:id="@+id/currentRoomHotel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:padding="10dp" />
+            android:layout_marginTop="10dp"
+            android:background="@drawable/round_edittext"
+            android:padding="4dp"
+            android:textColor="@color/teal_700"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_edittext"
+                android:padding="8dp"
+                android:text="Select Room Type:"
+                android:textColor="@color/inputText"
+                android:textSize="18sp" />
+
+            <Spinner
+                android:id="@+id/editRoomType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:padding="10dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewPrice2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/round_edittext"
+                android:padding="8dp"
+                android:text="Tariff:"
+                android:textColor="@color/inputText"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/editRoomTariff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/round_edittext"
+                android:ems="10"
+                android:hint="Tariff"
+                android:inputType="number"
+                android:padding="8dp"
+                android:textColor="@color/inputText"
+                android:textColorHint="@color/textHint" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/editRoomBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/teal_700"
+            android:text="confirm tariff change"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:cornerRadius="15dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewRooms"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/round_edittext"
+                android:padding="8dp"
+                android:text="No Of Rooms:"
+                android:textColor="@color/inputText"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/editRoomsNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/round_edittext"
+                android:ems="10"
+                android:hint="Rooms"
+                android:inputType="number"
+                android:padding="8dp"
+                android:textColor="@color/inputText"
+                android:textColorHint="@color/textHint" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/addRoomsBtn2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@android:color/holo_blue_bright"
+            android:text="Add Rooms"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:visibility="gone"
+            app:cornerRadius="15dp" />
+
+        <Button
+            android:id="@+id/deleteRoomsBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@android:color/holo_red_dark"
+            android:text="Update Number Of Rooms"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:cornerRadius="15dp" />
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
+</androidx.core.widget.NestedScrollView>
 
-        <TextView
-            android:id="@+id/textViewPrice2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/round_edittext"
-            android:padding="8dp"
-            android:text="Tariff:"
-            android:textColor="@color/inputText"
-            android:textSize="18sp" />
-
-        <EditText
-            android:id="@+id/editRoomTariff"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/round_edittext"
-            android:ems="10"
-            android:hint="Tariff"
-            android:inputType="number"
-            android:padding="8dp"
-            android:textColor="@color/inputText"
-            android:textColorHint="@color/textHint" />
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/editRoomBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@color/teal_700"
-        android:text="confirm tariff change"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        app:cornerRadius="15dp" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/textViewRooms"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/round_edittext"
-            android:padding="8dp"
-            android:text="No Of Rooms:"
-            android:textColor="@color/inputText"
-            android:textSize="18sp" />
-
-        <EditText
-            android:id="@+id/editRoomsNo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/round_edittext"
-            android:ems="10"
-            android:hint="Rooms"
-            android:inputType="number"
-            android:padding="8dp"
-            android:textColor="@color/inputText"
-            android:textColorHint="@color/textHint" />
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/addRoomsBtn2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@android:color/holo_blue_bright"
-        android:text="Add Rooms"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:visibility="gone"
-        app:cornerRadius="15dp" />
-
-    <Button
-        android:id="@+id/deleteRoomsBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@android:color/holo_red_dark"
-        android:text="Update Number Of Rooms"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        app:cornerRadius="15dp" />
-
-</LinearLayout>

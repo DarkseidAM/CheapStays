@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/parent_addHotel"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/appbg"
-    android:gravity="center_horizontal|center_vertical"
-    android:orientation="vertical"
-    android:padding="10dp"
-    android:paddingStart="30dp"
-    android:paddingEnd="30dp"
+    android:fillViewport="true"
     tools:context=".view.SignInActivity">
+
+    <LinearLayout
+        android:id="@+id/parent_addHotel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/appbg"
+        android:gravity="center_horizontal|center_vertical"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp">
+
 
     <ImageView
         android:id="@+id/imageView2"
@@ -78,22 +86,23 @@
         android:background="@drawable/round_edittext"
         android:ems="10"
         android:hint="Description"
-        android:inputType="textMultiLine|text"
+        android:inputType="textMultiLine"
         android:padding="8dp"
         android:textColor="@color/inputText"
         android:textColorHint="@color/textHint" />
 
-    <EditText
-        android:id="@+id/addHotelOffer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/round_edittext"
-        android:ems="10"
-        android:hint="Discount (If Any)"
-        android:padding="8dp"
-        android:textColor="@color/inputText"
-        android:textColorHint="@color/textHint" />
+        <EditText
+            android:id="@+id/addHotelOffer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/round_edittext"
+            android:ems="10"
+            android:hint="Discount (If Any)"
+            android:inputType="number"
+            android:padding="8dp"
+            android:textColor="@color/inputText"
+            android:textColorHint="@color/textHint" />
 
     <Button
         android:id="@+id/addHotelImage"
@@ -128,7 +137,8 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="25dp"
             android:layout_weight="1"
-            android:src="@android:drawable/stat_sys_upload"
+            android:background="#FDF5FF"
+            android:src="@drawable/ic_upload"
             android:visibility="gone" />
 
         <ProgressBar
@@ -153,4 +163,7 @@
         android:textSize="18sp"
         app:cornerRadius="15dp" />
 
-</LinearLayout>
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
+

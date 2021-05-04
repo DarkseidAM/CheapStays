@@ -71,7 +71,7 @@ class SelectedHotelFragment : Fragment(), AdapterView.OnItemSelectedListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     hotel = snapshot.getValue(Hotels::class.java)!!
-                    if(snapshot.child("rooms").exists()){
+                    if (snapshot.child("rooms").exists()) {
                         room = snapshot.child("rooms").getValue(Rooms::class.java)!!
                     }
                     hotelNameT.setText(hotel.name)
@@ -80,7 +80,14 @@ class SelectedHotelFragment : Fragment(), AdapterView.OnItemSelectedListener {
                     hotelPriceT.setText(hotel.price.toString())
                     hotelAddressT.setText(hotel.address)
                     hotelDescT.setText(hotel.description)
-                    hotelOfferT.setText(hotel.specialOffer)
+                    val offer = hotel.specialOffer
+                    if (offer == "None" || offer.isNullOrBlank()){
+                        hotelOfferT.setText("No Special Offers Available")
+                        hotelOfferT.background = null
+                    }
+                    else {
+                        hotelOfferT.setText("Special Offer: ${hotel.specialOffer}%")
+                    }
                 }
                 dRef.removeEventListener(this)
             }
@@ -90,18 +97,27 @@ class SelectedHotelFragment : Fragment(), AdapterView.OnItemSelectedListener {
             }
 
         })
-        val roomTypeAdapter = ArrayAdapter<String>(activity as Context,android.R.layout.simple_spinner_item, arrayOf("--SELECT--","Single","Double"))
+        val roomTypeAdapter = ArrayAdapter<String>(activity as Context,android.R.layout.simple_spinner_dropdown_item, arrayOf("--SELECT--","Single","Double"))
         book_room_type.adapter = roomTypeAdapter
         book_room_btn.setOnClickListener {
 
             val selectedNoOfRooms = book_noOfRooms.selectedItem.toString().toInt()
             val selectedTypeRooms = book_room_type.selectedItem.toString().toLowerCase()
             val bookingRoomType = if(selectedTypeRooms=="single") "singleBooked" else "doubleBooked"
-            val totalPrice  = if(selectedTypeRooms == "single") (selectedNoOfRooms*room.single.tariff.toInt()) else (selectedNoOfRooms.toInt()*room.double.tariff.toInt())
+            var totalPrice:Double  = if(selectedTypeRooms == "single") (selectedNoOfRooms*room.single.tariff.toDouble()) else (selectedNoOfRooms.toInt()*room.double.tariff.toDouble())
+            val offer = hotel.specialOffer
+            var saveMoney = 0.00
+            if (offer == "None" || offer.isNullOrBlank()){
+                totalPrice = totalPrice
+            }
+            else {
+                saveMoney = totalPrice * offer.toDouble()/100
+                totalPrice -= saveMoney
+            }
 
             MaterialAlertDialogBuilder(activity as Context)
                 .setTitle("Confirmation")
-                .setMessage("Do you want to confirm this booking \n₹$totalPrice on $bookingDate \nAt ${hotel.name}")
+                .setMessage("Do you want to confirm this booking \n₹${totalPrice.toInt()} on $bookingDate \nAt ${hotel.name} \nYou save : ₹${saveMoney.toInt()}")
                 .setPositiveButton("Book"){ dialogInterface: DialogInterface, i: Int ->
                     Toast.makeText(activity,"Booked",Toast.LENGTH_LONG).show()
                     val booking = Bookings(fAuth.currentUser?.uid.toString(),hotelId,bookingDate,selectedNoOfRooms,selectedTypeRooms,totalPrice.toDouble())
@@ -198,7 +214,7 @@ class SelectedHotelFragment : Fragment(), AdapterView.OnItemSelectedListener {
                     val intArray: List<Int> = IntRange(1, availableRooms).step(1).toList()
                     val roomNoAdapter = ArrayAdapter<Int>(
                         activity as Context,
-                        android.R.layout.simple_spinner_item,
+                        android.R.layout.simple_spinner_dropdown_item,
                         intArray
                     )
                     book_noOfRooms.adapter = roomNoAdapter

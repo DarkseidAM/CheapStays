@@ -1,16 +1,15 @@
 package com.cg.cheapstays.view.admin.presenter
 
 import com.cg.cheapstays.model.Hotels
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_modify_hotel.*
 
 class ModifyHotelPresenter(val view: View) {
 
     companion object{
         lateinit var fDatabase : FirebaseDatabase
+        lateinit var listener: ValueEventListener
+        lateinit var dRef : DatabaseReference
     }
 
     fun initialize() {
@@ -18,12 +17,12 @@ class ModifyHotelPresenter(val view: View) {
     }
 
     fun getHotelsFireBase(){
-        val dRef = fDatabase.reference.child("hotels")
+        dRef = fDatabase.reference.child("hotels")
         val hotelList = mutableListOf<Hotels>()
         val hotelNames = mutableListOf<String>()
         val hotelId = mutableListOf<String>()
 
-        dRef.addListenerForSingleValueEvent(object : ValueEventListener {
+        listener = dRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     hotelList.clear()
@@ -47,6 +46,11 @@ class ModifyHotelPresenter(val view: View) {
     }
 
 
+    fun removeListener(){
+        dRef.removeEventListener(listener)
+    }
+
+
     fun modifyHotelFireBase(hotelId: String, name: String, addr: String, desc: String, offer: String) {
 
         val dRef = fDatabase.reference.child("hotels")
@@ -60,7 +64,9 @@ class ModifyHotelPresenter(val view: View) {
         view.modifyHotelStatus("Success")
     }
 
+
     fun removeHotelFireBase(hotelId: String) {
+
         val dRef = fDatabase.reference.child("hotels")
         dRef.child(hotelId).removeValue().addOnSuccessListener {
             view.removeHotelStatus("Success")

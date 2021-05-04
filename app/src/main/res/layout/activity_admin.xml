@@ -5,7 +5,7 @@
     android:id="@+id/parentAdmin"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#647CF6">
+    android:background="@drawable/admin_background">
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

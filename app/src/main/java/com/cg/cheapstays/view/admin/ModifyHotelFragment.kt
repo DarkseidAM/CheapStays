@@ -110,6 +110,12 @@ class ModifyHotelFragment : Fragment(),
     }
 
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        presenter.removeListener()
+    }
+
+
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         currentPosition = position
         editHotelName.setText(hotelList[position].name)

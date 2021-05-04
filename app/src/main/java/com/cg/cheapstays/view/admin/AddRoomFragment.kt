@@ -52,8 +52,8 @@ class AddRoomFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val roomTypeAdapter = ArrayAdapter<String>(activity as Context,android.R.layout.simple_spinner_item, arrayOf("Single","Double"))
-        val roomNoAdapter = ArrayAdapter<Int>(activity as Context,android.R.layout.simple_spinner_item, arrayOf(1,2,3,4,5))
+        val roomTypeAdapter = ArrayAdapter<String>(activity as Context,android.R.layout.simple_spinner_dropdown_item, arrayOf("Single","Double"))
+        val roomNoAdapter = ArrayAdapter<Int>(activity as Context,android.R.layout.simple_spinner_dropdown_item, arrayOf(1,2,3,4,5))
         addRoomType.adapter = roomTypeAdapter
         addNoOfBeds.adapter = roomNoAdapter
 

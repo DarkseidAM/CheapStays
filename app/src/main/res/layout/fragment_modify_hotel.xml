@@ -1,135 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/appbg"
-    android:gravity="center|center_vertical"
-    android:orientation="vertical"
-    android:padding="10dp"
-    android:paddingStart="30dp"
-    android:paddingEnd="30dp"
-    tools:context=".view.SignInActivity">
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="209dp"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_overnight_stay" />
-
-    <Spinner
-        android:id="@+id/spinnerModidyHotel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="25dp" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/round_edittext"
-        android:padding="4dp"
-        android:text="Modify Hotel"
-        android:textColor="@color/teal_700"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/editHotelName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/round_edittext"
-        android:ems="10"
-        android:hint="Hotel Name"
-        android:inputType="text"
-        android:padding="8dp"
-        android:textColor="@color/inputText"
-        android:textColorHint="@color/textHint" />
-
-    <EditText
-        android:id="@+id/editHotelAddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/round_edittext"
-        android:ems="10"
-        android:hint="Address"
-        android:inputType="textPostalAddress"
-        android:padding="8dp"
-        android:textColor="@color/inputText"
-        android:textColorHint="@color/textHint" />
-
-    <EditText
-        android:id="@+id/editHotelDesc"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/round_edittext"
-        android:ems="10"
-        android:hint="Description"
-        android:inputType="textMultiLine"
-        android:padding="8dp"
-        android:scrollbars="vertical"
-        android:textColor="@color/inputText"
-        android:textColorHint="@color/textHint" />
-
-    <EditText
-        android:id="@+id/modifyHotelOffer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/round_edittext"
-        android:ems="10"
-        android:hint="Change Discount"
-        android:inputType="numberDecimal"
-        android:padding="8dp"
-        android:textColor="@color/inputText"
-        android:textColorHint="@color/textHint" />
-
-    <Button
-        android:id="@+id/editHotelBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@color/teal_700"
-        android:text="Confirm changes"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        app:cornerRadius="15dp" />
+    android:fillViewport="true">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:orientation="horizontal">
+        android:background="@drawable/appbg"
+        android:gravity="center|center_vertical"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
+        tools:context=".view.SignInActivity">
 
-        <Button
-            android:id="@+id/modifyHotelRoomBtn"
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="209dp"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_overnight_stay" />
+
+        <Spinner
+            android:id="@+id/spinnerModidyHotel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
+            android:padding="25dp" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/round_edittext"
+            android:padding="4dp"
+            android:text="Modify Hotel"
+            android:textColor="@color/teal_700"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/editHotelName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/round_edittext"
+            android:ems="10"
+            android:hint="Hotel Name"
+            android:inputType="text"
+            android:padding="8dp"
+            android:textColor="@color/inputText"
+            android:textColorHint="@color/textHint" />
+
+        <EditText
+            android:id="@+id/editHotelAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/round_edittext"
+            android:ems="10"
+            android:hint="Address"
+            android:inputType="textPostalAddress"
+            android:padding="8dp"
+            android:textColor="@color/inputText"
+            android:textColorHint="@color/textHint" />
+
+        <EditText
+            android:id="@+id/editHotelDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/round_edittext"
+            android:ems="10"
+            android:hint="Description"
+            android:inputType="textMultiLine"
+            android:padding="8dp"
+            android:scrollbars="vertical"
+            android:textColor="@color/inputText"
+            android:textColorHint="@color/textHint" />
+
+        <EditText
+            android:id="@+id/modifyHotelOffer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/round_edittext"
+            android:ems="10"
+            android:hint="Change Discount"
+            android:inputType="number"
+            android:padding="8dp"
+            android:textColor="@color/inputText"
+            android:textColorHint="@color/textHint" />
+
+        <Button
+            android:id="@+id/editHotelBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:backgroundTint="@color/teal_700"
-            android:text="Modify Rooms"
+            android:text="Confirm changes"
             android:textColor="@color/white"
             android:textSize="18sp"
             app:cornerRadius="15dp" />
 
-        <Button
-            android:id="@+id/deleteHotel"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="1"
-            android:backgroundTint="@android:color/holo_red_dark"
-            android:text="Delete Hotel"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            app:cornerRadius="15dp" />
+            android:layout_marginTop="25dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/modifyHotelRoomBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/teal_700"
+                android:text="Modify Rooms"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:cornerRadius="15dp" />
+
+            <Button
+                android:id="@+id/deleteHotel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:backgroundTint="@android:color/holo_red_dark"
+                android:text="Delete Hotel"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:cornerRadius="15dp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+</androidx.core.widget.NestedScrollView>
+

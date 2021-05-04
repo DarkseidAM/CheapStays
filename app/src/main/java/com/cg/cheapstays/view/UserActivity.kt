@@ -31,27 +31,15 @@ class UserActivity : AppCompatActivity(),UserPresenter.View {
         presenter.initialize()
 
         presenter.setUserTypeFireBase()
-        /*fDatabase = FirebaseDatabase.getInstance()
-        fAuth = FirebaseAuth.getInstance()
-
-        fDatabase.reference.child("users").child(fAuth.currentUser?.uid.toString()).addListenerForSingleValueEvent(object:ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                USER_TYPE = snapshot.child("userType").value.toString()
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                //
-            }
-        })*/
 
         navView.setOnNavigationItemReselectedListener {   }
 
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications))
-        setupActionBarWithNavController(navController, appBarConfiguration)
+//        // menu should be considered as top level destinations.
+//        val appBarConfiguration = AppBarConfiguration(setOf(
+//                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications))
+//        setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
     }

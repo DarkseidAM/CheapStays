@@ -8,7 +8,7 @@
     android:orientation="horizontal"
     app:cardBackgroundColor="#FFF59D"
     app:cardCornerRadius="40dp"
-    app:cardElevation="10dp">
+    app:cardElevation="15dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -63,6 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="3 Single Rooms"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bookingListDateT" />
@@ -91,6 +92,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="Booking Amount :"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/bookingListPriceT"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -102,9 +105,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:background="@color/white"
                     android:padding="2dp"
                     android:text="1500"
+                    android:textColor="#1041D5"
+                    android:textSize="18sp"
+                    android:textStyle="bold|italic"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"

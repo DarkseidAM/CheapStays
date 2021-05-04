@@ -1,5 +1,7 @@
 package com.cg.cheapstays.view.admin
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -43,9 +45,17 @@ class AdminStartUpFragment : Fragment(), AdminStartUpPresenter.View {
             startAdminFragment(frag)
         }
         logoutB.setOnClickListener {
-            presenter.signOutFireBase()
-            startActivity(Intent(activity,StartUpActivity::class.java))
-            activity?.finish()
+            val builder = AlertDialog.Builder(activity)
+            builder.setTitle("Confirmation")
+            builder.setMessage("Do you want  to Logout?")
+            builder.setPositiveButton("Yes", DialogInterface.OnClickListener { _, _ ->
+                presenter.signOutFireBase()
+                startActivity(Intent(activity,StartUpActivity::class.java))
+                activity?.finish()
+            })
+            builder.setNegativeButton("No") { dialog, _ -> dialog.cancel()}//trailing lambda
+            val dlg=builder.create()
+            dlg.show()
         }
         adminBookingListB.setOnClickListener{
             val frag = AdminBookingsFragment()

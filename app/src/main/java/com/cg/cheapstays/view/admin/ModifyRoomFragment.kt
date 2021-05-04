@@ -95,7 +95,6 @@ class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
                             }
                         }
                     }
-                    Log.d("BookedRooms","$singleBookedDate,$doubleBookedDate")
                 }
             }
 
