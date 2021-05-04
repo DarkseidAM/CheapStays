@@ -7,6 +7,7 @@ import android.widget.Toast
 import com.cg.cheapstays.R
 import com.cg.cheapstays.model.MakeSnackBar
 import com.cg.cheapstays.model.Users
+import com.cg.cheapstays.presenter.MainPresenter
 import com.cg.cheapstays.view.admin.AdminActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -18,44 +19,44 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainPresenter.View {
+
+    lateinit var presenter:MainPresenter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportActionBar?.hide()
-        val fAuth = FirebaseAuth.getInstance()
-        val fDatabase = FirebaseDatabase.getInstance()
-        if(fAuth.currentUser != null){
+
+        presenter = MainPresenter(this)
+        presenter.initialize()
+
+        if(MainPresenter.fAuth.currentUser != null){
             MakeSnackBar(findViewById(android.R.id.content)).make("Automatically Signing you in...").show()
-            val id = fAuth.currentUser?.uid!!
-            val ref =  fDatabase.reference.child("users")
             CoroutineScope(Dispatchers.IO).launch {
                 delay(500)
-                ref.addValueEventListener(object : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        runOnUiThread{
-                            val user_type = snapshot.child(id).getValue(Users::class.java)?.userType
-                            if (user_type == "admin") startActivity(Intent(this@MainActivity,AdminActivity::class.java))
-                            else startActivity(Intent(this@MainActivity, UserActivity::class.java))
-                            finish()
-                    }}
-
-                    override fun onCancelled(error: DatabaseError) {
-                        // Do nothing
-
-                    }
-                })
+                presenter.checkUserFireBase()
             }
-
         }else{
+            //---SPLASH SCREEN---
             CoroutineScope(Dispatchers.Main).launch{
                 delay(1000)
                 startActivity(Intent(this@MainActivity, StartUpActivity::class.java))
                 finish()
             }
         }
-
-
-
     }
+
+
+    override fun checkUserStatus(msg: String, userType: String?) {
+        if(msg!="Success"){
+            MakeSnackBar(findViewById(android.R.id.content)).make(msg).show()
+        }
+        else {
+            if (userType == "admin") startActivity(Intent(this@MainActivity, AdminActivity::class.java))
+            else startActivity(Intent(this@MainActivity, UserActivity::class.java))
+            finish()
+        }
+    }
+
 }
