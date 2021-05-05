@@ -1,20 +1,17 @@
-package com.cg.cheapstays.view
+package com.cg.cheapstays.view.user
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.cg.cheapstays.R
 import com.cg.cheapstays.presenter.UserPresenter
+import com.cg.cheapstays.view.NoInternetActivity
+import com.cg.cheapstays.view.utils.isOnline
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 
 class UserActivity : AppCompatActivity(),UserPresenter.View {
 
@@ -24,6 +21,10 @@ class UserActivity : AppCompatActivity(),UserPresenter.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if(!isOnline(this)){
+            startActivity(Intent(this, NoInternetActivity::class.java))
+            finish()
+        }
         setContentView(R.layout.activity_user)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 

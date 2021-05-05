@@ -12,6 +12,8 @@ import com.cg.cheapstays.R
 import com.cg.cheapstays.view.StartUpActivity
 import com.cg.cheapstays.view.admin.AdminReportActivity
 import com.cg.cheapstays.presenter.user.settings.SettingsPresenter
+import com.cg.cheapstays.view.NoInternetActivity
+import com.cg.cheapstays.view.utils.isOnline
 import kotlinx.android.synthetic.main.fragment_notifications.*
 
 class SettingsFragment : Fragment(), SettingsPresenter.View {
@@ -23,6 +25,10 @@ class SettingsFragment : Fragment(), SettingsPresenter.View {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        if(!isOnline(activity?.applicationContext!!)){
+            startActivity(Intent(activity?.applicationContext!!, NoInternetActivity::class.java))
+            activity?.finish()
+        }
         val root = inflater.inflate(R.layout.fragment_notifications, container, false)
         return root
     }

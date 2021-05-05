@@ -3,6 +3,7 @@ package com.cg.cheapstays.view.user.hotels
 
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -15,7 +16,9 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.cg.cheapstays.R
 import com.cg.cheapstays.model.*
+import com.cg.cheapstays.view.NoInternetActivity
 import com.cg.cheapstays.view.utils.MakeSnackBar
+import com.cg.cheapstays.view.utils.isOnline
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -43,6 +46,10 @@ class SelectedHotelFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if(!isOnline(activity?.applicationContext!!)){
+            startActivity(Intent(activity?.applicationContext!!, NoInternetActivity::class.java))
+            activity?.finish()
+        }
         arguments?.let {
             hotelId = it.getString("hotelid")!!
         }

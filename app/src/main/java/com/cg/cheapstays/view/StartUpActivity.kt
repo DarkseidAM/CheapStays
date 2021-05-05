@@ -9,6 +9,7 @@ import androidx.annotation.NonNull
 import com.cg.cheapstays.R
 import com.cg.cheapstays.model.Users
 import com.cg.cheapstays.view.admin.AdminActivity
+import com.cg.cheapstays.view.utils.isOnline
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -20,6 +21,11 @@ class StartUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start_up)
+
+        if(!isOnline(this)){
+            startActivity(Intent(this,NoInternetActivity::class.java))
+            finish()
+        }
 
 
         supportActionBar?.hide()

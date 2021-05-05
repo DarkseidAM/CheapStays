@@ -1,5 +1,6 @@
 package com.cg.cheapstays.view.admin
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -12,12 +13,18 @@ import android.view.ViewGroup
 import com.cg.cheapstays.R
 import com.cg.cheapstays.model.Bookings
 import com.cg.cheapstays.presenter.admin.AdminBookingsPresenter
+import com.cg.cheapstays.view.NoInternetActivity
+import com.cg.cheapstays.view.utils.isOnline
 
 class AdminBookingsFragment : Fragment(), AdminBookingsPresenter.View {
     private var columnCount = 1
     lateinit var presenter : AdminBookingsPresenter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if(!isOnline(activity?.applicationContext!!)){
+            startActivity(Intent(activity?.applicationContext!!, NoInternetActivity::class.java))
+            activity?.finish()
+        }
         presenter = AdminBookingsPresenter(this)
         presenter.initialize()
     }

@@ -11,13 +11,19 @@ import android.view.ViewGroup
 import com.cg.cheapstays.R
 import com.cg.cheapstays.view.StartUpActivity
 import com.cg.cheapstays.presenter.admin.AdminStartUpPresenter
+import com.cg.cheapstays.view.NoInternetActivity
 import com.cg.cheapstays.view.user.hotels.HotelsFragment
+import com.cg.cheapstays.view.utils.isOnline
 import kotlinx.android.synthetic.main.fragment_admin_start_up.*
 
 class AdminStartUpFragment : Fragment(), AdminStartUpPresenter.View {
     lateinit var presenter: AdminStartUpPresenter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if(!isOnline(activity?.applicationContext!!)){
+            startActivity(Intent(activity?.applicationContext!!, NoInternetActivity::class.java))
+            activity?.finish()
+        }
         presenter =AdminStartUpPresenter(this)
         presenter.initialize()
     }

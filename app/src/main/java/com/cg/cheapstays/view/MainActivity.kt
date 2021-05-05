@@ -1,13 +1,14 @@
 package com.cg.cheapstays.view
 
 import android.content.Intent
-import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.cg.cheapstays.R
 import com.cg.cheapstays.view.utils.MakeSnackBar
 import com.cg.cheapstays.presenter.MainPresenter
 import com.cg.cheapstays.view.admin.AdminActivity
+import com.cg.cheapstays.view.user.UserActivity
+import com.cg.cheapstays.view.utils.isOnline
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -22,7 +23,7 @@ class MainActivity : AppCompatActivity(), MainPresenter.View {
         setContentView(R.layout.activity_main)
         supportActionBar?.hide()
 
-        if(!isOnline()){
+        if(!isOnline(this)){
             startActivity(Intent(this,NoInternetActivity::class.java))
             finish()
         }
@@ -59,11 +60,6 @@ class MainActivity : AppCompatActivity(), MainPresenter.View {
             finish()
         }
     }
-    private fun isOnline() : Boolean{
-        val cm = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
-        val netInfo = cm.activeNetworkInfo
-        return netInfo!=null && netInfo.isConnectedOrConnecting
 
-    }
 
 }

@@ -1,6 +1,7 @@
 package com.cg.cheapstays.view.admin
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -14,6 +15,8 @@ import com.cg.cheapstays.R
 import com.cg.cheapstays.model.Hotels
 import com.cg.cheapstays.view.utils.MakeSnackBar
 import com.cg.cheapstays.presenter.admin.ModifyHotelPresenter
+import com.cg.cheapstays.view.NoInternetActivity
+import com.cg.cheapstays.view.utils.isOnline
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_modify_hotel.*
 import kotlinx.coroutines.CoroutineScope
@@ -39,8 +42,11 @@ class ModifyHotelFragment : Fragment(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if(!isOnline(activity?.applicationContext!!)){
+            startActivity(Intent(activity?.applicationContext!!, NoInternetActivity::class.java))
+            activity?.finish()
+        }
         arguments?.let {
-
         }
         hotelId = mutableListOf()
         hotelList = mutableListOf()

@@ -2,6 +2,7 @@ package com.cg.cheapstays.view.admin
 
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,7 +11,9 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.cg.cheapstays.R
+import com.cg.cheapstays.view.NoInternetActivity
 import com.cg.cheapstays.view.utils.MakeSnackBar
+import com.cg.cheapstays.view.utils.isOnline
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_modify_room.*
@@ -42,6 +45,10 @@ class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if(!isOnline(activity?.applicationContext!!)){
+            startActivity(Intent(activity?.applicationContext!!, NoInternetActivity::class.java))
+            activity?.finish()
+        }
         arguments?.let {
             hotelid = it.getString("hotelid")!!
         }

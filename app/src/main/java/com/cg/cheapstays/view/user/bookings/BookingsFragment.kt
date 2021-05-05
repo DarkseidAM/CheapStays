@@ -1,5 +1,6 @@
 package com.cg.cheapstays.view.user.bookings
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -12,6 +13,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.cg.cheapstays.R
 import com.cg.cheapstays.model.Bookings
+import com.cg.cheapstays.view.NoInternetActivity
+import com.cg.cheapstays.view.utils.isOnline
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -31,6 +34,10 @@ class BookingsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if(!isOnline(activity?.applicationContext!!)){
+            startActivity(Intent(activity?.applicationContext!!, NoInternetActivity::class.java))
+            activity?.finish()
+        }
         fDatabase = FirebaseDatabase.getInstance()
         bookingList = mutableListOf()
         bookingId = mutableListOf()

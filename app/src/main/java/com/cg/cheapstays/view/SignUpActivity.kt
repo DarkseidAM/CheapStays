@@ -8,6 +8,7 @@ import android.widget.Toast
 import com.cg.cheapstays.R
 import com.cg.cheapstays.view.utils.MakeSnackBar
 import com.cg.cheapstays.presenter.SignUpPresenter
+import com.cg.cheapstays.view.utils.isOnline
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
@@ -23,6 +24,11 @@ class SignUpActivity : AppCompatActivity(),SignUpPresenter.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
+
+        if(!isOnline(this)){
+            startActivity(Intent(this,NoInternetActivity::class.java))
+            finish()
+        }
 
         presenter = SignUpPresenter(this)
         presenter.initialize()

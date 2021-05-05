@@ -14,7 +14,7 @@
         <activity android:name=".view.admin.AdminActivity" />
         <activity android:name=".view.StartUpActivity" />
         <activity
-            android:name=".view.UserActivity"
+            android:name=".view.user.UserActivity"
             android:label="@string/title_activity_user" />
         <activity android:name=".view.SignInActivity" />
         <activity android:name=".view.SignUpActivity" />

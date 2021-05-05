@@ -11,6 +11,8 @@ import com.cg.cheapstays.presenter.SignInPresenter
 import com.cg.cheapstays.presenter.SignInPresenter.Companion.RC_SIGN_IN
 import com.cg.cheapstays.presenter.SignInPresenter.Companion.gso
 import com.cg.cheapstays.view.admin.AdminActivity
+import com.cg.cheapstays.view.user.UserActivity
+import com.cg.cheapstays.view.utils.isOnline
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.common.api.ApiException
@@ -26,6 +28,10 @@ class SignInActivity : AppCompatActivity(), SignInPresenter.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
+        if(!isOnline(this)){
+            startActivity(Intent(this,NoInternetActivity::class.java))
+            finish()
+        }
 
 
         progressBar.visibility = View.GONE
@@ -101,9 +107,9 @@ class SignInActivity : AppCompatActivity(), SignInPresenter.View {
         if(type=="admin"){
             startActivity(Intent(this@SignInActivity,AdminActivity::class.java))
         }else if(type=="employee"){
-            startActivity(Intent(this@SignInActivity,UserActivity::class.java))
+            startActivity(Intent(this@SignInActivity, UserActivity::class.java))
         }else
-            startActivity(Intent(this@SignInActivity,UserActivity::class.java))
+            startActivity(Intent(this@SignInActivity, UserActivity::class.java))
         finish()
 
     }

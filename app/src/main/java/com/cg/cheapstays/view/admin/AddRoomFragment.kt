@@ -13,6 +13,8 @@ import com.cg.cheapstays.R
 import com.cg.cheapstays.model.Doubles
 import com.cg.cheapstays.view.utils.MakeSnackBar
 import com.cg.cheapstays.model.Single
+import com.cg.cheapstays.view.NoInternetActivity
+import com.cg.cheapstays.view.utils.isOnline
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_add_room.*
@@ -32,6 +34,10 @@ class AddRoomFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if(!isOnline(activity?.applicationContext!!)){
+            startActivity(Intent(activity?.applicationContext!!, NoInternetActivity::class.java))
+            activity?.finish()
+        }
         arguments?.let {
             hotelid = it.getString("hotelid")!!
         }

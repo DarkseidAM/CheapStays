@@ -1,5 +1,6 @@
 package com.cg.cheapstays.view.admin
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,8 @@ import com.cg.cheapstays.R
 import com.cg.cheapstays.view.utils.MakeSnackBar
 import com.cg.cheapstays.model.Rooms
 import com.cg.cheapstays.presenter.admin.AdminReportPresenter
+import com.cg.cheapstays.view.NoInternetActivity
+import com.cg.cheapstays.view.utils.isOnline
 import com.google.android.material.datepicker.MaterialDatePicker
 import kotlinx.android.synthetic.main.activity_admin_report.*
 import java.text.SimpleDateFormat
@@ -27,6 +30,11 @@ class AdminReportActivity : AppCompatActivity(),AdminReportPresenter.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admin_report)
+
+        if(!isOnline(this)){
+            startActivity(Intent(this, NoInternetActivity::class.java))
+            finish()
+        }
 
         adminReportCV.visibility =View.INVISIBLE
         presenter = AdminReportPresenter(this)
