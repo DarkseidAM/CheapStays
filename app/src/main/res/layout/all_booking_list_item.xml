@@ -17,21 +17,20 @@
             android:id="@+id/show_booking_priceT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="4dp"
             android:layout_weight="1"
             android:padding="2dp"
             android:text="Price: "
             android:textColor="@color/white"
             android:textSize="18sp"
-            app:layout_constraintEnd_toStartOf="@+id/show_booking_dateT"
-            app:layout_constraintStart_toEndOf="@+id/show_booking_userT"
-            app:layout_constraintTop_toBottomOf="@+id/show_booking_hotelT" />
+            app:layout_constraintStart_toStartOf="@+id/show_booking_dateT"
+            app:layout_constraintTop_toBottomOf="@+id/show_booking_userT" />
 
         <TextView
             android:id="@+id/show_booking_hotelT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:layout_weight="1"
             android:padding="2dp"
             android:text="Hotel:"
@@ -39,7 +38,7 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.453"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -48,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="4dp"
             android:layout_weight="1"
             android:padding="2dp"
             android:text="User: "
@@ -70,5 +69,14 @@
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/show_booking_userT" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toStartOf="@+id/show_booking_userT"
+            app:layout_constraintTop_toBottomOf="@+id/show_booking_userT"
+            app:srcCompat="@drawable/basic_user_image" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

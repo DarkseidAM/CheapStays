@@ -9,6 +9,7 @@ import com.cg.cheapstays.R
 import com.cg.cheapstays.model.Bookings
 import com.cg.cheapstays.presenter.admin.AdminBookingsPresenter
 import com.cg.cheapstays.view.NoInternetActivity
+import com.cg.cheapstays.view.USER_TYPE
 import com.cg.cheapstays.view.utils.isOnline
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -41,7 +42,12 @@ class MyAdminBookingsRecyclerViewAdapter(
         val ref1 = AdminBookingsPresenter.fDatabase.reference.child("users").child(item.uid)
         ref1.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                if(snapshot.child("name").exists()) holder.user.text = snapshot.child("name").value.toString()
+                if(snapshot.exists()) {
+                    if(snapshot.child("userType").value.toString()=="employee")
+                        holder.user.text = "HotelEmployee"
+                    else
+                        holder.user.text = snapshot.child("name").value.toString()
+                }
             }
             override fun onCancelled(error: DatabaseError) {
             }

@@ -45,8 +45,11 @@ class AdminReportPresenter (val view : View) {
             ref.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
-                        val user = snapshot.getValue(Users::class.java)!!
-                        userNameList.add(user.name)
+                        val users = snapshot.getValue(Users::class.java)!!
+                        if(users.userType=="employee"){
+                            userNameList.add("HotelEmployee")
+                        }
+                        else    userNameList.add(users.name)
                         if(userNameList.size == userIDList.size)
                         {
                             Log.d("AdminReport User",userNameList.toString())
