@@ -19,6 +19,7 @@ class AdminReportPresenter (val view : View) {
     }
 
 
+    // Get details of Booked Rooms
     fun getHotelRoomFireBase(hotelId :String){
         val ref = fDatabase.reference.child("hotels").child(hotelId)
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -37,6 +38,7 @@ class AdminReportPresenter (val view : View) {
     }
 
 
+    // Getting the guest list for a specified date
     fun getGuestList(userIDList: MutableSet<String>) {
         val userNameList = mutableListOf<String>()
         userNameList.clear()
@@ -65,6 +67,7 @@ class AdminReportPresenter (val view : View) {
 
     }
 
+    // Get Bookings for the specified date
     fun getBookings(hotelId: String, bookingDateInMillis: String, date: String)
     {
         var numS ="0"
@@ -76,7 +79,6 @@ class AdminReportPresenter (val view : View) {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()){
                     numD = snapshot.child("bookedRooms").value.toString()
-                    Log.d("AdminReport 1","$numS $numD \n $userIDList")
                 }
                 else{
                     numD = "0"
@@ -91,7 +93,6 @@ class AdminReportPresenter (val view : View) {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()){
                     numS = snapshot.child("bookedRooms").value.toString()
-                    Log.d("AdminReport 2","$numS $numD \n $userIDList")
                 }
                 else{
                     numS = "0"
@@ -101,6 +102,7 @@ class AdminReportPresenter (val view : View) {
             }
         })
 
+        // Adding them to lists for setting them onto adapters
         val refU = fDatabase.reference.child("bookings").orderByChild("date").equalTo(date)
         refU.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -109,11 +111,9 @@ class AdminReportPresenter (val view : View) {
                         val userId = child.child("uid").value.toString()
                         userIDList.add(userId)
                     }
-                    Log.d("AdminReport 3","$numS $numD \n $userIDList")
                     view.makeChanges(numS,numD,userIDList)
                 }
                 else{
-                    Log.d("AdminReport 3","$numS $numD \n $userIDList")
                     view.makeChanges(numS,numD,userIDList)
                 }
             }

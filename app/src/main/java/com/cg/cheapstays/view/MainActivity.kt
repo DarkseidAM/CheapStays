@@ -21,8 +21,8 @@ class MainActivity : AppCompatActivity(), MainPresenter.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        supportActionBar?.hide()
 
+        // Checking if internet connection is there or not
         if(!isOnline(this)){
             startActivity(Intent(this,NoInternetActivity::class.java))
             finish()
@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity(), MainPresenter.View {
 
 
     override fun checkUserStatus(msg: String, userType: String?) {
+        // Automatic Logging in
         if(msg!="Success"){
             MakeSnackBar(findViewById(android.R.id.content)).make(msg).show()
         }

@@ -8,9 +8,11 @@ class AdminBookingsPresenter (val view : View) {
     companion object{
         lateinit var fDatabase: FirebaseDatabase
     }
+    // Initializing Firebase
     fun initialize(){
         fDatabase = FirebaseDatabase.getInstance()
     }
+    // Getting all the bookings made through the app
     fun getBookingList(){
         val ref = fDatabase.reference.child("bookings").orderByChild("date")
         ref.addListenerForSingleValueEvent(object: ValueEventListener {
@@ -24,6 +26,7 @@ class AdminBookingsPresenter (val view : View) {
                         bookingMap[booking] = child.key.toString()
                     }
                 }
+                // Callback to activity to change adapter
                 view.changeBookingAdapter(bookingMap,bookingList)
             }
             override fun onCancelled(error: DatabaseError) {

@@ -1,5 +1,6 @@
 package com.cg.cheapstays.model
 
+// Hold local Bookings data
 data class Bookings(
     val uid : String,
     val hotelId : String,

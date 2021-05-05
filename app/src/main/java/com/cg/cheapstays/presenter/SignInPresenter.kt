@@ -16,7 +16,7 @@ import com.google.firebase.database.ValueEventListener
 
 class SignInPresenter(val view : View) {
     companion object{
-        val RC_SIGN_IN :Int = 12
+        const val RC_SIGN_IN :Int = 12  // constant value for google sign in response. Can be any independent constant value
         lateinit var gso : GoogleSignInOptions
         lateinit var fAuth : FirebaseAuth
         lateinit var fDatabase : FirebaseDatabase
@@ -24,6 +24,7 @@ class SignInPresenter(val view : View) {
 
 
     fun initialize(webId : String){
+        // Initializing Firebase's Database, Auth & Google Sign-in options
         gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(webId)
                 .requestEmail()
@@ -34,6 +35,7 @@ class SignInPresenter(val view : View) {
     }
 
 
+    // Signing in using email & password
     fun emailSignInFireBase(email: String, password: String) {
         fAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener{ task ->
             if (task.isSuccessful) {
@@ -43,6 +45,7 @@ class SignInPresenter(val view : View) {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         if(snapshot.exists()) {
                             val userType = snapshot.getValue(Users::class.java)?.userType
+                            // Checking if the correct user logs in
                             if (userType == USER_TYPE)
                                 view.emailSignInStatus("Success", user)
                             else {
@@ -63,6 +66,7 @@ class SignInPresenter(val view : View) {
     }
 
 
+    // Google Sign in functionality
     fun googleSignInFireBase(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         fAuth.signInWithCredential(credential).addOnCompleteListener{ task ->
@@ -82,7 +86,6 @@ class SignInPresenter(val view : View) {
     interface View{
 
         val googleSignInClient : GoogleSignInClient
-
         fun emailSignInStatus(msg: String, user: FirebaseUser?)
         fun googleSignInStatus(msg: String, user: FirebaseUser?)
 

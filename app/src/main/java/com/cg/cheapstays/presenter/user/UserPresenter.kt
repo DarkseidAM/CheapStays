@@ -1,4 +1,4 @@
-package com.cg.cheapstays.presenter
+package com.cg.cheapstays.presenter.user
 
 import com.cg.cheapstays.view.USER_TYPE
 import com.google.firebase.auth.FirebaseAuth
@@ -20,6 +20,7 @@ class UserPresenter (val view : View) {
         fAuth = FirebaseAuth.getInstance()
     }
 
+    // Getting the current logged in user
     fun setUserTypeFireBase(){
         fDatabase.reference.child("users").child(fAuth.currentUser?.uid.toString()).addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {

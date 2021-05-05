@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.SearchView
 import com.cg.cheapstays.R
 import com.cg.cheapstays.model.Hotels
@@ -14,6 +15,7 @@ import com.cg.cheapstays.presenter.user.hotels.HotelsPresenter
 import com.cg.cheapstays.view.NoInternetActivity
 import com.cg.cheapstays.view.USER_TYPE
 import com.cg.cheapstays.view.admin.AdminReportActivity
+import com.cg.cheapstays.view.utils.MakeProgressBar
 import com.cg.cheapstays.view.utils.isOnline
 
 import java.util.*
@@ -24,6 +26,8 @@ class HotelsFragment : Fragment() , HotelsPresenter.View{
     lateinit var filteredList : MutableList<Hotels>
     lateinit var hotelMap : MutableMap<Hotels,String>
     lateinit var adapter: MyHotelsRecyclerViewAdapter
+    lateinit var pBar : ProgressBar
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if(!isOnline(activity?.applicationContext!!)){
@@ -42,14 +46,20 @@ class HotelsFragment : Fragment() , HotelsPresenter.View{
         activity?.findViewById<SearchView>(R.id.userSearchView)?.visibility = View.VISIBLE
         activity?.findViewById<SearchView>(R.id.userSearchView)?.setQuery("",false)
     }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_hotel_lists, container, false)
         return view
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        pBar = MakeProgressBar(activity?.findViewById(android.R.id.content)!!).make()
+        pBar.visibility = View.VISIBLE
+
         presenter.getHotelList()
+        // Implementing search for hotels
         val sv = activity?.findViewById<SearchView>(R.id.userSearchView)
         sv?.setOnQueryTextListener(object:SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -65,10 +75,12 @@ class HotelsFragment : Fragment() , HotelsPresenter.View{
         })
     }
 
+    // Changing the adapter accordingly on the basis of search results
     override fun changeHotelAdapter(hotels: MutableList<Hotels>, ids: MutableMap<Hotels, String>) {
         hotelList = hotels
         hotelMap = ids
         if(view is RecyclerView){
+            pBar.visibility = View.GONE
             adapter = MyHotelsRecyclerViewAdapter(hotelList){
                 if(USER_TYPE!="admin"){
                     val bundle = Bundle()

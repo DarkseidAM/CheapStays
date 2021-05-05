@@ -14,6 +14,7 @@ class AdminStartUpPresenter(view : View) {
     fun initialize(){
         fAuth = FirebaseAuth.getInstance()
         fDatabase = FirebaseDatabase.getInstance()
+        // Getting the user which got automatically logged in
         fDatabase.reference.child("users").child(fAuth.currentUser?.uid.toString()).addListenerForSingleValueEvent(object:
             ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {

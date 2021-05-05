@@ -12,12 +12,14 @@ class AddHotelPresenter(val view : View) {
         lateinit var storageRef : StorageReference
     }
 
+    // Initialize Firebase
     fun initialize() {
         fDatabase = FirebaseDatabase.getInstance()
         fStorage = FirebaseStorage.getInstance()
         storageRef = fStorage.reference
     }
 
+    // Uploading image on Firebase Storage
     fun imageUploadFireBase(filePath : Uri){
         view.uploadImageStatus("Start")
         val ref: StorageReference =storageRef.child("images/"
@@ -38,6 +40,7 @@ class AddHotelPresenter(val view : View) {
         }
     }
 
+    // Adding hotel to firebase database
     fun addHotelFireBase(name: String, address: String, description: String, price: Int, rating: Double, imgPath: String, specialOffer: String) {
         val db = fDatabase.reference.child("hotels")
         val hotelid = db.push().key!!

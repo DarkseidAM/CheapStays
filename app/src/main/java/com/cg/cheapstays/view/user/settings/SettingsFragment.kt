@@ -7,18 +7,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import com.cg.cheapstays.R
 import com.cg.cheapstays.view.StartUpActivity
 import com.cg.cheapstays.view.admin.AdminReportActivity
 import com.cg.cheapstays.presenter.user.settings.SettingsPresenter
 import com.cg.cheapstays.view.NoInternetActivity
+import com.cg.cheapstays.view.utils.MakeProgressBar
 import com.cg.cheapstays.view.utils.isOnline
 import kotlinx.android.synthetic.main.fragment_notifications.*
 
 class SettingsFragment : Fragment(), SettingsPresenter.View {
     lateinit var presenter: SettingsPresenter
     lateinit var hotelid:String
+    lateinit var pBar : ProgressBar
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,8 +38,10 @@ class SettingsFragment : Fragment(), SettingsPresenter.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        pBar = MakeProgressBar(activity?.findViewById(android.R.id.content)!!).make()
+        pBar.visibility = View.VISIBLE
         presenter = SettingsPresenter(this)
-        settingsEmployeeReportB.visibility = View.INVISIBLE
+        settingsEmployeeReportB.visibility = View.GONE
         //----START GETTING AUTH---
         presenter.initialize()
         presenter.getUserFireBase()
@@ -68,7 +73,9 @@ class SettingsFragment : Fragment(), SettingsPresenter.View {
     private fun updateUserData() {
         val name = settingsNameE.text.toString()
         val phone =  settingsPhoneE.text.toString()
+        pBar.visibility = View.VISIBLE
         presenter.updateUserFireBase(name,phone)
+        pBar.visibility = View.GONE
     }
 
     private fun startReportActivity(){
@@ -78,6 +85,7 @@ class SettingsFragment : Fragment(), SettingsPresenter.View {
     }
 
     override fun getUserStatus(name: String, email: String, phone: String, id: String?) {
+        pBar.visibility = View.GONE
         if(id!=null){
             settingsEmployeeReportB.visibility = View.VISIBLE
             hotelid=id

@@ -18,6 +18,7 @@ class SettingsPresenter(val view : View) {
         fAuth = FirebaseAuth.getInstance()
     }
 
+    // Get user details from firebase
     fun getUserFireBase(){
         val id = fAuth.currentUser?.uid!!
         val ref =  fDatabase.reference.child("users").child(id)
@@ -41,6 +42,7 @@ class SettingsPresenter(val view : View) {
         })
     }
 
+    // Updating user's details
     fun updateUserFireBase(name: String, phone: String) {
         val id = fAuth.currentUser?.uid!!
         val ref =  fDatabase.reference.child("users").child(id)

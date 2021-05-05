@@ -50,6 +50,7 @@ class HotelBaseFragment : Fragment() ,HotelBasePresenter.View{
         }
     }
 
+    // Checking if user is employee then taking him to his respective hotel
     override fun sendId(id: String) {
         hotelId = id
         val frag = SelectedHotelFragment()

@@ -22,13 +22,14 @@ class StartUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start_up)
 
+        // Checking if internet connection is there or not
         if(!isOnline(this)){
             startActivity(Intent(this,NoInternetActivity::class.java))
             finish()
         }
 
 
-        supportActionBar?.hide()
+        // Checking what type of user is selected and starting respective activities
         userCV.setOnClickListener{
             USER_TYPE = "user"
             val intent = Intent(this,SignInActivity::class.java)

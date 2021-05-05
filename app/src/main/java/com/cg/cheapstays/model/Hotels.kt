@@ -1,6 +1,6 @@
 package com.cg.cheapstays.model
 
-// TODO check noOfRooms is being used or not
+// Hold local Hotels data
 data class Hotels(
     val name : String,
     val address : String,
@@ -13,6 +13,7 @@ data class Hotels(
     constructor() : this ("","","",0,0.00,"","None")
 
 }
+// Hold local Rooms data
 data class Rooms (
         val single : Single,
         val double : Doubles

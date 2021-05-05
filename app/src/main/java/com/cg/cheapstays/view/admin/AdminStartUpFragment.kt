@@ -24,6 +24,7 @@ class AdminStartUpFragment : Fragment(), AdminStartUpPresenter.View {
             startActivity(Intent(activity?.applicationContext!!, NoInternetActivity::class.java))
             activity?.finish()
         }
+        // Initialize Presenter
         presenter =AdminStartUpPresenter(this)
         presenter.initialize()
     }

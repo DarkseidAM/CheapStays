@@ -15,11 +15,13 @@ class SignUpPresenter (val view : View) {
     }
 
     fun initialize(){
+        // Initializing Firebase's Database and Auth Instances
         fDatabase = FirebaseDatabase.getInstance()
         fAuth = FirebaseAuth.getInstance()
     }
 
     fun getHotelsFireBase(){
+        // Getting the hotel list for the employee to select
         fDatabase.reference.child("hotels").addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val hotels = mutableListOf<String>()
@@ -29,6 +31,7 @@ class SignUpPresenter (val view : View) {
                         hotels.add(childs.child("name").value.toString())
                         hotelId.add(childs.key!!)
                     }
+                    // Giving a callback to activity
                     view.setHotelAdapter(hotels,hotelId)
                 }
             }
@@ -39,12 +42,14 @@ class SignUpPresenter (val view : View) {
 
 
     fun signUpFireBase(name : String,email: String, password: String, hotelid:String?=null ) {
+        // Signing Up with Email & Password
         fAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener{
             if(it.isSuccessful){
                 val users = Users(name,email, USER_TYPE,"")
                 val id = it.result?.user?.uid
                 fDatabase.reference.child("users").child(id!!).setValue(users)
                 if(USER_TYPE=="employee")    fDatabase.reference.child("users").child(id).child("hotelId").setValue(hotelid)
+                // Callback to activity
                 view.signUpStatus("Success")
             }
             else{

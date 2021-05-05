@@ -12,6 +12,7 @@ class HotelsPresenter(val view : View) {
     fun initialize(){
         fDatabase = FirebaseDatabase.getInstance()
     }
+    // Get all the Hotels from database and sort them by price
     fun getHotelList(){
         val ref = fDatabase.reference.child("hotels").orderByChild("price")
         ref.addListenerForSingleValueEvent(object: ValueEventListener {

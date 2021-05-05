@@ -10,8 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.ProgressBar
 import com.cg.cheapstays.R
 import com.cg.cheapstays.view.NoInternetActivity
+import com.cg.cheapstays.view.utils.MakeProgressBar
 import com.cg.cheapstays.view.utils.MakeSnackBar
 import com.cg.cheapstays.view.utils.isOnline
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -30,7 +32,6 @@ class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private lateinit var hotelid : String
     lateinit var fDatabase: FirebaseDatabase
     lateinit var dRef: DatabaseReference
-    lateinit var roomId : MutableList<String>
     lateinit var oldPrice : String
     lateinit var listener1 : ValueEventListener
     lateinit var listener2 : ValueEventListener
@@ -42,6 +43,7 @@ class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
     var doubleRoomNo = 0
     var doubleBooked = 0
     lateinit var doubleBookedDate : String
+    lateinit var pBar : ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +51,7 @@ class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
             startActivity(Intent(activity?.applicationContext!!, NoInternetActivity::class.java))
             activity?.finish()
         }
+        // Taking hotelId from previous fragment
         arguments?.let {
             hotelid = it.getString("hotelid")!!
         }
@@ -69,11 +72,11 @@ class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
         savedInstanceState: Bundle?
     ): View? {
 
+        // Initialize Firebase
         fDatabase = FirebaseDatabase.getInstance()
         dRef = fDatabase.reference.child("hotels").child(hotelid)
-        roomId = mutableListOf<String>()
-        // Inflate the layout for this fragment
 
+        // Getting the current booked rooms
         listener2 = dRef.child("rooms").addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 val currentTime = Calendar.getInstance().timeInMillis
@@ -104,13 +107,17 @@ class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
             }
 
         })
-
+        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_modify_room, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        pBar = MakeProgressBar(activity?.findViewById(android.R.id.content)!!).make()
+        pBar.visibility = View.GONE
 
+
+        // Getting the current room details - tariff and current room numbers
         listener1 = dRef.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()){
@@ -141,6 +148,7 @@ class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
             val roomType = editRoomType.selectedItem.toString().toLowerCase()
             val price = editRoomTariff.text.toString()
 
+            // Changing the tariff of a particular type of room
             CoroutineScope(Dispatchers.Default).launch {
                 val j = CoroutineScope(Dispatchers.IO).launch {
                     dRef.child("rooms").child(roomType).addListenerForSingleValueEvent(object:ValueEventListener{
@@ -167,6 +175,7 @@ class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
                 j.join()
                 delay(1500)
+                // Updating the minimum price for hotel
                 dRef.child("price").setValue(min(singlePrice,doublePrice))
             }
 
@@ -177,6 +186,7 @@ class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
             val bookedRooms = if(roomType=="single") singleBooked else doubleBooked
             val bookedRoomsDate = if(roomType=="single") singleBookedDate else doubleBookedDate
 
+            // Checking if rooms are booked
             if(newRoomNo<bookedRooms){
                 MakeSnackBar(activity?.findViewById(android.R.id.content)!!).make("This type of room can't be lesser than $bookedRooms as it is booked on $bookedRoomsDate").show()
             }
@@ -185,6 +195,7 @@ class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
                     .setTitle("Confirmation")
                     .setMessage("Do you want to change the number of rooms to $newRoomNo?")
                     .setPositiveButton("Confirm"){ dialogInterface: DialogInterface, i: Int ->
+                        // Updating room numbers
                         dRef.child("rooms").child(roomType).child("noOfRooms").setValue(newRoomNo)                    }
                     .setNegativeButton("Cancel"){ dialogInterface: DialogInterface, i: Int ->
                         dialogInterface.dismiss()
@@ -205,6 +216,7 @@ class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     }
 
+    // If no rooms were created at creation of hotel
     private fun onNullRooms() {
         deleteRoomsBtn.visibility = View.GONE
         editRoomBtn.visibility = View.GONE
@@ -212,6 +224,7 @@ class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {
         editRoomTariff.isEnabled = false
         editRoomsNo.isEnabled = false
     }
+    // If rooms of one type were created so enabling again
     private fun onNonNullRooms() {
         deleteRoomsBtn.visibility = View.VISIBLE
         editRoomBtn.visibility = View.VISIBLE

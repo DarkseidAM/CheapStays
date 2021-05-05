@@ -21,6 +21,7 @@ class ModifyHotelPresenter(val view: View) {
         fDatabase = FirebaseDatabase.getInstance()
     }
 
+    // Getting all the hotels from database for selection
     fun getHotelsFireBase(){
         dRef = fDatabase.reference.child("hotels")
         val hotelList = mutableListOf<Hotels>()
@@ -56,6 +57,7 @@ class ModifyHotelPresenter(val view: View) {
     }
 
 
+    // Modifying Hotel
     fun modifyHotelFireBase(hotelId: String, name: String, addr: String, desc: String, offer: String) {
 
         val dRef = fDatabase.reference.child("hotels")
@@ -70,6 +72,7 @@ class ModifyHotelPresenter(val view: View) {
     }
 
 
+    // Removing Hotel
     fun removeHotelFireBase(hotelId: String) {
 
         val dRef = fDatabase.reference.child("hotels")
@@ -78,6 +81,7 @@ class ModifyHotelPresenter(val view: View) {
         }
     }
 
+    // Checking if no clashes happened when deleting hotel
     fun checkRemoving(hotelId : String){
         var currentTime = Calendar.getInstance().timeInMillis
         val ref1 = fDatabase.reference.child("bookings")

@@ -3,6 +3,7 @@ package com.cg.cheapstays.view
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.cg.cheapstays.R
@@ -12,6 +13,7 @@ import com.cg.cheapstays.presenter.SignInPresenter.Companion.RC_SIGN_IN
 import com.cg.cheapstays.presenter.SignInPresenter.Companion.gso
 import com.cg.cheapstays.view.admin.AdminActivity
 import com.cg.cheapstays.view.user.UserActivity
+import com.cg.cheapstays.view.utils.MakeProgressBar
 import com.cg.cheapstays.view.utils.isOnline
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -24,35 +26,43 @@ class SignInActivity : AppCompatActivity(), SignInPresenter.View {
     lateinit var presenter: SignInPresenter
     override lateinit var googleSignInClient : GoogleSignInClient
     lateinit var type : String
+    lateinit var pBar : ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
+        pBar = MakeProgressBar(findViewById(android.R.id.content)).make()
+        pBar.visibility = View.GONE
+        // Checking if internet connection is there or not
         if(!isOnline(this)){
             startActivity(Intent(this,NoInternetActivity::class.java))
             finish()
         }
 
-
         progressBar.visibility = View.GONE
         presenter = SignInPresenter(this)
         presenter.initialize(getString(R.string.default_web_client_id))
 
+
         type = USER_TYPE
+        // Checking the type of user selected on previous screen
         if(type == "admin" || type == "employee"){
             if(type == "admin")    NewUserT.visibility = View.GONE
             googleLoginBtn.visibility = View.GONE
         }
 
+        // Moving to Sign Up activity
         NewUserT.setOnClickListener{
             val intent = Intent(this,SignUpActivity::class.java)
             startActivity(intent)
             finish()
         }
 
+        // Initializing Google Sign In Client
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         googleLoginBtn.setOnClickListener {
+            pBar.visibility = View.VISIBLE
             googleSignIn()
         }
         signInBtn.setOnClickListener {
@@ -103,6 +113,7 @@ class SignInActivity : AppCompatActivity(), SignInPresenter.View {
 
 
     private fun updateUI(user: FirebaseUser?) { //use this to move to activity
+        pBar.visibility = View.GONE
         Toast.makeText(this,"Login successful", Toast.LENGTH_LONG).show()
         if(type=="admin"){
             startActivity(Intent(this@SignInActivity,AdminActivity::class.java))
@@ -116,6 +127,9 @@ class SignInActivity : AppCompatActivity(), SignInPresenter.View {
 
 
     override fun emailSignInStatus(msg: String, user: FirebaseUser?) {
+        // Checking status of sign in
+        pBar.visibility = View.GONE
+        progressBar.visibility = View.GONE
         if(msg=="Success")
         {
             updateUI(user)
@@ -128,15 +142,15 @@ class SignInActivity : AppCompatActivity(), SignInPresenter.View {
         }
         else if(msg=="Failure"){
             MakeSnackBar(findViewById(android.R.id.content)).make("Authentication Failed. Incorrect Username/Password").show()
-            progressBar.visibility = View.GONE
         }
         else{
             MakeSnackBar(findViewById(android.R.id.content)).make(msg).show()
-            progressBar.visibility = View.GONE
         }
     }
 
     override fun googleSignInStatus(msg: String, user: FirebaseUser?) {
+        // Checking status of sign in
+        pBar.visibility = View.GONE
         if(msg=="Success")
         {
             updateUI(user)

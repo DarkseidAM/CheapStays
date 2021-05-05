@@ -4,6 +4,11 @@ package com.cg.cheapstays.view.user.hotels
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.BlendMode
+import android.graphics.Color
+import android.graphics.ColorFilter
+import android.graphics.PorterDuff
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -17,6 +22,8 @@ import com.bumptech.glide.Glide
 import com.cg.cheapstays.R
 import com.cg.cheapstays.model.*
 import com.cg.cheapstays.view.NoInternetActivity
+import com.cg.cheapstays.view.USER_TYPE
+import com.cg.cheapstays.view.utils.MakeProgressBar
 import com.cg.cheapstays.view.utils.MakeSnackBar
 import com.cg.cheapstays.view.utils.isOnline
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -43,6 +50,7 @@ class SelectedHotelFragment : Fragment(), AdapterView.OnItemSelectedListener {
     lateinit var hotel : Hotels
     lateinit var room : Rooms
     var currentBookedRooms = 0
+    lateinit var pBar : ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,10 +79,16 @@ class SelectedHotelFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if(USER_TYPE=="employee"){
+            activity?.findViewById<SearchView>(R.id.userSearchView)?.visibility = View.GONE
+        }
+        pBar = MakeProgressBar(activity?.findViewById(android.R.id.content)!!).make()
+        pBar.visibility = View.VISIBLE
 
         activity?.findViewById<Spinner>(R.id.book_room_type)?.isEnabled = false
         activity?.findViewById<Spinner>(R.id.book_noOfRooms)?.isEnabled = false
 
+        // Getting and setting up the selected hotel
         dRef.child("hotels").child(hotelId).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
@@ -97,6 +111,7 @@ class SelectedHotelFragment : Fragment(), AdapterView.OnItemSelectedListener {
                         hotelOfferT.setText("Special Offer: ${hotel.specialOffer}%")
                     }
                 }
+                pBar.visibility = View.GONE
                 dRef.removeEventListener(this)
             }
 
@@ -105,10 +120,12 @@ class SelectedHotelFragment : Fragment(), AdapterView.OnItemSelectedListener {
             }
 
         })
+        // Setting up the room type adapter
         val roomTypeAdapter = ArrayAdapter<String>(activity as Context,android.R.layout.simple_spinner_dropdown_item, arrayOf("--SELECT--","Single","Double"))
         book_room_type.adapter = roomTypeAdapter
         book_room_btn.setOnClickListener {
 
+            // Checking all the details and booking room
             val selectedNoOfRooms = book_noOfRooms.selectedItem.toString().toInt()
             val selectedTypeRooms = book_room_type.selectedItem.toString().toLowerCase()
             val bookingRoomType = if(selectedTypeRooms=="single") "singleBooked" else "doubleBooked"
@@ -123,6 +140,7 @@ class SelectedHotelFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 totalPrice -= saveMoney
             }
 
+            // Confirming book and taking him to his bookings fragment
             MaterialAlertDialogBuilder(activity as Context)
                 .setTitle("Confirmation")
                 .setMessage("Do you want to confirm this booking \n₹${totalPrice.toInt()} on $bookingDate \nAt ${hotel.name} \nYou save : ₹${saveMoney.toInt()}")
@@ -145,6 +163,7 @@ class SelectedHotelFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
         book_date_btn.setOnClickListener {
 
+            // Date Picker dialog
             activity?.supportFragmentManager?.let {frag ->
                 val picker = MaterialDatePicker.Builder.datePicker().build()
                 picker.addOnPositiveButtonClickListener {
@@ -166,6 +185,7 @@ class SelectedHotelFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onResume() {
         super.onResume()
+        // Setting up the recycler view again so search can be implemented again
         view?.isFocusableInTouchMode =true
         view?.requestFocus()
         view?.setOnKeyListener { _, keyCode, _ ->
@@ -185,6 +205,8 @@ class SelectedHotelFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         val bookingRoomType = if(book_room_type.selectedItem.toString().toLowerCase() == "single") "singleBooked" else "doubleBooked"
+        if(bookingRoomType=="singleBooked" || bookingRoomType == "doubleBooked")    pBar.visibility = View.VISIBLE
+        // Checking the number of available rooms
         CoroutineScope(Dispatchers.Main).launch {
             if(bookingDateInMillis.isNotEmpty()) {
                 dRef.child("hotels").child(hotelId).child("rooms").child(bookingRoomType)
@@ -213,9 +235,11 @@ class SelectedHotelFragment : Fragment(), AdapterView.OnItemSelectedListener {
                         }
                     })
                 delay(500)
+                // Updating the number of bookedRooms
                 val allRooms = if (book_room_type.selectedItem.toString().toLowerCase() == "single") room.single.noOfRooms else room.double.noOfRooms
                 val availableRooms = allRooms - currentBookedRooms
                 Log.d("RoomsAv","$allRooms,$currentBookedRooms")
+                pBar.visibility = View.GONE
                 if (availableRooms == 0) {
                     MakeSnackBar(activity?.findViewById(android.R.id.content)!!).make("No rooms available for this type on selected date").show()
                 } else {

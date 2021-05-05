@@ -10,12 +10,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.ProgressBar
 import android.widget.Toast
 import com.cg.cheapstays.R
 import com.cg.cheapstays.model.Hotels
 import com.cg.cheapstays.view.utils.MakeSnackBar
 import com.cg.cheapstays.presenter.admin.ModifyHotelPresenter
 import com.cg.cheapstays.view.NoInternetActivity
+import com.cg.cheapstays.view.utils.MakeProgressBar
 import com.cg.cheapstays.view.utils.isOnline
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_modify_hotel.*
@@ -30,7 +32,6 @@ class ModifyHotelFragment : Fragment(),
         AdapterView.OnItemSelectedListener {
 
     lateinit var presenter: ModifyHotelPresenter
-    //TODO
     lateinit var fDatabase: FirebaseDatabase
     lateinit var dRef: DatabaseReference
 
@@ -38,6 +39,7 @@ class ModifyHotelFragment : Fragment(),
     lateinit var hotelList: MutableList<Hotels>
     lateinit var hotelNames : MutableList<String>
     lateinit var hotelId : MutableList<String>
+    lateinit var pBar : ProgressBar
     var currentPosition = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,7 +56,7 @@ class ModifyHotelFragment : Fragment(),
 
         presenter = ModifyHotelPresenter(this)
         presenter.initialize()
-        //TODO
+
         fDatabase = FirebaseDatabase.getInstance()
         dRef = fDatabase.reference.child("hotels")
 
@@ -70,6 +72,8 @@ class ModifyHotelFragment : Fragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        pBar = MakeProgressBar(activity?.findViewById(android.R.id.content)!!).make()
+        pBar.visibility = View.VISIBLE
         presenter.getHotelsFireBase()
         spinnerModidyHotel.onItemSelectedListener = this
 
@@ -80,6 +84,7 @@ class ModifyHotelFragment : Fragment(),
             builder.setMessage("Do you confirm the changes")
             builder.setPositiveButton("Yes") { _, _ ->
 
+                pBar.visibility = View.VISIBLE
                 presenter.modifyHotelFireBase(hotelId[currentPosition],editHotelName.text.toString(),
                         editHotelAddress.text.toString(),
                         editHotelDesc.text.toString(),
@@ -95,6 +100,7 @@ class ModifyHotelFragment : Fragment(),
             Toast.makeText(it.context,"Checking for any problems...",Toast.LENGTH_LONG).show()
             var flag = 0
             CoroutineScope(Dispatchers.Main).launch {
+                pBar.visibility = View.VISIBLE
                 val j = CoroutineScope(Dispatchers.IO).launch {
                     presenter.checkRemoving(hotelId[currentPosition])
                 }
@@ -105,12 +111,9 @@ class ModifyHotelFragment : Fragment(),
                 val builder = AlertDialog.Builder(activity)
                 builder.setTitle("Are you sure?")
                 builder.setMessage("You won't be able to revert the changes")
+                pBar.visibility = View.GONE
                 builder.setPositiveButton("Yes") { _, _ ->
-
                     hotelRemoveConditions(flag)
-                    //else    presenter.removeHotelFireBase(hotelId[currentPosition])
-                    //TODO
-//                dRef.child(hotelId[currentPosition]).removeValue()
                 }
                 builder.setNegativeButton("No") { dialog, _ -> dialog.cancel()}//trailing lambda
                 val dlg=builder.create()
@@ -151,6 +154,7 @@ class ModifyHotelFragment : Fragment(),
 
 
     override fun getHotelsStatus(msg: String, hNames: MutableList<String>, hId: MutableList<String>, hList: MutableList<Hotels>) {
+        pBar.visibility = View.GONE
         if(msg=="Success")
         {
             hotelNames = hNames
@@ -167,7 +171,7 @@ class ModifyHotelFragment : Fragment(),
 
 
     override fun modifyHotelStatus(msg: String) {
-        //TODO FIX HOTEL LIST DATA
+        pBar.visibility = View.GONE
         if(msg=="Success"){
             MakeSnackBar(activity?.findViewById(android.R.id.content)!!).make("Hotel Updated").show()
             spinnerAdapter.notifyDataSetChanged()
@@ -177,7 +181,6 @@ class ModifyHotelFragment : Fragment(),
     override fun removeHotelStatus(msg: String) {
         if(msg=="Success"){
             MakeSnackBar(activity?.findViewById(android.R.id.content)!!).make("Hotel Removed").show()
-            //TODO FIX HOTEL SPINNER
 //            presenter.getHotelsFireBase()
         }
     }

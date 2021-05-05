@@ -10,10 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import com.cg.cheapstays.R
 import com.cg.cheapstays.model.Bookings
 import com.cg.cheapstays.view.NoInternetActivity
+import com.cg.cheapstays.view.utils.MakeProgressBar
 import com.cg.cheapstays.view.utils.isOnline
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -31,6 +33,7 @@ class BookingsFragment : Fragment() {
     lateinit var bookingList : MutableList<Bookings>
     lateinit var bookingId : MutableList<String>
     lateinit var fAuth : FirebaseAuth
+    lateinit var pBar : ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +69,10 @@ class BookingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        pBar = MakeProgressBar(activity?.findViewById(android.R.id.content)!!).make()
+        pBar.visibility = View.VISIBLE
+
+        // Getting user's booking details and setting them to the recycler view
         val ref = fDatabase.reference.child("bookings").orderByChild("uid").equalTo(fAuth.currentUser?.uid.toString())
         ref.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -82,6 +89,7 @@ class BookingsFragment : Fragment() {
 
                     }
                     if(view is RecyclerView){
+                        pBar.visibility = View.GONE
                         view.adapter = MyBookingsRecyclerViewAdapter(bookingList){
                             val bookings = bookingList[it]
                             fDatabase.reference.child("bookings").child(bookingId[it]).removeValue()
@@ -116,7 +124,7 @@ class BookingsFragment : Fragment() {
                 }
                 else{
                     Toast.makeText(view.context,"No Bookings",Toast.LENGTH_SHORT).show()
-                    Log.d("NoBookings","eeeee")
+                    pBar.visibility = View.GONE
                     activity?.findViewById<BottomNavigationView>(R.id.nav_view)?.selectedItemId = R.id.navigation_home
 //                    activity?.findViewById<BottomNavigationView>(R.id.nav_view)?.selectedItemId = R.id.navigation_dashboard
                     ref.removeEventListener(this)

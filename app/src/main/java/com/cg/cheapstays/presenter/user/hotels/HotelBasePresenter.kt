@@ -17,6 +17,7 @@ class HotelBasePresenter (val view : View) {
         fDatabase = FirebaseDatabase.getInstance()
         fAuth = FirebaseAuth.getInstance()
     }
+    // Get the hotelId if current logged in user is employee
     fun getHotelId(){
         val ref = fDatabase.reference.child("users").child(fAuth.currentUser?.uid!!)
         ref.addListenerForSingleValueEvent(object : ValueEventListener{
