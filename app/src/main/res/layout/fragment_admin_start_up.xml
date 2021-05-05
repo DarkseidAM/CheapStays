@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:fontFamily="sans-serif-condensed-medium"
-            android:text="    Cheap Stays     \nAdministrator"
+            android:text="@string/cheap_stays_admin"
             android:textAlignment="center"
             android:textColor="@color/teal_700"
             android:textSize="24sp"
@@ -48,7 +48,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="16dp"
-            app:cardBackgroundColor="#FDF5FF"
+            app:cardBackgroundColor="@color/bgColor"
             app:cardCornerRadius="75dp"
             app:cardElevation="15dp"
             app:layout_constraintBottom_toTopOf="@+id/logoutB"
@@ -71,7 +71,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="20dp"
                     android:backgroundTint="@color/fbBG"
-                    android:text="Add Hotel"
+                    android:text="@string/add_hotel"
                     android:textColor="@color/white"
                     app:cornerRadius="10dp" />
 
@@ -82,7 +82,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="20dp"
                     android:backgroundTint="@color/fbBG"
-                    android:text="List Hotel"
+                    android:text="@string/list_hotel"
                     android:textColor="@color/white"
                     app:cornerRadius="10dp" />
 
@@ -93,7 +93,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="20dp"
                     android:backgroundTint="@color/fbBG"
-                    android:text="Modify Hotels"
+                    android:text="@string/mod_hotel"
                     android:textColor="@color/white"
                     app:cornerRadius="10dp" />
 
@@ -103,7 +103,7 @@
                     android:layout_height="50dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="20dp"
-                    android:backgroundTint="#C3E60000"
+                    android:backgroundTint="@color/deepRed2"
                     android:scaleType="fitCenter"
                     android:tooltipText="View All Bookings"
                     app:srcCompat="@android:drawable/checkbox_on_background" />
@@ -116,7 +116,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/signBtnBG"
-            android:text="Logout"
+            android:text="@string/logout"
             android:textColor="@color/white"
             app:cornerRadius="10dp"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -32,7 +32,7 @@
             android:layout_marginTop="30dp"
             android:background="@drawable/round_edittext"
             android:padding="4dp"
-            android:text="Modify Room"
+            android:text="@string/mod_room"
             android:textColor="@color/teal_700"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/round_edittext"
                 android:padding="8dp"
-                android:text="Select Room Type:"
+                android:text="@string/sel_room_type"
                 android:textColor="@color/inputText"
                 android:textSize="18sp" />
 
@@ -87,7 +87,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/round_edittext"
                 android:padding="8dp"
-                android:text="Tariff:"
+                android:text="@string/tariff"
                 android:textColor="@color/inputText"
                 android:textSize="18sp" />
 
@@ -98,7 +98,7 @@
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/round_edittext"
                 android:ems="10"
-                android:hint="Tariff"
+                android:hint="@string/tariff"
                 android:inputType="number"
                 android:padding="8dp"
                 android:textColor="@color/inputText"
@@ -111,7 +111,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:backgroundTint="@color/teal_700"
-            android:text="confirm tariff change"
+            android:text="@string/confirm_tariff"
             android:textColor="@color/white"
             android:textSize="18sp"
             app:cornerRadius="15dp" />
@@ -129,7 +129,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/round_edittext"
                 android:padding="8dp"
-                android:text="No Of Rooms:"
+                android:text="@string/no_of_rooms"
                 android:textColor="@color/inputText"
                 android:textSize="18sp" />
 
@@ -140,7 +140,7 @@
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/round_edittext"
                 android:ems="10"
-                android:hint="Rooms"
+                android:hint="@string/rooms"
                 android:inputType="number"
                 android:padding="8dp"
                 android:textColor="@color/inputText"
@@ -153,7 +153,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:backgroundTint="@android:color/holo_blue_bright"
-            android:text="Add Rooms"
+            android:text="@string/add_rooms"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:visibility="gone"
@@ -165,7 +165,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:backgroundTint="@android:color/holo_red_dark"
-            android:text="Update Number Of Rooms"
+            android:text="@string/update_rooms"
             android:textColor="@color/white"
             android:textSize="18sp"
             app:cornerRadius="15dp" />

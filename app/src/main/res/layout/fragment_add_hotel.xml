@@ -27,69 +27,69 @@
         android:layout_height="107dp"
         app:srcCompat="@drawable/ic_overnight_stay" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/round_edittext"
-        android:padding="4dp"
-        android:text="Add Hotel"
-        android:textColor="@color/teal_700"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/round_edittext"
+            android:padding="4dp"
+            android:text="@string/add_hotel"
+            android:textColor="@color/teal_700"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/addHotelName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/round_edittext"
-        android:ems="10"
-        android:hint="Hotel Name"
-        android:inputType="text"
-        android:padding="8dp"
-        android:textColor="@color/inputText"
-        android:textColorHint="@color/textHint" />
+        <EditText
+            android:id="@+id/addHotelName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/round_edittext"
+            android:ems="10"
+            android:hint="@string/hotel_name"
+            android:inputType="text"
+            android:padding="8dp"
+            android:textColor="@color/inputText"
+            android:textColorHint="@color/textHint" />
 
-    <EditText
-        android:id="@+id/addHotelAddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/round_edittext"
-        android:ems="10"
-        android:hint="Address"
-        android:inputType="textPostalAddress"
-        android:padding="8dp"
-        android:textColor="@color/inputText"
-        android:textColorHint="@color/textHint" />
+        <EditText
+            android:id="@+id/addHotelAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/round_edittext"
+            android:ems="10"
+            android:hint="@string/address"
+            android:inputType="textPostalAddress"
+            android:padding="8dp"
+            android:textColor="@color/inputText"
+            android:textColorHint="@color/textHint" />
 
-    <EditText
-        android:id="@+id/addHotelRatings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/round_edittext"
-        android:ems="10"
-        android:hint="Rating of Hotel"
-        android:inputType="numberDecimal"
-        android:padding="8dp"
-        android:textColor="@color/inputText"
-        android:textColorHint="@color/textHint" />
+        <EditText
+            android:id="@+id/addHotelRatings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/round_edittext"
+            android:ems="10"
+            android:hint="@string/rating"
+            android:inputType="numberDecimal"
+            android:padding="8dp"
+            android:textColor="@color/inputText"
+            android:textColorHint="@color/textHint" />
 
-    <EditText
-        android:id="@+id/addHotelDesc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/round_edittext"
-        android:ems="10"
-        android:hint="Description"
-        android:inputType="textMultiLine"
-        android:padding="8dp"
-        android:textColor="@color/inputText"
-        android:textColorHint="@color/textHint" />
+        <EditText
+            android:id="@+id/addHotelDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/round_edittext"
+            android:ems="10"
+            android:hint="@string/desc"
+            android:inputType="textMultiLine"
+            android:padding="8dp"
+            android:textColor="@color/inputText"
+            android:textColorHint="@color/textHint" />
 
         <EditText
             android:id="@+id/addHotelOffer"
@@ -98,23 +98,23 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/round_edittext"
             android:ems="10"
-            android:hint="Discount (If Any)"
+            android:hint="@string/disc"
             android:inputType="number"
             android:padding="8dp"
             android:textColor="@color/inputText"
             android:textColorHint="@color/textHint" />
 
-    <Button
-        android:id="@+id/addHotelImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:backgroundTint="@color/signBtnBG"
-        android:drawableLeft="@drawable/ic_fi_rr_add"
-        android:text="Select Picture"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        app:cornerRadius="10dp" />
+        <Button
+            android:id="@+id/addHotelImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:backgroundTint="@color/signBtnBG"
+            android:drawableLeft="@drawable/ic_fi_rr_add"
+            android:text="@string/select_pic"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:cornerRadius="10dp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -137,7 +137,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="25dp"
             android:layout_weight="1"
-            android:background="#FDF5FF"
+            android:background="@color/bgColor"
             android:src="@drawable/ic_upload"
             android:visibility="gone" />
 
@@ -152,16 +152,16 @@
             android:visibility="gone" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/addHotelBtn"
-        android:layout_width="209dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@color/teal_700"
-        android:text="Add"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        app:cornerRadius="15dp" />
+        <Button
+            android:id="@+id/addHotelBtn"
+            android:layout_width="209dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/teal_700"
+            android:text="@string/add"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:cornerRadius="15dp" />
 
     </LinearLayout>
 

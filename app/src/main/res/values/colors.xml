@@ -72,4 +72,10 @@
     <color name="deepTurquoise">#009688</color>
     <color name="brightYellow2">#FFC107</color>
     <color name="lemonYellow2">#FFEB3B</color>
+    <color name="Green">#00FF00</color>
+    <color name="bgColor">#FDF5FF</color>
+    <color name="priceBlue">#1041D5</color>
+    <color name="tealv2">#06AA97</color>
+    <color name="originalYellow">#FF0</color>
+    <color name="bgColor2">#92D5D2</color>
 </resources>

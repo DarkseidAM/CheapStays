@@ -30,10 +30,10 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/round_edittext"
             android:padding="4dp"
-            android:text="SIGN UP"
+            android:text="@string/sign_up"
             android:textColor="@color/teal_700"
             android:textSize="24sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/nameE"
@@ -45,7 +45,7 @@
             android:drawableLeft="@drawable/ic_fi_rr_text"
             android:drawablePadding="6dp"
             android:ems="10"
-            android:hint="Name"
+            android:hint="@string/name"
             android:inputType="text"
             android:padding="8dp"
             android:paddingEnd="30dp"
@@ -63,7 +63,7 @@
             android:drawableLeft="@drawable/ic_fi_rr_envelope"
             android:drawablePadding="6dp"
             android:ems="10"
-            android:hint="Email ID"
+            android:hint="@string/email"
             android:inputType="textWebEmailAddress|textPassword"
             android:padding="8dp"
             android:textColor="@color/inputText"
@@ -80,7 +80,7 @@
             android:drawableLeft="@drawable/ic_fi_rr_lock"
             android:drawablePadding="6dp"
             android:ems="10"
-            android:hint="Password"
+            android:hint="@string/password"
             android:inputType="textPassword"
             android:padding="8dp"
             android:textColor="@color/inputText"
@@ -94,7 +94,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:backgroundTint="@color/signBtnBG"
-            android:text="Sign Up"
+            android:text="@string/sign_up"
             android:textColor="@color/white"
             app:cornerRadius="15dp" />
 
@@ -113,7 +113,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/round_edittext"
             android:padding="2dp"
-            android:text="Existing User? Sign In"
+            android:text="@string/existing_user"
             android:textColor="@color/teal_700"
             android:textSize="14sp"
             android:textStyle="bold" />

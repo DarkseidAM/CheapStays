@@ -33,7 +33,7 @@
             android:layout_marginTop="30dp"
             android:background="@drawable/round_edittext"
             android:padding="4dp"
-            android:text="Add Room"
+            android:text="@string/add_room"
             android:textColor="@color/teal_700"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/round_edittext"
                 android:padding="8dp"
-                android:text="No. of Rooms:"
+                android:text="@string/no_of_rooms"
                 android:textColor="@color/inputText"
                 android:textSize="18sp" />
 
@@ -79,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/round_edittext"
                 android:padding="8dp"
-                android:text="Room Type:"
+                android:text="@string/room_type"
                 android:textColor="@color/inputText"
                 android:textSize="18sp" />
 
@@ -105,7 +105,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/round_edittext"
                 android:padding="2dp"
-                android:text="Price"
+                android:text="@string/price"
                 android:textColor="@color/inputText"
                 android:textSize="18sp" />
 
@@ -126,7 +126,7 @@
             android:layout_marginTop="20dp"
             android:backgroundTint="@color/teal_700"
             android:padding="10dp"
-            android:text="Add"
+            android:text="@string/add"
             android:textColor="@color/white"
             android:textSize="18sp"
             app:cornerRadius="15dp" />
@@ -138,7 +138,7 @@
             android:layout_marginTop="20dp"
             android:backgroundTint="@color/teal_700"
             android:padding="10dp"
-            android:text="Return"
+            android:text="@string/ret"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:visibility="gone"

@@ -32,7 +32,7 @@
             android:layout_marginTop="8dp"
             android:fontFamily="@font/actor"
             android:gravity="center"
-            android:text="CheapStays Bookings"
+            android:text="@string/title_name_booking"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="24sp"

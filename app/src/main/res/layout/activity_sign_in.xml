@@ -31,10 +31,10 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/round_edittext"
             android:padding="4dp"
-            android:text="SIGN IN"
+            android:text="@string/sign_in"
             android:textColor="@color/teal_700"
             android:textSize="24sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/emailLoginE"
@@ -46,7 +46,7 @@
             android:drawableLeft="@drawable/ic_fi_rr_envelope"
             android:drawablePadding="6dp"
             android:ems="10"
-            android:hint="Email ID"
+            android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:padding="8dp"
             android:textColor="@color/inputText"
@@ -62,7 +62,7 @@
             android:drawableLeft="@drawable/ic_fi_rr_lock"
             android:drawablePadding="6dp"
             android:ems="10"
-            android:hint="Password"
+            android:hint="@string/password"
             android:inputType="textPassword"
             android:padding="8dp"
             android:textColor="@color/inputText"
@@ -81,7 +81,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:backgroundTint="@color/signBtnBG"
-                android:text="Sign In"
+                android:text="@string/sign_in"
                 android:textColor="@color/white"
                 app:cornerRadius="15dp" />
 
@@ -108,9 +108,9 @@
                 android:id="@+id/googleLoginBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#E44D4D"
+                android:backgroundTint="@color/redFade"
                 android:drawableLeft="@drawable/ic_google"
-                android:text="Sign In with Google"
+                android:text="@string/google_sign_in"
                 android:textColor="#FBF7F7"
                 app:cornerRadius="15dp" />
 
@@ -124,7 +124,7 @@
             android:layout_marginTop="8dp"
             android:background="@drawable/round_edittext"
             android:padding="2dp"
-            android:text="New User? Sign Up"
+            android:text="@string/new_user"
             android:textColor="@color/signBtnBG"
             android:textSize="14sp"
             android:textStyle="bold" />

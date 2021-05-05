@@ -43,8 +43,8 @@
             android:id="@+id/adminReportDateT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Select Date"
-            android:textColor="#00FF00"
+            android:text="@string/select_date"
+            android:textColor="@color/Green"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/adminReportDateB"
@@ -57,7 +57,7 @@
             android:id="@+id/adminReportCV"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="#FFFFFF"
+            app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="40dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -73,7 +73,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
-                    android:text="Booked Rooms"
+                    android:text="@string/bookedRooms"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
@@ -83,7 +83,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="16dp"
-                    android:text="Single Rooms"
+                    android:text="@string/single_rooms"
                     android:textAllCaps="true"
                     android:textColor="@color/black"
                     android:textSize="18sp"
@@ -102,11 +102,11 @@
 
                 <TextView
                     android:id="@+id/textView16"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="67dp"
+                    android:layout_height="25dp"
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="2dp"
-                    android:text="Max Rooms"
+                    android:text="@string/maxRooms"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
@@ -125,7 +125,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="32dp"
-                    android:text="Double Rooms"
+                    android:text="@string/double_rooms"
                     android:textAllCaps="true"
                     android:textColor="@color/black"
                     android:textSize="18sp"
@@ -139,7 +139,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="2dp"
-                    android:text="Max Rooms"
+                    android:text="@string/maxRooms"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
@@ -158,7 +158,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
-                    android:text="Booked Rooms"
+                    android:text="@string/bookedRooms"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
@@ -176,7 +176,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:backgroundTint="@color/brightYellow2"
-                    android:text="Show Guest List"
+                    android:text="@string/guestList"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"

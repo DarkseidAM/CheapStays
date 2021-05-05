@@ -33,7 +33,7 @@
             android:layout_marginTop="8dp"
             android:fontFamily="@font/actor"
             android:gravity="center"
-            android:text="Welcome to CheapStays "
+            android:text="@string/welcome"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="24sp"
