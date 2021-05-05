@@ -70,7 +70,7 @@ class SignInPresenter(val view : View) {
                         // Sign in success, update UI with the signed-in user's information
                         val user = fAuth.currentUser
                         val users = Users(user?.displayName!!,user.email!!, USER_TYPE,"")
-                        fDatabase.reference.child("users").child(user.uid).setValue(users)
+                        if(task.result?.additionalUserInfo?.isNewUser!!) fDatabase.reference.child("users").child(user.uid).setValue(users)
                         view.googleSignInStatus("Success",user)
                     } else {
                         // If sign in fails, display a message to the user.

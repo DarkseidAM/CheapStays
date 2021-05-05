@@ -9,7 +9,7 @@
         android:roundIcon="@drawable/main_splash_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.CheapStays">
-        <activity android:name=".view.NoInternetActivity"></activity>
+        <activity android:name=".view.NoInternetActivity"/>
         <activity android:name=".view.admin.AdminReportActivity" />
         <activity android:name=".view.admin.AdminActivity" />
         <activity android:name=".view.StartUpActivity" />
