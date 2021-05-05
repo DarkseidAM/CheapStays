@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/admin_background_blur">
+        android:background="@drawable/admin_background">
 
         <TextView
             android:id="@+id/adminReportHotelNameT"
@@ -32,10 +32,12 @@
             android:id="@+id/adminReportDateB"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toStartOf="@+id/adminReportDateT"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/adminReportDateT"
             app:layout_constraintTop_toBottomOf="@+id/adminReportHotelNameT"
             app:srcCompat="@drawable/ic_fi_rr_calendar" />
 
@@ -43,15 +45,18 @@
             android:id="@+id/adminReportDateT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="16dp"
             android:text="@string/select_date"
             android:textColor="@color/Green"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/adminReportDateB"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/adminReportDateB"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/adminReportDateB"
-            app:layout_constraintTop_toTopOf="@+id/adminReportDateB" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/adminReportDateB"
+            app:layout_constraintVertical_bias="0.0" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/adminReportCV"
@@ -73,7 +78,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
-                    android:text="@string/bookedRooms"
+                    android:text="@string/booked_rooms"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
@@ -102,11 +107,11 @@
 
                 <TextView
                     android:id="@+id/textView16"
-                    android:layout_width="67dp"
-                    android:layout_height="25dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="2dp"
-                    android:text="@string/maxRooms"
+                    android:text="@string/max"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
@@ -139,7 +144,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="2dp"
-                    android:text="@string/maxRooms"
+                    android:text="@string/max"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
@@ -158,7 +163,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
-                    android:text="@string/bookedRooms"
+                    android:text="@string/booked_rooms"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
@@ -176,7 +181,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:backgroundTint="@color/brightYellow2"
-                    android:text="@string/guestList"
+                    android:text="@string/show_guest_list"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"

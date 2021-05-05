@@ -84,9 +84,10 @@
     <string name="modify_hotel">Modify Hotel</string>
     <string name="view_report">View Bookings Report For the hotel</string>
     <string name="special_offer">Special Offer:</string>
-    <string name="noInternet">You have no internet connection</string>
+    <string name="no_internet">No Internet Available</string>
+    <string name="max">Max Rooms</string>
+    <string name="booked_rooms">Booked Rooms</string>
+    <string name="show_guest_list">Show Guest List</string>
+    <string name="all_bookings">All Bookings</string>
     <string name="userAccount">Choose your desired user account</string>
-    <string name="maxRooms">Max Rooms</string>
-    <string name="bookedRooms">Booked Rooms</string>
-    <string name="guestList">Show Guest List</string>
 </resources>

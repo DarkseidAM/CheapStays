@@ -20,9 +20,10 @@
 
         <ImageView
             android:id="@+id/imageView5"
-            android:layout_width="99dp"
-            android:layout_height="57dp"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="2dp"
             android:layout_weight="0"
             android:src="@drawable/ic_overnight_stay" />
 
@@ -36,14 +37,14 @@
             android:text="@string/welcome"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <SearchView
             android:id="@+id/userSearchView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="0" />
     </LinearLayout>
 
     <LinearLayout

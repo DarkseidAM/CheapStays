@@ -21,6 +21,7 @@
             android:layout_width="315dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
             app:srcCompat="@drawable/ic_overnight_stay" />
 
         <TextView
