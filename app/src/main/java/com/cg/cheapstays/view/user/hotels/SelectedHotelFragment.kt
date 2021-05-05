@@ -1,4 +1,4 @@
-package com.cg.cheapstays.view.ui.home
+package com.cg.cheapstays.view.user.hotels
 
 
 import android.content.Context

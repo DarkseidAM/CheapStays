@@ -10,8 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.cg.cheapstays.R
 import com.cg.cheapstays.view.StartUpActivity
-import com.cg.cheapstays.view.admin.presenter.AdminStartUpPresenter
-import com.cg.cheapstays.view.ui.home.HotelsFragment
+import com.cg.cheapstays.presenter.admin.AdminStartUpPresenter
+import com.cg.cheapstays.view.user.hotels.HotelsFragment
 import kotlinx.android.synthetic.main.fragment_admin_start_up.*
 
 class AdminStartUpFragment : Fragment(), AdminStartUpPresenter.View {

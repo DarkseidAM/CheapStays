@@ -1,4 +1,4 @@
-package com.cg.cheapstays.view.ui.dashboard
+package com.cg.cheapstays.view.user.bookings
 
 import android.content.DialogInterface
 import androidx.recyclerview.widget.RecyclerView

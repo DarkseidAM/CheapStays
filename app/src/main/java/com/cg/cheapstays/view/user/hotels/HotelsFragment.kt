@@ -1,4 +1,4 @@
-package com.cg.cheapstays.view.ui.home
+package com.cg.cheapstays.view.user.hotels
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,9 +10,9 @@ import android.view.ViewGroup
 import android.widget.SearchView
 import com.cg.cheapstays.R
 import com.cg.cheapstays.model.Hotels
+import com.cg.cheapstays.presenter.user.hotels.HotelsPresenter
 import com.cg.cheapstays.view.USER_TYPE
 import com.cg.cheapstays.view.admin.AdminReportActivity
-import com.cg.cheapstays.view.ui.home.presenter.HotelsPresenter
 
 import java.util.*
 

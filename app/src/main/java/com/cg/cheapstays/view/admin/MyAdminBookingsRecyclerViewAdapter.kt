@@ -6,7 +6,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.cg.cheapstays.R
 import com.cg.cheapstays.model.Bookings
-import com.cg.cheapstays.view.admin.presenter.AdminBookingsPresenter
+import com.cg.cheapstays.presenter.admin.AdminBookingsPresenter
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase

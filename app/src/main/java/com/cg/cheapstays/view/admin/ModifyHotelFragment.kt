@@ -1,7 +1,6 @@
 package com.cg.cheapstays.view.admin
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -14,8 +13,7 @@ import android.widget.Toast
 import com.cg.cheapstays.R
 import com.cg.cheapstays.model.Hotels
 import com.cg.cheapstays.model.MakeSnackBar
-import com.cg.cheapstays.view.admin.presenter.ModifyHotelPresenter
-import com.google.android.material.snackbar.Snackbar
+import com.cg.cheapstays.presenter.admin.ModifyHotelPresenter
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_modify_hotel.*
 import kotlinx.coroutines.CoroutineScope

@@ -1,16 +1,13 @@
-package com.cg.cheapstays.view.ui.dashboard
+package com.cg.cheapstays.view.user.bookings
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.cg.cheapstays.R
 
-class DashboardFragment : Fragment() {
+class BookingsDashboardFragment : Fragment() {
 
 
     override fun onCreateView(

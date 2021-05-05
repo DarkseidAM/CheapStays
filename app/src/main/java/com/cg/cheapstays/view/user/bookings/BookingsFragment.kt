@@ -1,4 +1,4 @@
-package com.cg.cheapstays.view.ui.dashboard
+package com.cg.cheapstays.view.user.bookings
 
 import android.os.Bundle
 import android.util.Log
@@ -18,7 +18,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import kotlinx.android.synthetic.main.fragment_bookings_list.*
 import java.text.SimpleDateFormat
 import java.util.*
 

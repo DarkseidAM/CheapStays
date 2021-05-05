@@ -1,4 +1,4 @@
-package com.cg.cheapstays.view.admin.presenter
+package com.cg.cheapstays.presenter.admin
 import androidx.fragment.app.Fragment
 import com.cg.cheapstays.view.USER_TYPE
 import com.google.firebase.auth.FirebaseAuth

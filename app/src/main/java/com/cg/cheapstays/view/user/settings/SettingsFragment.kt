@@ -1,4 +1,4 @@
-package com.cg.cheapstays.view.ui.notifications
+package com.cg.cheapstays.view.user.settings
 
 import android.app.AlertDialog
 import android.content.DialogInterface
@@ -11,11 +11,11 @@ import androidx.fragment.app.Fragment
 import com.cg.cheapstays.R
 import com.cg.cheapstays.view.StartUpActivity
 import com.cg.cheapstays.view.admin.AdminReportActivity
-import com.cg.cheapstays.view.ui.notifications.presenter.NotificationPresenter
+import com.cg.cheapstays.presenter.user.settings.SettingsPresenter
 import kotlinx.android.synthetic.main.fragment_notifications.*
 
-class NotificationsFragment : Fragment(),NotificationPresenter.View {
-    lateinit var presenter: NotificationPresenter
+class SettingsFragment : Fragment(), SettingsPresenter.View {
+    lateinit var presenter: SettingsPresenter
     lateinit var hotelid:String
 
     override fun onCreateView(
@@ -29,7 +29,7 @@ class NotificationsFragment : Fragment(),NotificationPresenter.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter = NotificationPresenter(this)
+        presenter = SettingsPresenter(this)
         settingsEmployeeReportB.visibility = View.INVISIBLE
         //----START GETTING AUTH---
         presenter.initialize()

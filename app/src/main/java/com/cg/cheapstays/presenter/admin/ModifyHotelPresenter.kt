@@ -1,11 +1,10 @@
-package com.cg.cheapstays.view.admin.presenter
+package com.cg.cheapstays.presenter.admin
 
 import android.util.Log
 import com.cg.cheapstays.model.Bookings
 import com.cg.cheapstays.model.Hotels
 import com.cg.cheapstays.model.Users
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.fragment_modify_hotel.*
 import java.text.SimpleDateFormat
 import java.util.*
 

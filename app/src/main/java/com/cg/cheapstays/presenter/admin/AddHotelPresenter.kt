@@ -1,4 +1,4 @@
-package com.cg.cheapstays.view.admin.presenter
+package com.cg.cheapstays.presenter.admin
 import android.net.Uri
 import com.cg.cheapstays.model.Hotels
 import com.google.firebase.database.FirebaseDatabase

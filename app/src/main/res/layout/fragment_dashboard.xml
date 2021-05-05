@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_color_user_bg"
-    tools:context=".view.ui.dashboard.DashboardFragment">
+    tools:context=".view.user.bookings.BookingsDashboardFragment">
 
     <LinearLayout
         android:id="@+id/linearLayout"

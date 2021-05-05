@@ -1,4 +1,4 @@
-package com.cg.cheapstays.view.admin.presenter
+package com.cg.cheapstays.presenter.admin
 import com.cg.cheapstays.model.Bookings
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

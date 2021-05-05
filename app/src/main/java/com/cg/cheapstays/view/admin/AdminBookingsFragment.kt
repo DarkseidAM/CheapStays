@@ -11,7 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.cg.cheapstays.R
 import com.cg.cheapstays.model.Bookings
-import com.cg.cheapstays.view.admin.presenter.AdminBookingsPresenter
+import com.cg.cheapstays.presenter.admin.AdminBookingsPresenter
 
 class AdminBookingsFragment : Fragment(), AdminBookingsPresenter.View {
     private var columnCount = 1

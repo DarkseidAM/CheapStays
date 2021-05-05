@@ -1,4 +1,4 @@
-package com.cg.cheapstays.view.admin.presenter
+package com.cg.cheapstays.presenter.admin
 
 import android.util.Log
 import com.cg.cheapstays.model.Rooms

@@ -1,4 +1,4 @@
-package com.cg.cheapstays.view.ui.notifications.presenter
+package com.cg.cheapstays.presenter.user.settings
 
 import com.cg.cheapstays.model.Users
 import com.google.firebase.auth.FirebaseAuth
@@ -7,7 +7,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class NotificationPresenter(val view : View) {
+class SettingsPresenter(val view : View) {
     companion object{
         lateinit var fDatabase: FirebaseDatabase
         lateinit var fAuth:FirebaseAuth
