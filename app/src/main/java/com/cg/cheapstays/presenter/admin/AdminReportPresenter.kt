@@ -109,7 +109,8 @@ class AdminReportPresenter (val view : View) {
                 if(snapshot.exists()){
                     for(child in snapshot.children){
                         val userId = child.child("uid").value.toString()
-                        userIDList.add(userId)
+                        if(child.child("hotelId").value.toString()==hotelId)
+                            userIDList.add(userId)
                     }
                     view.makeChanges(numS,numD,userIDList)
                 }
