@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import com.cg.cheapstays.R
 import com.cg.cheapstays.model.Doubles
-import com.cg.cheapstays.model.MakeSnackBar
+import com.cg.cheapstays.view.utils.MakeSnackBar
 import com.cg.cheapstays.model.Single
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.database.*

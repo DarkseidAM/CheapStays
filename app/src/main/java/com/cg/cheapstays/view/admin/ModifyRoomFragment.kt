@@ -3,21 +3,15 @@ package com.cg.cheapstays.view.admin
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import com.cg.cheapstays.R
-import com.cg.cheapstays.model.Bookings
-import com.cg.cheapstays.model.MakeSnackBar
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.cg.cheapstays.view.utils.MakeSnackBar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.dialog.MaterialDialogs
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_modify_room.*
 import kotlinx.coroutines.CoroutineScope
@@ -25,9 +19,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import java.time.Instant
 import java.util.*
-import kotlin.math.max
 import kotlin.math.min
 
 class ModifyRoomFragment : Fragment(), AdapterView.OnItemSelectedListener {

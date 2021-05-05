@@ -12,7 +12,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.cg.cheapstays.R
 import com.cg.cheapstays.model.Hotels
-import com.cg.cheapstays.model.MakeSnackBar
+import com.cg.cheapstays.view.utils.MakeSnackBar
 import com.cg.cheapstays.presenter.admin.ModifyHotelPresenter
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_modify_hotel.*

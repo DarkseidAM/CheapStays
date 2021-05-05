@@ -1,4 +1,4 @@
-package com.cg.cheapstays.view.ui.home.presenter
+package com.cg.cheapstays.presenter.user.hotels
 import com.cg.cheapstays.model.Hotels
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -13,7 +13,7 @@ class HotelsPresenter(val view : View) {
         fDatabase = FirebaseDatabase.getInstance()
     }
     fun getHotelList(){
-        val ref = fDatabase.reference.child("hotels")
+        val ref = fDatabase.reference.child("hotels").orderByChild("price")
         ref.addListenerForSingleValueEvent(object: ValueEventListener {
             val hotelList = mutableListOf<Hotels>()
             val hotelMap = mutableMapOf<Hotels,String>()
@@ -22,7 +22,7 @@ class HotelsPresenter(val view : View) {
                     for (child in snapshot.children) {
                         val hotel = child.getValue(Hotels::class.java)
                         hotelList.add(hotel!!)
-                        hotelMap[hotel!!] = child.key.toString()
+                        hotelMap[hotel] = child.key.toString()
                     }
                 }
                 view.changeHotelAdapter(hotelList,hotelMap)

@@ -6,12 +6,9 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.cg.cheapstays.R
-import com.cg.cheapstays.model.MakeSnackBar
-import com.cg.cheapstays.model.Users
+import com.cg.cheapstays.view.utils.MakeSnackBar
 import com.cg.cheapstays.presenter.SignUpPresenter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
 class SignUpActivity : AppCompatActivity(),SignUpPresenter.View {

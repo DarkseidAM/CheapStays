@@ -23,7 +23,6 @@ class StartUpActivity : AppCompatActivity() {
 
 
         supportActionBar?.hide()
-
         userCV.setOnClickListener{
             USER_TYPE = "user"
             val intent = Intent(this,SignInActivity::class.java)

@@ -1,4 +1,4 @@
-package com.cg.cheapstays.model
+package com.cg.cheapstays.view.utils
 
 import android.content.Context
 import android.graphics.Color

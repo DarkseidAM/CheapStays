@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.cg.cheapstays.R
-import com.cg.cheapstays.model.MakeSnackBar
+import com.cg.cheapstays.view.utils.MakeSnackBar
 import com.cg.cheapstays.presenter.SignInPresenter
 import com.cg.cheapstays.presenter.SignInPresenter.Companion.RC_SIGN_IN
 import com.cg.cheapstays.presenter.SignInPresenter.Companion.gso

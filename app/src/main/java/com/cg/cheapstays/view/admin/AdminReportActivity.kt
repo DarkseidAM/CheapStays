@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.cg.cheapstays.R
-import com.cg.cheapstays.model.MakeSnackBar
+import com.cg.cheapstays.view.utils.MakeSnackBar
 import com.cg.cheapstays.model.Rooms
 import com.cg.cheapstays.presenter.admin.AdminReportPresenter
 import com.google.android.material.datepicker.MaterialDatePicker

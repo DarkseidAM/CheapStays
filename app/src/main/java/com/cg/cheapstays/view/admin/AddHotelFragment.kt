@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.cg.cheapstays.R
-import com.cg.cheapstays.model.MakeSnackBar
+import com.cg.cheapstays.view.utils.MakeSnackBar
 import com.cg.cheapstays.presenter.admin.AddHotelPresenter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.fragment_add_hotel.*
