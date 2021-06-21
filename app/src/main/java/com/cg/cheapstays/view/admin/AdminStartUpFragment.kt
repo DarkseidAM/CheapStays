@@ -41,7 +41,6 @@ class AdminStartUpFragment : Fragment(), AdminStartUpPresenter.View {
         adminAddHotelB.setOnClickListener {
             val frag = AddHotelFragment()
             startAdminFragment(frag)
-            startAdminFragment(frag)
         }
         adminModifyHotel.setOnClickListener {
             val frag = ModifyHotelFragment()
